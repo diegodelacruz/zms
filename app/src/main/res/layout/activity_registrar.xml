@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.zaimella.snacks.zaimellasnacks.RegistrarActivity"
+        android:gravity="center_horizontal|center_vertical"
+        android:background="@drawable/fondo">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REGISTRO DE HUELLA"
+        android:id="@+id/titulo"
+        android:textSize="15pt"
+        android:textStyle="bold"
+        android:paddingTop="90dp"
+        android:textColor="#498054" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50pt"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/huella1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:paddingTop="30dp"
+            android:src="@drawable/fpoff" />
+
+        <ImageView
+            android:id="@+id/huella2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:paddingTop="30dp"
+            android:paddingStart="30dp"
+            android:src="@drawable/fpoff" />
+
+        <ImageView
+            android:id="@+id/huella3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:paddingTop="30dp"
+            android:paddingStart="30dp"
+            android:src="@drawable/fpoff" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imagenHuella"
+        android:layout_width="150px"
+        android:layout_height="150px"
+        android:adjustViewBounds="true"
+        android:src="@drawable/sinhuella" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mensaje"
+        android:textSize="15pt" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAPTURAR"
+        android:id="@+id/button3"
+        android:onClick="btnCapturar"/>
+
+</LinearLayout>

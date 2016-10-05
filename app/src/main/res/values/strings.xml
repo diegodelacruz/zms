@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ZMSnacks</string>
+    <string name="not_done">Not done yet</string>
+    <string name="loading">Loading</string>
+    <string name="preparing_device">Device is preparing, please wait…</string>
+    <string name="closing_device">Device is closing, please wait…</string>
+    <string name="enroll_success">Registro exitoso!!! El ID generado es : </string>
+    <string name="enroll_failed_because_of_make_template">enroll_failed_because_of_make_template</string>
+    <string name="enroll_failed_because_of_get_id">enroll_failed_because_of_get_id</string>
+    <string name="enroll_failed_because_of_error">enroll_failed_because_of_error</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
