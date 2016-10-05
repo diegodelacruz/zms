@@ -59,6 +59,8 @@ public class SplashActivity extends AppCompatActivity {
 
             logger.addRecordToLog("SincronizacionTask.doInBackground");
 
+            // MV
+
             /*try {
 
                 //0. Validar si existe BD y si no existe crearla
