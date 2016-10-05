@@ -5,36 +5,35 @@
               android:layout_height="match_parent"
               tools:context=".MenuActivity"
               android:id="@+id/menu_container"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@drawable/fondo">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50pt"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="COMPRAR"
-            android:id="@+id/button2"
-            android:layout_gravity="center_horizontal"
+            android:id="@+id/imgComprar"
+            android:src="@drawable/btncomprar"
             android:onClick="btnComprar"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REGISTRAR"
-            android:id="@+id/button4"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:onClick="btnRegistrar" />
+            android:id="@+id/imgRegistrar"
+            android:src="@drawable/btnregistrar"
+            android:onClick="btnRegistrar"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50pt"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/fragments_container">
 

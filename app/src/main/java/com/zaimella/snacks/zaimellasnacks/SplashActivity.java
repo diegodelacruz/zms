@@ -6,51 +6,39 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 
 import com.google.gson.Gson;
 import com.zaimella.log.Logger;
-import com.zaimella.snacks.service.EmpleadoVO;
 import com.zaimella.snacks.service.RespuestaVO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 
-import cn.com.aratek.dev.Terminal;
-
-
-public class MainActivity extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     Logger logger;
-    //private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
+    //private ProgressDialog dialog = new ProgressDialog(SplashActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        logger.addRecordToLog("SplashActivity.onCreate");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Log.i("BMAPI", "SDK version: v" + Terminal.getSdkVersion() + ", device SN: " + Terminal.getSN());
-        //logger.addRecordToLog("SDK version: v" + Terminal.getSdkVersion() + ", device SN: " + Terminal.getSN());
-
         new SincronizacionTask( this ).execute();
-
     }
 
     private class SincronizacionTask extends AsyncTask<Void, Void, Void> {
 
         public Context context;
-        private ProgressDialog dialog; // = new ProgressDialog(MainActivity.this);
-        //String data ="";
+        private ProgressDialog dialog; // = new ProgressDialog(SplashActivity.this);
 
         public SincronizacionTask(Context context){
             this.context = context;
@@ -59,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPreExecute(){
             // NOTE: You can call UI Element here.
-            logger.addRecordToLog("HttpRquestTask.onPreExecute");
+            logger.addRecordToLog("SincronizacionTask.onPreExecute");
 
             //Dialogo
             dialog.setMessage("Procesando...");
@@ -69,17 +57,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            try {
-                logger.addRecordToLog("_HttpRequestTask.doInBackground");
+            logger.addRecordToLog("SincronizacionTask.doInBackground");
+
+            /*try {
 
                 //0. Validar si existe BD y si no existe crearla
                 //this.validarBDD();
 
                 //1. Obtener el código máximo del usuario
-                Integer codigoMaximo = 0; //existe db, obtener el maximo?
+                //Integer codigoMaximo = 0; //existe db, obtener el maximo?
 
                 //2. Invocar el servicio para obtener el listado de empleados de tipo A
-                RespuestaVO usuariosTipoA = this.obtenerUsuariosTipoA( codigoMaximo );
+                //RespuestaVO usuariosTipoA = this.obtenerUsuariosTipoA( codigoMaximo );
 
                 //3. Insertar en la bdd
                 if( usuariosTipoA.getCodigo().equalsIgnoreCase("OK") ) {
@@ -108,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
 
                 logger.addRecordToLog("Exception general doInBackground : " + e.getMessage());
-            }
+            }*/
 
             return null;
         }
@@ -116,13 +105,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            logger.addRecordToLog("onPostExecute");
+            logger.addRecordToLog("SincronizacionTask.onPostExecute");
 
             if( dialog!=null && dialog.isShowing()) {
                 dialog.dismiss();
             }
 
-            ((MainActivity)context).presentarMenu();
+            ((SplashActivity)context).presentarMenu();
 
         }
 
@@ -154,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void presentarMenu(){
+        logger.addRecordToLog("SplashActivity.presentarMenu");
 
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);

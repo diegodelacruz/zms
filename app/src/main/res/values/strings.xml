@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZMSnacks</string>
+    <string name="app_name">Snacks</string>
     <string name="not_done">Not done yet</string>
     <string name="loading">Loading</string>
     <string name="preparing_device">Device is preparing, please wait…</string>

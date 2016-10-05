@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:gravity="center_horizontal"
-              tools:context="com.zaimella.snacks.zaimellasnacks.ComprarFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="com.zaimella.snacks.zaimellasnacks.ComprarActivity"
+    android:gravity="center_horizontal"
+    android:background="@drawable/fondo">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="COMPRAR"
-        android:id="@+id/tituloCompra"
-        android:layout_gravity="center"
+        android:id="@+id/titulo"
         android:textSize="15pt"
         android:textStyle="bold"
-        android:textColor="#498054"/>
+        android:paddingTop="90dp"
+        android:textColor="#498054" />
 
     <ImageView
-        android:id="@+id/imagenHuellaCompra"
+        android:id="@+id/imagenHuella"
         android:layout_width="250px"
         android:layout_height="250px"
         android:adjustViewBounds="true"
@@ -29,8 +29,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/mensajeCompra"
-        android:paddingTop="30dp"
+        android:id="@+id/mensaje"
         android:textSize="15pt" />
 
     <Button
@@ -38,10 +37,6 @@
         android:layout_height="wrap_content"
         android:text="CAPTURAR"
         android:id="@+id/button3"
-        android:paddingTop="30dp"
         android:onClick="btnCapturarCompra"/>
-
-
-
 
 </LinearLayout>

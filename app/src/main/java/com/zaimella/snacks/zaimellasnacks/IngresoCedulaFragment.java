@@ -1,9 +1,11 @@
 package com.zaimella.snacks.zaimellasnacks;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,8 @@ import android.view.ViewGroup;
  * to handle interaction events.
  * Use the {@link IngresoCedulaFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
-public class IngresoCedulaFragment extends Fragment {
+public class IngresoCedulaFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,6 +30,10 @@ public class IngresoCedulaFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    public IngresoCedulaFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -46,9 +51,6 @@ public class IngresoCedulaFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-    public IngresoCedulaFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -96,7 +98,7 @@ public class IngresoCedulaFragment extends Fragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
+     * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
@@ -105,4 +107,12 @@ public class IngresoCedulaFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    @Override
+    public void onClick(View v) {
+
+
+
+    }
+
 }

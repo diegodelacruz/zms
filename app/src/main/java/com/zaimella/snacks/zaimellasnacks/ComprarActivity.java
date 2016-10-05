@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,30 +20,16 @@ import com.zaimella.log.Logger;
 import com.zaimella.snacks.service.ResultadoScanVO;
 import com.zaimella.snacks.service.TiposRespuesta;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.net.URLEncoder;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
 import cn.com.aratek.fp.Bione;
 import cn.com.aratek.fp.FingerprintImage;
 import cn.com.aratek.fp.FingerprintScanner;
 import cn.com.aratek.util.Result;
 
-/*import cn.com.aratek.dev.Terminal;
-import cn.com.aratek.fp.Bione;
-import cn.com.aratek.fp.FingerprintImage;
-import cn.com.aratek.fp.FingerprintScanner;
-import cn.com.aratek.util.Result;*/
-
-public class RegistrarActivity extends AppCompatActivity  {
+public class ComprarActivity extends AppCompatActivity {
 
     Logger logger;
 
@@ -56,7 +41,7 @@ public class RegistrarActivity extends AppCompatActivity  {
     private ImageView mHuella2;
     private ImageView mHuella3;
     private TextView mMensaje;
-    private Integer numeroHuella;
+    //private Integer numeroHuella;
     byte[][] huellas = new byte[3][];
 
 
@@ -82,14 +67,14 @@ public class RegistrarActivity extends AppCompatActivity  {
                 case MSG_SHOW_INFO: {
                     logger.addRecordToLog("MSG_SHOW_INFO");
 
-                    Toast.makeText(RegistrarActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ComprarActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
                     break;
                 }
                 case MSG_UPDATE_IMAGE: {
                     logger.addRecordToLog("MSG_UPDATE_IMAGE");
 
                     mFingerprintImage.setImageBitmap((Bitmap) msg.obj);
-                    mMensaje.setText("Ingrese la huella No: " + numeroHuella);
+                    //fmMensaje.setText("Ingrese la huella No: ");
                     break;
                 }
                 case MSG_UPDATE_TEXT: {
@@ -149,12 +134,11 @@ public class RegistrarActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //Instancia actividad
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrar);
+        setContentView(R.layout.activity_comprar);
 
         //Atributos
-        numeroHuella = 0;
+        //numeroHuella = 0;
         mFingerprintImage = (ImageView)findViewById(R.id.imagenHuella);
         mHuella1 = (ImageView)findViewById(R.id.huella1);
         mHuella2 = (ImageView)findViewById(R.id.huella2);
@@ -219,7 +203,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                     enableControl(true);*/
                 }
 
-                if ((error = Bione.initialize(RegistrarActivity.this, FP_DB_PATH)) == Bione.RESULT_OK) {
+                if ((error = Bione.initialize(ComprarActivity.this, FP_DB_PATH)) == Bione.RESULT_OK) {
                     logger.addRecordToLog("algorithm_initialization_success");
                 }else{
                     logger.addRecordToLog("algorithm_initialization_failed");
@@ -301,15 +285,15 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     }
 
-    public void btnCapturar(View view){
+    public void btnCapturarCompra(View view){
         try {
             logger.addRecordToLog("btnCapturar -0-");
 
             mFingerprintImage.setImageResource(R.drawable.nuevahuella);
-            mMensaje.setText("Ingrese la huella No: " + numeroHuella);
+            mMensaje.setText("Ingrese la huella");
 
             //Lanza la tarea asíncrona para ingreso de huella
-            (new FingerprintTask(this)).execute(numeroHuella);
+            (new FingerprintTask(this)).execute();
             logger.addRecordToLog("btnCapturar -3-");
 
         }catch(Exception e){
@@ -402,12 +386,26 @@ public class RegistrarActivity extends AppCompatActivity  {
                 if (res.error != Bione.RESULT_OK) {
                     //showErrorDialog(getString(R.string.enroll_failed_because_of_extract_feature), getFingerprintErrorString(res.error));
                     //Tomar la huella nuevamente
+                    logger.addRecordToLog("Error al extraer la huella");
                     return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al extraer la huella");
                 }
 
                 //Utilizar este fingerprint
                 //huellas[numeroHuella] = (byte[]) res.data;
                 //huellas
+                //Bione.identify()
+                fingerPrintFeature = (byte[]) res.data;
+                int id = Bione.identify( fingerPrintFeature );
+                //verifyTime = System.currentTimeMillis() - startTime;
+                logger.addRecordToLog("id : " + id);
+                if (id < 0) {
+                    //showErrorDialog(getString(R.string.identify_failed_because_of_error), getFingerprintErrorString(id));
+                    //break;
+                    logger.addRecordToLog("Error en la identificación de la huella");
+                    return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error en la identificación de la huella");
+                }
+
+                showInfoToast("Id " + id + " encontrado");
 
                 /* logger.addRecordToLog("Extract feature");
                 startTime = System.currentTimeMillis();
@@ -420,7 +418,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                 }*/
 
                 //Feature
-                fingerPrintFeature = (byte[]) res.data;
+
                 //mFpFeature = fpFeat;
                 //logger.addRecordToLog("ENROLL SUCCESS!!! feature : " + fpFeat);
 
@@ -428,8 +426,8 @@ public class RegistrarActivity extends AppCompatActivity  {
                 //updateFingerprintImage(fi);
 
                 mIsDone = true;
-
-                return new ResultadoScanVO(TiposRespuesta.EXITO, params[0], fingerprintImage, fingerPrintFeature, "Error al extraer la huella");
+                //ResultadoScanVO(TiposRespuesta respuesta , Integer numeroHuella , FingerprintImage fingerprintImage , byte[] fingerPrintFeature, String mensaje){
+                return new ResultadoScanVO(TiposRespuesta.EXITO, null , fingerprintImage, fingerPrintFeature, "");
 
             }catch(Exception e){
 
@@ -449,82 +447,16 @@ public class RegistrarActivity extends AppCompatActivity  {
 
                 if (respuestaScan.getRespuesta().equals(TiposRespuesta.EXITO)) {
                     logger.addRecordToLog("FingerprintTask.onPostExecute - EXITO");
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getNumeroHuella() : " + respuestaScan.getNumeroHuella());
+
+                    /*logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getNumeroHuella() : " + respuestaScan.getNumeroHuella());
                     logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getFingerPrintFeature() : " + respuestaScan.getFingerPrintFeature());
                     logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getFingerprintImage() : " + respuestaScan.getFingerprintImage());
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - huellas : " + huellas);
-
-                    //Asigna en el arreglo las huellas
-                    huellas[respuestaScan.getNumeroHuella()] = respuestaScan.getFingerPrintFeature();
+                    logger.addRecordToLog("FingerprintTask.onPostExecute - huellas : " + huellas);*/
 
                     //Actualiza la imagen de la huella
                     updateFingerprintImage(respuestaScan.getFingerprintImage());
 
-                    switch ( respuestaScan.getNumeroHuella() ){
-                        case 0: mHuella1.setImageResource(R.drawable.fpon);
-                            break;
-                        case 1: mHuella2.setImageResource(R.drawable.fpon);
-                                break;
-                        case 2: mHuella3.setImageResource(R.drawable.fpon);
-                            break;
-                        default: break;
-                    }
-
-                    if( numeroHuella>= 2 ){
-
-                        logger.addRecordToLog("onPostExecute - Número de huellas existentes : " + numeroHuella+1);
-                        Result res = Bione.makeTemplate( huellas[0] , huellas[1] , huellas[2] );
-                        if (res.error != Bione.RESULT_OK) {
-
-                            showInfoToast(getString( R.string.enroll_failed_because_of_make_template) );
-                            logger.addRecordToLog("onPostExecute - enroll_failed_because_of_make_template");
-
-                            ((RegistrarActivity)context).invocarPaginaMenu();
-                            return;
-                        }
-
-                        byte[] fpTemp = (byte[]) res.data;
-
-                        int id = Bione.getFreeID();
-                        if (id < 0) {
-
-                            showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
-                            logger.addRecordToLog("onPostExecute - enroll_failed_because_of_get_id");
-
-                            ((RegistrarActivity)context).invocarPaginaMenu();
-                            return;
-                        }
-
-                        int ret = Bione.enroll(id, fpTemp);
-                        if (ret != Bione.RESULT_OK) {
-
-                            showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
-
-                            logger.addRecordToLog("onPostExecute - enroll_failed_because_of_error");
-                            ((RegistrarActivity)context).invocarPaginaMenu();
-                            return;
-                        }
-
-                        logger.addRecordToLog("onPostExecute - id generado : "+ id);
-
-                        showInfoToast(getString(R.string.enroll_success) + id);
-
-                        ((RegistrarActivity)context).invocarPaginaMenu();
-
-                    }else{
-
-                        ++numeroHuella;
-
-                        //Actualizar para el ingreso de una nueva huella
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {}
-                        }, 1000);
-
-                        mFingerprintImage.setImageResource(R.drawable.sinhuella);
-
-                    }
+                    ((ComprarActivity)context).ingresarCedula();
 
                 } else {
                     logger.addRecordToLog("FingerprintTask.onPostExecute - ERROR");
@@ -536,12 +468,12 @@ public class RegistrarActivity extends AppCompatActivity  {
                 //logger.addRecordToLog("after update image");
             }catch(Exception e){
 
-                /*Writer writer = new StringWriter();
+                Writer writer = new StringWriter();
                 PrintWriter printWriter = new PrintWriter(writer);
                 e.printStackTrace(printWriter);
-                String s = writer.toString();*/
+                String s = writer.toString();
 
-                logger.addRecordToLog("Exception onPostExecute : " + e.getMessage());
+                logger.addRecordToLog("Exception onPostExecute : " + s);
             }
         }
 
@@ -550,7 +482,6 @@ public class RegistrarActivity extends AppCompatActivity  {
                 logger.addRecordToLog("mIsDone");
             }
         }
-
 
     }
 
@@ -572,126 +503,18 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     }
 
-    private class HttpRequestTask extends AsyncTask<Object, Void, Void>{
-
-        private ProgressDialog dialog = new ProgressDialog(RegistrarActivity.this);
-        String data ="";
-
-        protected void onPreExecute() {
-            // NOTE: You can call UI Element here.
-            logger.addRecordToLog("HttpRquestTask.onPreExecute");
-
-            //Start Progress Dialog (Message)
-
-            //Dialog.setMessage("Please wait..");
-            //Dialog.show();
-            dialog.setMessage("Procesando...");
-            dialog.show();
-
-            /*try{
-                // Set Request parameter
-                data +="&" + URLEncoder.encode("data", "UTF-8") + "="+serverText.getText();
-
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
-        }
-
-        @Override
-        protected Void doInBackground(Object... params) {
-
-            BufferedReader reader=null;
-
-            try {
-                logger.addRecordToLog("_HttpRequestTask.doInBackground");
-
-                /*final String url = "http://rest-service.guides.spring.io/greeting";
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                //Greeting greeting = restTemplate.getForObject(url, Greeting.class);
-                Greeting greeting = restTemplate.postForObject( url , Greeting.class );*/
-
-                logger.addRecordToLog("antes httpclient");
-
-                // Create a new HttpClient and Post Header
-                HttpClient httpclient = new DefaultHttpClient();
-                //HttpPost httppost = new HttpPost("http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/test");
-
-                String ci = (String)params[0];
-                byte[] huella = (byte[])params[1];
-                String huellaString = URLEncoder.encode( Base64.encodeToString( huella , Base64.DEFAULT) ,  "UTF-8");
-
-                logger.addRecordToLog("ci : " + ci);
-                logger.addRecordToLog("huellaString : " + huellaString);
-
-                HttpPost httppost = new HttpPost("http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/registrar/" + ci + "/" + huellaString);
-
-                try {
-                    // Add your data
-                    /*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-                    nameValuePairs.add(new BasicNameValuePair("stringdata", "Hi"));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));*/
-
-                    logger.addRecordToLog("antes httpclient.execute(httppost)");
-
-                    // Execute HTTP Post Request
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity entity = response.getEntity();
-                    String responseString = EntityUtils.toString(entity, "UTF-8");
-
-                    logger.addRecordToLog("despues responseString : " + responseString);
-
-                } catch (ClientProtocolException e) {
-
-                    logger.addRecordToLog("ClientProtocolException  : " + e.getMessage());
-
-                    // TODO Auto-generated catch block
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    logger.addRecordToLog("IOException : " + e.getMessage());
-                }
-
-                logger.addRecordToLog("despues");
-                return null;
-            }catch (Exception e) {
-                //Log.e("RegistrarActivity.HttpRequestTask ", e.getMessage());
-                logger.addRecordToLog("doInBackground : " + e.getMessage());
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void greeting) {
-            /*TextView greetingIdText = (TextView) findViewById(R.id.id_value);
-            TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            greetingIdText.setText(greeting.getId());
-            greetingContentText.setText(greeting.getContent());*/
-            logger.addRecordToLog("onPostExecute : " + greeting);
-
-            dialog.dismiss();
-        }
-
-    }
-
-    public void btnServicio(View view){
-
-        //Log.i("MV","btnServicio");
-        logger.addRecordToLog("btnServicio");
-
-        //new HttpRequestTask().execute("171123432" , mFpFeature);
-
-    }
-
     private void showInfoToast(String info) {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_INFO, info));
     }
 
-    /*@Override
-    public void onBackPressed() {
-    }*/
+
+    public void ingresarCedula(){
+        logger.addRecordToLog("ComprarActivity.ingresarCedula");
+
+        Intent intent = new Intent(this, ComprarCedulaActivity.class);
+        startActivity(intent);
+        //finish();
+
+    }
 
 }
-

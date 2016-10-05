@@ -1,13 +1,48 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.zaimella.snacks.zaimellasnacks.IngresoCedulaFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.zaimella.snacks.zaimellasnacks.IngresoCedulaFragment"
+              android:id="@+id/idFrgIngresoCedula">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="REGISTRAR"
+        android:id="@+id/titulo"
+        android:textSize="15pt"
+        android:textStyle="bold"
+        android:textColor="#498054"
+        android:gravity="center_horizontal"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cédula de identidad"
+        android:id="@+id/textView"
+        android:textColor="#498054"
+        android:textSize="13pt"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:textColor="#583b3b"
+            android:textSize="20pt"
+            android:layout_marginTop="10dp"
+            android:background="#dfd2d2" />
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONTINUAR"
+            android:id="@+id/button3"
+            android:onClick="btnRegistrarHuella"/>
+
+</LinearLayout>
