@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".ComprarActivityHuella"
+              android:background="@drawable/fondo"
+              android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_comprar"
+        android:id="@+id/idComprarValor"
+        android:textSize="15pt"
+        android:textStyle="bold"
+        android:textColor="#498054"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp"/>
+
+    <ImageView
+        android:id="@+id/imagenHuellaVerificar"
+        android:layout_width="250px"
+        android:layout_height="250px"
+        android:adjustViewBounds="true"
+        android:paddingTop="30dp"
+        android:gravity="center_horizontal"
+        android:src="@drawable/sinhuella" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/lbl_ingresar_huella"
+        android:id="@+id/idButObtenerHuella"
+        android:layout_marginTop="40dp"
+        android:onClick="btnCapturarCompra"
+        android:background="#62bb71"
+        android:textColor="#0a0a0a"
+        android:textSize="15pt" />
+
+</LinearLayout>

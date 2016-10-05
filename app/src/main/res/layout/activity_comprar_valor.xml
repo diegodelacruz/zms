@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".ComprarActivityValor"
+              android:id="@+id/idFrgIngresoCedula"
+              android:background="@drawable/fondo">
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/lbl_comprar"
+    android:id="@+id/idComprarValor"
+    android:textSize="15pt"
+    android:textStyle="bold"
+    android:textColor="#498054"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="30dp"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/lbl_valor"
+    android:id="@+id/idLblValor"
+    android:textColor="#498054"
+    android:textSize="13pt"
+    android:textStyle="bold"
+    android:layout_marginTop="30dp"/>
+
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:inputType="numberDecimal"
+    android:ems="10"
+    android:id="@+id/idTxtValor"
+    android:textColor="#583b3b"
+    android:textSize="20pt"
+    android:background="#dfd2d2" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/lbl_observaciones"
+    android:id="@+id/idLblObservaciones"
+    android:textColor="#498054"
+    android:textSize="13pt"
+    android:textStyle="bold"
+    android:layout_marginTop="30dp"/>
+
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:inputType="textMultiLine"
+    android:minLines="4"
+    android:lines="4"
+    android:maxLines="4"
+    android:gravity="top|left"
+    android:id="@+id/idTxtObservaciones"
+    android:textColor="#583b3b"
+    android:textSize="20pt"
+    android:background="#dfd2d2"
+    android:scrollbars="vertical"/>
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:text="CONTINUAR"
+    android:id="@+id/button3"
+    android:layout_marginTop="40dp"
+    android:onClick="btnRegistrarHuella"
+    android:background="#62bb71"
+    android:textColor="#0a0a0a"
+    android:textSize="15pt" />
+
+</LinearLayout>

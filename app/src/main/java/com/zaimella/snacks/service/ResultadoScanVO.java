@@ -17,14 +17,17 @@ public class ResultadoScanVO {
 
     private byte[] fingerPrintFeature;
 
+    private Integer idUsuarioAratek;
+
     public ResultadoScanVO(){}
 
-    public ResultadoScanVO(TiposRespuesta respuesta , Integer numeroHuella , FingerprintImage fingerprintImage , byte[] fingerPrintFeature, String mensaje){
+    public ResultadoScanVO(TiposRespuesta respuesta , Integer numeroHuella , FingerprintImage fingerprintImage , byte[] fingerPrintFeature, String mensaje , Integer idUsuarioAratek){
         this.respuesta = respuesta;
         this.numeroHuella = numeroHuella;
         this.fingerprintImage = fingerprintImage;
         this.fingerPrintFeature = fingerPrintFeature;
         this.mensaje = mensaje;
+        this.idUsuarioAratek = idUsuarioAratek;
     }
 
     public TiposRespuesta getRespuesta() {
@@ -67,5 +70,12 @@ public class ResultadoScanVO {
         this.fingerPrintFeature = fingerPrintFeature;
     }
 
+    public Integer getIdUsuarioAratek() {
+        return idUsuarioAratek;
+    }
+
+    public void setIdUsuarioAratek(Integer idUsuarioAratek) {
+        this.idUsuarioAratek = idUsuarioAratek;
+    }
 
 }

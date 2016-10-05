@@ -31,18 +31,15 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URLEncoder;
 
 import cn.com.aratek.fp.Bione;
 import cn.com.aratek.fp.FingerprintImage;
 import cn.com.aratek.fp.FingerprintScanner;
 import cn.com.aratek.util.Result;
-
-/*import cn.com.aratek.dev.Terminal;
-import cn.com.aratek.fp.Bione;
-import cn.com.aratek.fp.FingerprintImage;
-import cn.com.aratek.fp.FingerprintScanner;
-import cn.com.aratek.util.Result;*/
 
 public class RegistrarActivity extends AppCompatActivity  {
 
@@ -82,7 +79,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                 case MSG_SHOW_INFO: {
                     logger.addRecordToLog("MSG_SHOW_INFO");
 
-                    Toast.makeText(RegistrarActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrarActivity.this, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
                 }
                 case MSG_UPDATE_IMAGE: {
@@ -314,12 +311,12 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         }catch(Exception e){
 
-            /*Writer writer = new StringWriter();
+            Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             e.printStackTrace(printWriter);
-            String s = writer.toString();*/
+            String s = writer.toString();
 
-            logger.addRecordToLog("Exception btnCapturar : " + e.getMessage());
+            logger.addRecordToLog("Exception btnCapturar : " + s);
         }
     }
 
@@ -341,10 +338,6 @@ public class RegistrarActivity extends AppCompatActivity  {
 
             logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
 
-            //mFingerprintImage.setImageResource( R.drawable.errornuevahuella );
-
-            //e.printStackTrace();
-
         }
 
     }
@@ -353,7 +346,6 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         public Context context;
         private boolean mIsDone = false;
-        //FingerprintImage fiExterno = null;
 
         public FingerprintTask(Context context){
             this.context = context;
@@ -386,57 +378,30 @@ public class RegistrarActivity extends AppCompatActivity  {
                     mScanner.finish();
                     if (isCancelled()) {
                         logger.addRecordToLog("FingerprintTask.doInBackground isCancelled()");
-                        return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Cancelado");
+                        return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Cancelado",null);
                     }
 
                 }while(res.error != FingerprintScanner.RESULT_OK);
-
-                /*if (res.error != FingerprintScanner.RESULT_OK) {
-                    //Tomar la huella nuevamente
-                    return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al tomar la huella");
-                }*/
 
                 //Huella ok
                 fingerprintImage = (FingerprintImage) res.data;
                 res = Bione.extractFeature(fingerprintImage);
                 if (res.error != Bione.RESULT_OK) {
-                    //showErrorDialog(getString(R.string.enroll_failed_because_of_extract_feature), getFingerprintErrorString(res.error));
                     //Tomar la huella nuevamente
-                    return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al extraer la huella");
+                    return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al extraer la huella",null);
                 }
 
-                //Utilizar este fingerprint
-                //huellas[numeroHuella] = (byte[]) res.data;
-                //huellas
-
-                /* logger.addRecordToLog("Extract feature");
-                startTime = System.currentTimeMillis();
-                res = Bione.extractFeature(fi);
-                extractTime = System.currentTimeMillis() - startTime;
-                if (res.error != Bione.RESULT_OK) {
-                    logger.addRecordToLog("enroll_failed_because_of_extract_feature");
-                    //showErrorDialog(getString(R.string.enroll_failed_because_of_extract_feature), getFingerprintErrorString(res.error));
-                    break;
-                }*/
-
-                //Feature
                 fingerPrintFeature = (byte[]) res.data;
-                //mFpFeature = fpFeat;
-                //logger.addRecordToLog("ENROLL SUCCESS!!! feature : " + fpFeat);
-
-                //Bione.makeTemplate()
-                //updateFingerprintImage(fi);
 
                 mIsDone = true;
-
-                return new ResultadoScanVO(TiposRespuesta.EXITO, params[0], fingerprintImage, fingerPrintFeature, "Error al extraer la huella");
+                return new ResultadoScanVO(TiposRespuesta.EXITO, params[0], fingerprintImage, fingerPrintFeature, "Error al extraer la huella",null);
 
             }catch(Exception e){
 
                 Log.e("MV" , e.getMessage() );
                 logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
 
-                return new ResultadoScanVO(TiposRespuesta.ERROR , null , null , null , e.getMessage());
+                return new ResultadoScanVO(TiposRespuesta.ERROR , null , null , null , e.getMessage(),null);
             }
         }
 
@@ -473,6 +438,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                     if( numeroHuella>= 2 ){
 
                         logger.addRecordToLog("onPostExecute - Número de huellas existentes : " + numeroHuella+1);
+
                         Result res = Bione.makeTemplate( huellas[0] , huellas[1] , huellas[2] );
                         if (res.error != Bione.RESULT_OK) {
 
@@ -572,30 +538,19 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     }
 
+
+    /*
     private class HttpRequestTask extends AsyncTask<Object, Void, Void>{
 
         private ProgressDialog dialog = new ProgressDialog(RegistrarActivity.this);
         String data ="";
 
         protected void onPreExecute() {
-            // NOTE: You can call UI Element here.
+
             logger.addRecordToLog("HttpRquestTask.onPreExecute");
 
-            //Start Progress Dialog (Message)
-
-            //Dialog.setMessage("Please wait..");
-            //Dialog.show();
             dialog.setMessage("Procesando...");
             dialog.show();
-
-            /*try{
-                // Set Request parameter
-                data +="&" + URLEncoder.encode("data", "UTF-8") + "="+serverText.getText();
-
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }*/
         }
 
         @Override
@@ -605,12 +560,6 @@ public class RegistrarActivity extends AppCompatActivity  {
 
             try {
                 logger.addRecordToLog("_HttpRequestTask.doInBackground");
-
-                /*final String url = "http://rest-service.guides.spring.io/greeting";
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                //Greeting greeting = restTemplate.getForObject(url, Greeting.class);
-                Greeting greeting = restTemplate.postForObject( url , Greeting.class );*/
 
                 logger.addRecordToLog("antes httpclient");
 
@@ -628,12 +577,6 @@ public class RegistrarActivity extends AppCompatActivity  {
                 HttpPost httppost = new HttpPost("http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/registrar/" + ci + "/" + huellaString);
 
                 try {
-                    // Add your data
-                    /*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                    nameValuePairs.add(new BasicNameValuePair("id", "12345"));
-                    nameValuePairs.add(new BasicNameValuePair("stringdata", "Hi"));
-                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));*/
-
                     logger.addRecordToLog("antes httpclient.execute(httppost)");
 
                     // Execute HTTP Post Request
@@ -647,9 +590,7 @@ public class RegistrarActivity extends AppCompatActivity  {
 
                     logger.addRecordToLog("ClientProtocolException  : " + e.getMessage());
 
-                    // TODO Auto-generated catch block
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     logger.addRecordToLog("IOException : " + e.getMessage());
                 }
 
@@ -665,10 +606,7 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         @Override
         protected void onPostExecute(Void greeting) {
-            /*TextView greetingIdText = (TextView) findViewById(R.id.id_value);
-            TextView greetingContentText = (TextView) findViewById(R.id.content_value);
-            greetingIdText.setText(greeting.getId());
-            greetingContentText.setText(greeting.getContent());*/
+
             logger.addRecordToLog("onPostExecute : " + greeting);
 
             dialog.dismiss();
@@ -683,7 +621,7 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         //new HttpRequestTask().execute("171123432" , mFpFeature);
 
-    }
+    }*/
 
     private void showInfoToast(String info) {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_INFO, info));
