@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zaimella.log.Logger;
+import com.zaimella.snacks.service.Constantes;
 import com.zaimella.snacks.service.ResultadoScanVO;
 import com.zaimella.snacks.service.TiposRespuesta;
 
@@ -34,14 +35,14 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
     Logger logger;
 
-    private ProgressDialog mProgressDialog;
-    private FingerprintScanner mScanner;
+    private Float valorCompra;
+    private String observaciones;
+
     private FingerprintTask mTask;
-    private ImageView mFingerprintImage;
+    private ImageView mImgHuella;
+    private FingerprintScanner mHuellaScanner;
 
     private static final String FP_DB_PATH = "/sdcard/zaimella.db";
-
-    /*
     private static final int MSG_SHOW_ERROR = 0;
     private static final int MSG_SHOW_INFO = 1;
     private static final int MSG_UPDATE_IMAGE = 2;
@@ -51,7 +52,6 @@ public class ComprarActivityHuella extends AppCompatActivity {
     private static final int MSG_UPDATE_FW_VERSION = 6;
     private static final int MSG_SHOW_PROGRESS_DIALOG = 7;
     private static final int MSG_DISMISS_PROGRESS_DIALOG = 8;
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -70,18 +70,18 @@ public class ComprarActivityHuella extends AppCompatActivity {
                 case MSG_UPDATE_IMAGE: {
                     logger.addRecordToLog("MSG_UPDATE_IMAGE");
 
-                    mFingerprintImage.setImageBitmap((Bitmap) msg.obj);
-                    //fmMensaje.setText("Ingrese la huella No: ");
+                    mImgHuella.setImageBitmap((Bitmap) msg.obj);
+                    //mMensaje.setText("Ingrese la huella No: " + numeroHuella);
                     break;
                 }
                 case MSG_UPDATE_TEXT: {
                     logger.addRecordToLog("MSG_UPDATE_TEXT");
 
                     String[] texts = (String[]) msg.obj;
-                    //mCaptureTime.setText(texts[0]);
-                    //mExtractTime.setText(texts[1]);
-                    //mGeneralizeTime.setText(texts[2]);
-                    //mVerifyTime.setText(texts[3]);
+                    /*mCaptureTime.setText(texts[0]);
+                    mExtractTime.setText(texts[1]);
+                    mGeneralizeTime.setText(texts[2]);
+                    mVerifyTime.setText(texts[3]);*/
 
                     break;
                 }
@@ -89,12 +89,11 @@ public class ComprarActivityHuella extends AppCompatActivity {
                     logger.addRecordToLog("MSG_UPDATE_BUTTON");
 
                     Boolean enable = (Boolean) msg.obj;
-
-                    //mBtnEnroll.setEnabled(enable);
-                    //mBtnVerify.setEnabled(enable);
-                    //mBtnIdentify.setEnabled(enable);
-                    //mBtnClear.setEnabled(enable);
-                    //mBtnShow.setEnabled(enable);
+                    /*mBtnEnroll.setEnabled(enable);
+                    mBtnVerify.setEnabled(enable);
+                    mBtnIdentify.setEnabled(enable);
+                    mBtnClear.setEnabled(enable);
+                    mBtnShow.setEnabled(enable);*/
                     break;
                 }
                 case MSG_UPDATE_SN: {
@@ -112,10 +111,10 @@ public class ComprarActivityHuella extends AppCompatActivity {
                 case MSG_SHOW_PROGRESS_DIALOG: {
                     logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
 
-                    //String[] info = (String[]) msg.obj;
-                    //mProgressDialog.setTitle(info[0]);
-                    //mProgressDialog.setMessage(info[1]);
-                    //mProgressDialog.show();
+                    /*String[] info = (String[]) msg.obj;
+                    mProgressDialog.setTitle(info[0]);
+                    mProgressDialog.setMessage(info[1]);
+                    mProgressDialog.show();*/
 
                     break;
                 }
@@ -126,13 +125,8 @@ public class ComprarActivityHuella extends AppCompatActivity {
                 }
             }
         }
-    };*/
+    };
 
-    public ComprarActivityHuella(){
-
-        mProgressDialog = new ProgressDialog(ComprarActivityHuella.this);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,11 +134,19 @@ public class ComprarActivityHuella extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprar_huella);
 
-        mFingerprintImage = (ImageView)findViewById(R.id.imagenHuellaVerificar);
+        mImgHuella = (ImageView)findViewById(R.id.imgHuellaVerificar);
+
+        Intent intent = getIntent();
+
+        valorCompra = intent.getFloatExtra( Constantes.VALOR_COMPRA , 0  );
+        Toast.makeText(ComprarActivityHuella.this, "valorCompra : " + valorCompra , Toast.LENGTH_LONG).show();
+
+        observaciones = intent.getStringExtra( Constantes.OBSERVACIONES );
+        Toast.makeText(ComprarActivityHuella.this, "observaciones: " + observaciones, Toast.LENGTH_LONG).show();
 
         //Instancia dispositivo
-        mScanner = FingerprintScanner.getInstance();
-        logger.addRecordToLog("AFTER FingerprintScanner.getInstance : " + mScanner.hasFinger().error);
+        mHuellaScanner = FingerprintScanner.getInstance();
+        logger.addRecordToLog("AFTER FingerprintScanner.getInstance : " + mHuellaScanner.hasFinger().error);
     }
 
     @Override
@@ -163,12 +165,10 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
             @Override
             public void run() {
-                //showProgressDialog(getString(R.string.loading), getString(R.string.preparing_device));
-                mProgressDialog.setMessage("Procesando...");
-                mProgressDialog.show();
+                showProgressDialog(getString(R.string.loading), getString(R.string.preparing_device));
 
                 int error;
-                if ((error = mScanner.powerOn()) != FingerprintScanner.RESULT_OK) {
+                if ((error = mHuellaScanner.powerOn()) != FingerprintScanner.RESULT_OK) {
                     //showErrorDialog(getString(R.string.fingerprint_device_power_on_failed), getFingerprintErrorString(error));
                     logger.addRecordToLog("fingerprint_device_power_on_failed : " + error);
                 }else{
@@ -179,7 +179,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
                 //error = mScanner.open();
                 //Log.i("MV", "after mScanner.open() : " + error);
                 //logger.addRecordToLog("after mScanner.open() : " + error);
-                if ((error = mScanner.open()) != FingerprintScanner.RESULT_OK) {
+                if ((error = mHuellaScanner.open()) != FingerprintScanner.RESULT_OK) {
                     Log.i("MV","mScanner.open() error");
                     Log.i("MV","MSG_UPDATE_SN");
                     Log.i("MV","MSG_UPDATE_FW_VERSION");
@@ -190,8 +190,8 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
                 }else{
 
-                    Result res = mScanner.getSN();
-                    res = mScanner.getFirmwareVersion();
+                    Result res = mHuellaScanner.getSN();
+                    res = mHuellaScanner.getFirmwareVersion();
                     logger.addRecordToLog("MSG_UPDATE_FW_VERSION : " + (String) res.data);
 
                     /*mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_SN, getString(R.string.fps_sn, (String) res.data)));
@@ -206,21 +206,19 @@ public class ComprarActivityHuella extends AppCompatActivity {
                     logger.addRecordToLog("algorithm_initialization_failed");
                 }
 
-                //dismissProgressDialog();
-                mProgressDialog.dismiss();
-
+                dismissProgressDialog();
             }
         }.start();
 
     }
 
-    /*private void showProgressDialog(String title, String message) {
+    private void showProgressDialog(String title, String message) {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_PROGRESS_DIALOG, new String[] { title, message }));
     }
 
     private void dismissProgressDialog() {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_DISMISS_PROGRESS_DIALOG));
-    }*/
+    }
 
     @Override
     protected void onPause() {
@@ -247,7 +245,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
         this.closeDevice();
         Log.i("MV","after closeDevice");
 
-        this.mScanner = null;
+        this.mHuellaScanner = null;
     }
 
     private void closeDevice() {
@@ -260,7 +258,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
                 int error;
                 Log.i("MV","BEFORE mScanner.close()");
-                if ((error = mScanner.close()) != FingerprintScanner.RESULT_OK) {
+                if ((error = mHuellaScanner.close()) != FingerprintScanner.RESULT_OK) {
                     Log.i("MV","fingerprint_device_close_failed");
                     logger.addRecordToLog("fingerprint_device_close_failed");
                 }else {
@@ -268,7 +266,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
                     logger.addRecordToLog("fingerprint_device_close_success");
                 }
 
-                if ((error = mScanner.powerOff()) != FingerprintScanner.RESULT_OK) {
+                if ((error = mHuellaScanner.powerOff()) != FingerprintScanner.RESULT_OK) {
                     Log.i("MV","fingerprint_device_power_off_failed");
                     logger.addRecordToLog("fingerprint_device_power_off_failed");
                 }else{
@@ -293,7 +291,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
         try {
             logger.addRecordToLog("ComprarActivityHuella.btnCapturarCompra");
 
-            mFingerprintImage.setImageResource(R.drawable.nuevahuella);
+            mImgHuella.setImageResource(R.drawable.nuevahuella);
 
             //Lanza la tarea asíncrona para ingreso de huella
             (new FingerprintTask(this)).execute();
@@ -301,13 +299,21 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
         }catch(Exception e){
 
-            /*Writer writer = new StringWriter();
+            Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             e.printStackTrace(printWriter);
-            String s = writer.toString();*/
+            String s = writer.toString();
 
-            logger.addRecordToLog("Exception btnCapturar : " + e.getMessage());
+            logger.addRecordToLog("Exception btnCapturar : " + s);
         }
+    }
+
+    public void btnCancelarCompra(View view){
+        logger.addRecordToLog("ComprarActivityHuella.btnCancelarCompra");
+
+        Intent menuIntent = new Intent(this, MenuActivity.class);
+        startActivity(menuIntent);
+
     }
 
     private void updateFingerprintImage(FingerprintImage fi) {
@@ -321,9 +327,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
                 logger.addRecordToLog("updateFingerprintImage sin huella ");
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sinhuella);
             }
-            //mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_IMAGE, bitmap));
-            //mFingerprintImage.setImageBitmap(bitmap);
-            mFingerprintImage.setImageBitmap(bitmap);
+            mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_IMAGE, bitmap));
 
         }catch(Exception e){
 
@@ -355,38 +359,40 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
         @Override
         protected ResultadoScanVO doInBackground(Integer... params) {
+            logger.addRecordToLog("ComprarActivityHuella.FingerprintTask.doInBackground");
 
             FingerprintImage fingerprintImage = null;
             byte[] fingerPrintFeature = null;
             Result resultado = null;
 
             try {
-                logger.addRecordToLog("FingerprintTask.doInBackground");
 
                 do {
                     //Prepara el scanner
-                    mScanner.prepare();
+                    int resultadoPrepare = mHuellaScanner.prepare();
+                    //logger.addRecordToLog("ComprarActivityHuella.FingerprintTask.luego prepare : " + resultadoPrepare);
+
                     do {
-                        resultado = mScanner.capture();
+                        resultado = mHuellaScanner.capture();
                     }while(resultado.error == FingerprintScanner.NO_FINGER && !isCancelled());
-
-                    mScanner.finish();
-
+                    mHuellaScanner.finish();
                     if (isCancelled()) {
-                        logger.addRecordToLog("FingerprintTask.doInBackground isCancelled()");
+                        logger.addRecordToLog("ComprarActivityHuella.FingerprintTask.doInBackground isCancelled()");
                         return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Cancelado" , null);
                     }
 
                 }while(resultado.error != FingerprintScanner.RESULT_OK);
 
                 //Huella ok
-                fingerprintImage = (FingerprintImage) resultado.data;
+                fingerprintImage = (FingerprintImage)resultado.data;
                 resultado = Bione.extractFeature(fingerprintImage);
                 if (resultado.error != Bione.RESULT_OK) {
                     //showErrorDialog(getString(R.string.enroll_failed_because_of_extract_feature), getFingerprintErrorString(res.error));
                     //Tomar la huella nuevamente
-                    logger.addRecordToLog("Error al extraer la huella");
+                    logger.addRecordToLog("Error al extraer FEATURE");
                     return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al extraer la huella" , null);
+                }else{
+                    logger.addRecordToLog("OK extraer FEATURE");
                 }
 
                 //Utilizar este fingerprint
@@ -401,15 +407,14 @@ public class ComprarActivityHuella extends AppCompatActivity {
                     return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error en la identificación de la huella",null);
                 }
 
-                //showInfoToast("Id " + id + " encontrado");
-                Toast.makeText(ComprarActivityHuella.this, "El ID encontrado es: " + idUsuarioAratek, Toast.LENGTH_LONG).show();
+                showInfoToast("El ID encontrado es: " + idUsuarioAratek);
+                //Toast.makeText(ComprarActivityHuella.this, "El ID encontrado es: " + idUsuarioAratek, Toast.LENGTH_LONG).show();
 
                 mIsDone = true;
                 return new ResultadoScanVO(TiposRespuesta.EXITO, null , fingerprintImage , fingerPrintFeature , "" , idUsuarioAratek);
 
             }catch(Exception e){
 
-                Log.e("MV" , e.getMessage() );
                 logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
 
                 return new ResultadoScanVO(TiposRespuesta.ERROR , null , null , null , e.getMessage(),null);
@@ -421,7 +426,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
             try {
                 super.onPostExecute(respuestaScan);
 
-                logger.addRecordToLog("FingerprintTask.onPostExecute");
+                logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan : " + respuestaScan);
 
                 if (respuestaScan.getRespuesta().equals(TiposRespuesta.EXITO)) {
                     logger.addRecordToLog("FingerprintTask.onPostExecute - EXITO");
@@ -429,12 +434,12 @@ public class ComprarActivityHuella extends AppCompatActivity {
                     //Actualiza la imagen de la huella
                     updateFingerprintImage(respuestaScan.getFingerprintImage());
 
-                    ((ComprarActivityHuella)context).confirmarCompra( respuestaScan.getIdUsuarioAratek() , new BigDecimal("0.00") , null);
+                    ((ComprarActivityHuella)context).confirmarCompra( respuestaScan.getIdUsuarioAratek() );
 
                 } else {
                     logger.addRecordToLog("FingerprintTask.onPostExecute - ERROR");
 
-                    mFingerprintImage.setImageResource(R.drawable.errornuevahuella);
+                    mImgHuella.setImageResource(R.drawable.errornuevahuella);
 
                 }
 
@@ -447,6 +452,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
                 String s = writer.toString();
 
                 logger.addRecordToLog("Exception onPostExecute : " + s);
+                mImgHuella.setImageResource(R.drawable.errornuevahuella);
             }
         }
 
@@ -476,21 +482,27 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
     }
 
-    /*private void showInfoToast(String info) {
+    private void showInfoToast(String info) {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_INFO, info));
-    }*/
+    }
 
-
-    public void confirmarCompra(Integer idUsuarioAratek , BigDecimal valor , String observaciones){
-        logger.addRecordToLog("ComprarActivityHuella.confirma rCompra");
+    public void confirmarCompra(Integer idUsuarioAratek ){
+        logger.addRecordToLog("ComprarActivityHuella.confirmarCompra");
         logger.addRecordToLog("idUsuarioAratek : " + idUsuarioAratek);
-        logger.addRecordToLog("valor : " + valor);
+        logger.addRecordToLog("valorCompra : " + valorCompra);
         logger.addRecordToLog("observaciones : " + observaciones);
 
         Intent intent = new Intent(this, ConfirmarCompraActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putFloat( Constantes.VALOR_COMPRA , valorCompra );
+        bundle.putString( Constantes.OBSERVACIONES , observaciones);
+        bundle.putInt( Constantes.ID_USUARIO_ARATEK , idUsuarioAratek);
+
+        intent.putExtras( bundle );
+
         startActivity(intent);
         //finish();
-
     }
 
 }

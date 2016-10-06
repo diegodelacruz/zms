@@ -144,7 +144,7 @@ public class SplashActivity extends AppCompatActivity {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            ((SplashActivity) context).irProximaVista();
+            ((SplashActivity) context).menuPrincipal();
         }
 
         private RespuestaVO obtenerUsuariosTipoA(int codigoMaximo) throws Exception {
@@ -197,7 +197,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    public void irProximaVista() {
+    public void menuPrincipal() {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();

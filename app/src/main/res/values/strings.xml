@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Snacks</string>
     <string name="lbl_comprar">COMPRAR</string>
+    <string name="lbl_confirmar_comprar">CONFIRMAR COMPRAR</string>
+    <string name="lbl_nueva_compra">NUEVA COMPRA</string>
     <string name="lbl_valor">Valor</string>
     <string name="lbl_observaciones">Observaciones</string>
     <string name="lbl_continuar">CONTINUAR</string>
     <string name="lbl_ingresar_huella">INGRESAR HUELLA</string>
-
+    <string name="lbl_cancelar">CANCELAR</string>
     <string name="not_done">Not done yet</string>
     <string name="loading">Loading</string>
     <string name="preparing_device">Device is preparing, please wait…</string>

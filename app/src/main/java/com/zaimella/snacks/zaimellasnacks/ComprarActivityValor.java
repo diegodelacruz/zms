@@ -7,18 +7,27 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.zaimella.log.Logger;
+import com.zaimella.snacks.service.Constantes;
+
+import java.math.BigDecimal;
+
 public class ComprarActivityValor extends AppCompatActivity {
 
+    Logger logger;
     private EditText mTxtValor;
+    private EditText mTxtObservaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        logger.addRecordToLog("ComprarActivityValor.onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprar_valor);
 
-        mTxtValor=(EditText) findViewById(R.id.idTxtValor);
+        mTxtValor=(EditText)findViewById(R.id.idTxtValor);
+        mTxtObservaciones=(EditText)findViewById(R.id.idTxtObservaciones);
         mTxtValor.requestFocus();
-
     }
 
     public void btnRegistrarHuella(View view){
@@ -32,6 +41,12 @@ public class ComprarActivityValor extends AppCompatActivity {
         fragmentTransaction.commit();*/
 
         Intent intent = new Intent(this, ComprarActivityHuella.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putFloat( Constantes.VALOR_COMPRA , Float.parseFloat( mTxtValor.getText().toString() ) );
+        bundle.putString( Constantes.OBSERVACIONES ,mTxtObservaciones.getText().toString());
+        intent.putExtras( bundle );
+
         startActivity(intent);
     }
 

@@ -20,7 +20,7 @@
         android:layout_marginTop="30dp"/>
 
     <ImageView
-        android:id="@+id/imagenHuellaVerificar"
+        android:id="@+id/imgHuellaVerificar"
         android:layout_width="250px"
         android:layout_height="250px"
         android:adjustViewBounds="true"
@@ -38,5 +38,17 @@
         android:background="#62bb71"
         android:textColor="#0a0a0a"
         android:textSize="15pt" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/lbl_cancelar"
+        android:id="@+id/idButCancelarHuella"
+        android:layout_marginTop="40dp"
+        android:onClick="btnCancelarCompra"
+        android:background="#62bb71"
+        android:textColor="#0a0a0a"
+        android:textSize="15pt"
+        android:paddingTop="30dp"/>
 
 </LinearLayout>

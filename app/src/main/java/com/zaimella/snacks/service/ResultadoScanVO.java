@@ -1,5 +1,7 @@
 package com.zaimella.snacks.service;
 
+import java.util.Arrays;
+
 import cn.com.aratek.fp.FingerprintImage;
 
 /**
@@ -78,4 +80,15 @@ public class ResultadoScanVO {
         this.idUsuarioAratek = idUsuarioAratek;
     }
 
+    @Override
+    public String toString() {
+        return "ResultadoScanVO{" +
+                "respuesta=" + respuesta +
+                ", numeroHuella=" + numeroHuella +
+                ", mensaje='" + mensaje + '\'' +
+                ", fingerprintImage=" + fingerprintImage +
+                ", fingerPrintFeature=" + Arrays.toString(fingerPrintFeature) +
+                ", idUsuarioAratek=" + idUsuarioAratek +
+                '}';
+    }
 }
