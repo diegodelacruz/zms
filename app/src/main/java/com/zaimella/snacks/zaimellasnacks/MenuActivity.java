@@ -19,16 +19,6 @@ public class MenuActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        /*mFingerprintImage = (ImageView)findViewById(R.id.imagenHuella);
-        mHuella1 = (ImageView)findViewById(R.id.huella1);
-        mHuella2 = (ImageView)findViewById(R.id.huella2);
-        mHuella3 = (ImageView)findViewById(R.id.huella3);
-        mMensaje = (TextView)findViewById(R.id.mensaje);
-
-        //Instancia dispositivo
-        mScanner = FingerprintScanner.getInstance();
-        logger.addRecordToLog("mScanner : " + mScanner.hasFinger().error);*/
     }
 
     /*@Override
@@ -85,10 +75,12 @@ public class MenuActivity extends AppCompatActivity {
         RegistrarFragment registrarFragment = new RegistrarFragment();
         fragmentTransaction.replace( R.id.fragments_container , registrarFragment);
         fragmentTransaction.commit();*/
-
-
     }
 
+    public void btnSindronizar(View view){
+        Log.d("DLC SINCRONIZAR","btnSindronizar");
+        //sincronizacion.
+    }
 
 }
 
