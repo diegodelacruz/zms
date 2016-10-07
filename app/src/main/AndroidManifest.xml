@@ -16,8 +16,8 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,8 @@
         <activity android:name=".RegistrarActivity" />
         <activity android:name=".ComprarActivityHuella" />
         <activity android:name=".ComprarActivityValor" />
-        <activity android:name=".ConfirmarCompraActivity"></activity>
+        <activity android:name=".ConfirmarCompraActivity" />
+        <activity android:name=".RegistraCedulaActivity"></activity>
     </application>
 
 </manifest>

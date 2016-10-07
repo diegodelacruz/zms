@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zaimella.log.Logger;
+import com.zaimella.snacks.service.Constantes;
 import com.zaimella.snacks.service.ResultadoScanVO;
 import com.zaimella.snacks.service.TiposRespuesta;
 
@@ -45,6 +46,8 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     Logger logger;
 
+    private TextView mNumeroCedula;
+    private TextView mNombreUsuario;
     private ProgressDialog mProgressDialog;
     private FingerprintScanner mScanner;
     private FingerprintTask mTask;
@@ -52,10 +55,11 @@ public class RegistrarActivity extends AppCompatActivity  {
     private ImageView mHuella1;
     private ImageView mHuella2;
     private ImageView mHuella3;
-    private TextView mMensaje;
+    //private TextView mMensaje;
     private Integer numeroHuella;
     byte[][] huellas = new byte[3][];
-
+    private String numeroCedula;
+    private String nombrePersona;
 
     private static final String FP_DB_PATH = "/sdcard/zaimella.db";
     private static final int MSG_SHOW_ERROR = 0;
@@ -86,7 +90,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                     logger.addRecordToLog("MSG_UPDATE_IMAGE");
 
                     mFingerprintImage.setImageBitmap((Bitmap) msg.obj);
-                    mMensaje.setText("Ingrese la huella No: " + numeroHuella);
+                    //mMensaje.setText("Ingrese la huella No: " + numeroHuella);
                     break;
                 }
                 case MSG_UPDATE_TEXT: {
@@ -152,13 +156,17 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         //Atributos
         numeroHuella = 0;
+        mNumeroCedula =(TextView)findViewById(R.id.idNumeroCedula);
+        mNombreUsuario = (TextView)findViewById(R.id.idNombreUsuario);
         mFingerprintImage = (ImageView)findViewById(R.id.imagenHuella);
         mHuella1 = (ImageView)findViewById(R.id.huella1);
         mHuella2 = (ImageView)findViewById(R.id.huella2);
         mHuella3 = (ImageView)findViewById(R.id.huella3);
-        mMensaje = (TextView)findViewById(R.id.mensaje);
+        //mMensaje = (TextView)findViewById(R.id.mensaje);
 
-        logger.addRecordToLog("mMensaje  : " + mMensaje);
+        Intent intent = getIntent();
+        mNumeroCedula.setText( intent.getStringExtra(Constantes.NUMERO_CEDULA) );
+        mNombreUsuario.setText( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
 
         //Instancia dispositivo
         mScanner = FingerprintScanner.getInstance();
@@ -267,31 +275,37 @@ public class RegistrarActivity extends AppCompatActivity  {
             @Override
             public void run() {
 
-                int error;
-                Log.i("MV","BEFORE mScanner.close()");
-                if ((error = mScanner.close()) != FingerprintScanner.RESULT_OK) {
-                    Log.i("MV","fingerprint_device_close_failed");
-                    logger.addRecordToLog("fingerprint_device_close_failed");
-                }else {
-                    Log.i("MV", "fingerprint_device_close_success");
-                    logger.addRecordToLog("fingerprint_device_close_success");
-                }
+                try {
 
-                if ((error = mScanner.powerOff()) != FingerprintScanner.RESULT_OK) {
-                    Log.i("MV","fingerprint_device_power_off_failed");
-                    logger.addRecordToLog("fingerprint_device_power_off_failed");
-                }else{
-                    logger.addRecordToLog("power_off success");
-                }
+                    int error;
+                    Log.i("MV", "BEFORE mScanner.close()");
+                    if ((error = mScanner.close()) != FingerprintScanner.RESULT_OK) {
+                        Log.i("MV", "fingerprint_device_close_failed");
+                        logger.addRecordToLog("fingerprint_device_close_failed");
+                    } else {
+                        Log.i("MV", "fingerprint_device_close_success");
+                        logger.addRecordToLog("fingerprint_device_close_success");
+                    }
 
-                if ((error = Bione.exit()) != Bione.RESULT_OK) {
-                    //showErrorDialog(getString(R.string.algorithm_cleanup_failed), getFingerprintErrorString(error));
-                    Log.i("MV","algorithm_cleanup_failed");
-                    logger.addRecordToLog("algorithm_cleanup_failed");
-                }else{
-                    logger.addRecordToLog("algorithm_cleanup_failed success");
-                }
+                    if ((error = mScanner.powerOff()) != FingerprintScanner.RESULT_OK) {
+                        Log.i("MV", "fingerprint_device_power_off_failed");
+                        logger.addRecordToLog("fingerprint_device_power_off_failed");
+                    } else {
+                        logger.addRecordToLog("power_off success");
+                    }
 
+                    if ((error = Bione.exit()) != Bione.RESULT_OK) {
+                        //showErrorDialog(getString(R.string.algorithm_cleanup_failed), getFingerprintErrorString(error));
+                        Log.i("MV", "algorithm_cleanup_failed");
+                        logger.addRecordToLog("algorithm_cleanup_failed");}
+                    else {
+                        logger.addRecordToLog("algorithm_cleanup_failed success");
+                    }
+
+                }catch(Exception e){
+
+                    logger.addRecordToLog("Exception close device : " + e.getMessage());
+                }
 
             }
         }.start();
@@ -303,7 +317,7 @@ public class RegistrarActivity extends AppCompatActivity  {
             logger.addRecordToLog("btnCapturar -0-");
 
             mFingerprintImage.setImageResource(R.drawable.nuevahuella);
-            mMensaje.setText("Ingrese la huella No: " + numeroHuella);
+            //mMensaje.setText("Ingrese la huella No: " + numeroHuella);
 
             //Lanza la tarea asíncrona para ingreso de huella
             (new FingerprintTask(this)).execute(numeroHuella);
@@ -528,7 +542,7 @@ public class RegistrarActivity extends AppCompatActivity  {
 
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
-            //finish();
+            finish();
 
         }catch(Exception e){
 
