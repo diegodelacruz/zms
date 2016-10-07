@@ -25,10 +25,10 @@ dependencies {
     compile files('src/main/jniLibs/AraBMApiDev.jar')
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
-    compile files('C:/Users/ddelacruz/AndroidStudioProjects/zms/lib/AndroidLog.jar')
-    compile files('C:/Users/ddelacruz/AndroidStudioProjects/zms/lib/gson-2.7.jar')
-    compile files('C:/Users/ddelacruz/AndroidStudioProjects/zms/lib/httpclient-4.5.2.jar')
-    compile files('C:/Users/ddelacruz/AndroidStudioProjects/zms/lib/httpcore-4.4.4.jar')
+    compile files('D:/Mauro_Velasco/Documentos/Proyectos/ZaimellaSnacks/ZaimellaSnacks/lib/AndroidLog.jar')
+    compile files('D:/Mauro_Velasco/Documentos/Proyectos/ZaimellaSnacks/ZaimellaSnacks/lib/httpclient-4.5.2.jar')
+    compile files('D:/Mauro_Velasco/Documentos/Proyectos/ZaimellaSnacks/ZaimellaSnacks/lib/httpcore-4.4.4.jar')
+    compile files('D:/Mauro_Velasco/Documentos/Proyectos/ZaimellaSnacks/ZaimellaSnacks/lib/gson-2.7.jar')
 }
 
 
