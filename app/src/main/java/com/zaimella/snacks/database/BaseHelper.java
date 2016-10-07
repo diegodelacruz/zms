@@ -85,17 +85,18 @@ public class BaseHelper extends SQLiteOpenHelper {
 
     public String buscarEmpleado(String cedula) {
         String nombreCompleto = "";
-        String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula;
+        String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula.trim();
         Cursor cursor = getWritableDatabase().rawQuery(qry, null);
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             nombreCompleto = cursor.getString(0);
+
+            cursor.close();
+            return nombreCompleto;
         }
 
-        cursor.close();
-
-        return nombreCompleto;
+        return null;
     }
 
 }

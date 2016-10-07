@@ -24,7 +24,8 @@
     <string name="enroll_failed_because_of_make_template">enroll_failed_because_of_make_template</string>
     <string name="enroll_failed_because_of_get_id">enroll_failed_because_of_get_id</string>
     <string name="enroll_failed_because_of_error">enroll_failed_because_of_error</string>
-
+    <string name="mns_usuario_no_existe">El usuario no existe</string>
+    <string name="mns_titulo">ZAIMELLA SNACKS</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
