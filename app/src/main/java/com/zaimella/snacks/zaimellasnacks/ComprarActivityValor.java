@@ -1,8 +1,11 @@
 package com.zaimella.snacks.zaimellasnacks;
 
 import android.content.Intent;
+import android.support.annotation.FloatRange;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +23,7 @@ public class ComprarActivityValor extends AppCompatActivity {
     private EditText mTxtValor;
     private EditText mTxtObservaciones;
 
-    private ImageButton btnBorrarValor, btnBorrarObservacion, btnComprarHome;
+    private ImageButton btnBorrarValor, btnBorrarObservacion, btnComprarHome, btnComprarContinuar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,11 @@ public class ComprarActivityValor extends AppCompatActivity {
         mTxtObservaciones = (EditText) findViewById(R.id.idTxtObservaciones);
         mTxtValor.requestFocus();
 
+        btnComprarContinuar = (ImageButton) findViewById(R.id.imgComprarContinuar);
+
+        btnComprarContinuar.setEnabled(false);
+
+        verificarCampos();
         onClickBorrarValor();
         onClickBorrarObservacion();
         onClickComprarHome();
@@ -58,6 +66,7 @@ public class ComprarActivityValor extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Acción cuando presiona el boton "X" junto al Valor de la Compra.
     public void onClickBorrarValor() {
         btnBorrarValor = (ImageButton) findViewById(R.id.imgBorrarValor);
         btnBorrarValor.setOnClickListener(
@@ -71,6 +80,7 @@ public class ComprarActivityValor extends AppCompatActivity {
         );
     }
 
+    //Acción cuando presiona el boton "X" junto a la Observación.
     public void onClickBorrarObservacion() {
         btnBorrarObservacion = (ImageButton) findViewById(R.id.imgBorrarObservacion);
         btnBorrarObservacion.setOnClickListener(
@@ -84,6 +94,7 @@ public class ComprarActivityValor extends AppCompatActivity {
         );
     }
 
+    //Acción cuando presiona el boton Home
     public void onClickComprarHome() {
         btnComprarHome = (ImageButton) findViewById(R.id.imgComprarHome);
         btnComprarHome.setOnClickListener(
@@ -94,5 +105,30 @@ public class ComprarActivityValor extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    //Verifico si el campo del Valor de la Compra no está vacio.
+    public void verificarCampos() {
+        mTxtValor.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //if (s.toString().equals("") || Float.parseFloat(mTxtValor.getText().toString()) > 5) {
+                if (s.toString().equals("")) {
+                    btnComprarContinuar.setEnabled(false);
+                } else {
+                    btnComprarContinuar.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }

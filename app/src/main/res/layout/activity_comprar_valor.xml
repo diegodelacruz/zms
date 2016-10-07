@@ -12,9 +12,9 @@
         android:id="@+id/idComprarValor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="60dp"
         android:gravity="center_horizontal"
-        android:text="COMPRAR"
+        android:text="@string/lbl_comprar_inicio"
         android:textColor="#2a2b34"
         android:textSize="15pt"
         android:textStyle="bold" />
@@ -23,8 +23,9 @@
         android:id="@+id/idLblValor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="30dp"
-        android:text="@string/lbl_valor"
+        android:text="@string/lbl_comprar_valor"
         android:textColor="#2a2b34"
         android:textSize="13pt"
         android:textStyle="bold" />
@@ -39,6 +40,7 @@
             android:id="@+id/idTxtValor"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="#dfd2d2"
             android:ems="10"
@@ -51,6 +53,7 @@
             android:id="@+id/imgBorrarValor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@android:color/transparent"
             android:gravity="left"
             android:onClick="btnBorrarValor"
@@ -61,8 +64,9 @@
         android:id="@+id/idLblObservaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_marginTop="30dp"
-        android:text="@string/lbl_observaciones"
+        android:text="@string/lbl_comprar_observacion"
         android:textColor="#2a2b34"
         android:textSize="13pt"
         android:textStyle="bold" />
@@ -70,13 +74,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/idTxtObservaciones"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="#dfd2d2"
             android:gravity="top|left"
@@ -92,6 +97,7 @@
             android:id="@+id/imgBorrarObservacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@android:color/transparent"
             android:gravity="left"
             android:onClick="btnBorrarObservacion"
@@ -105,7 +111,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/imgComprarContinuar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"

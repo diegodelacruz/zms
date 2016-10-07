@@ -28,27 +28,36 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         mObservacionesCompra = (TextView) findViewById(R.id.idObservacionesCompra);
 
         Intent intent = getIntent();
-        logger.addRecordToLog("idUsuarioAratek : " + intent.getIntExtra( Constantes.ID_USUARIO_ARATEK , 0 ));
-        logger.addRecordToLog("valorCompra : " + intent.getFloatExtra( Constantes.VALOR_COMPRA , 0  ) );
-        logger.addRecordToLog("observaciones : " + intent.getStringExtra( Constantes.OBSERVACIONES ));
+        logger.addRecordToLog("idUsuarioAratek : " + intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0));
+        logger.addRecordToLog("valorCompra : " + intent.getFloatExtra(Constantes.VALOR_COMPRA, 0));
+        logger.addRecordToLog("observaciones : " + intent.getStringExtra(Constantes.OBSERVACIONES));
 
-        mNombrePersona.setText( Integer.toString( intent.getIntExtra( Constantes.ID_USUARIO_ARATEK , 0 ) ) );
-        mValorCompra.setText( Float.toString( intent.getFloatExtra( Constantes.VALOR_COMPRA , 0  ) ) );
-        mObservacionesCompra.setText( intent.getStringExtra( Constantes.OBSERVACIONES ) );
+        StringBuilder sbNombrePersona = new StringBuilder();
+        sbNombrePersona.append(Constantes.CONFIRMAR_COMPRA_NOMBRE).append(Integer.toString(intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0)));
+        //mNombrePersona.setText(Integer.toString(intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0)));
+        mNombrePersona.setText(sbNombrePersona.toString());
+
+        StringBuilder sbValorCompra = new StringBuilder();
+        sbValorCompra.append(Constantes.CONFIRMAR_COMPRA_VALOR).append(Float.toString(intent.getFloatExtra(Constantes.VALOR_COMPRA, 0)));
+        mValorCompra.setText(sbValorCompra.toString());
+
+        StringBuilder sbObservacion = new StringBuilder();
+        sbObservacion.append(Constantes.CONFIRMAR_COMPRA_OBSERVACION).append(intent.getStringExtra(Constantes.OBSERVACIONES));
+        //mObservacionesCompra.setText(intent.getStringExtra(Constantes.OBSERVACIONES));
+        mObservacionesCompra.setText(sbObservacion.toString());
 
     }
 
-    //public void btnRegistrarHuella(View view){
-    public void btnConfirmarCompra(View view){
-
+    public void btnConfirmarCompra(View view) {
+        Intent intent = new Intent(this, ComprarActivityValor.class);
+        startActivity(intent);
+        finish();
     }
 
-    public void btnCancelarCompra(View view){
+    public void btnCancelarCompra(View view) {
 
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();
-
     }
-
 }

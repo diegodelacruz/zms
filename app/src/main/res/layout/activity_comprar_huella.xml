@@ -12,9 +12,9 @@
         android:id="@+id/idComprarValor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="60dp"
         android:gravity="center_horizontal"
-        android:text="COMPRAR"
+        android:text="@string/lbl_comprar_huella"
         android:textColor="#2a2b34"
         android:textSize="15pt"
         android:textStyle="bold" />
@@ -23,13 +23,15 @@
         android:id="@+id/imgHuellaVerificar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:adjustViewBounds="true"
         android:gravity="center_horizontal"
-        android:src="@drawable/sinhuella" />
+        android:src="@drawable/img_huella_p" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -43,20 +45,10 @@
             android:src="@drawable/btn_finger_p" />
     </LinearLayout>
 
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="70dp"-->
-    <!--android:text="@string/lbl_ingresar_huella"-->
-    <!--android:id="@+id/idButObtenerHuella"-->
-    <!--android:layout_marginTop="40dp"-->
-    <!--android:onClick="btnCapturarCompra"-->
-    <!--android:background="#62bb71"-->
-    <!--android:textColor="#0a0a0a"-->
-    <!--android:textSize="15pt" />-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -81,17 +73,4 @@
             android:onClick="btnCancelarCompra"
             android:src="@drawable/btn_home_p" />
     </LinearLayout>
-
-    <!--<Button-->
-    <!--android:id="@+id/idButCancelarHuella"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="70dp"-->
-    <!--android:layout_marginTop="40dp"-->
-    <!--android:background="#62bb71"-->
-    <!--android:onClick="btnCancelarCompra"-->
-    <!--android:paddingTop="30dp"-->
-    <!--android:text="@string/lbl_cancelar"-->
-    <!--android:textColor="#0a0a0a"-->
-    <!--android:textSize="15pt" />-->
-
 </LinearLayout>
