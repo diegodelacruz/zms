@@ -4,7 +4,7 @@
     android:id="@+id/menu_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_menu"
+    android:background="@drawable/img_nav_zai"
     android:gravity="center_vertical"
     android:orientation="vertical"
     tools:context=".MenuActivity">
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:onClick="btnSincronizar"
-                android:src="@drawable/btn_sync_edt" />
+                android:src="@drawable/btn_syncronizar" />
         </LinearLayout>
     </LinearLayout>
     <!--
