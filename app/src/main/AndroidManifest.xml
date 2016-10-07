@@ -27,9 +27,10 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".RegistrarActivity" />
         <activity android:name=".ComprarActivityHuella" />
-        <activity android:name=".ComprarActivityValor" />
+        <activity android:name=".ComprarActivityValor"
+                  android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity android:name=".ConfirmarCompraActivity" />
-        <activity android:name=".RegistraCedulaActivity"></activity>
+        <activity android:name=".RegistraCedulaActivity" />
     </application>
 
 </manifest>

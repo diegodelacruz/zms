@@ -1,77 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".ComprarActivityValor"
-              android:id="@+id/idFrgIngresoCedula"
-              android:background="@drawable/fondo">
-
-<TextView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/idFrgIngresoCedula"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/lbl_comprar"
-    android:id="@+id/idComprarValor"
-    android:textSize="15pt"
-    android:textStyle="bold"
-    android:textColor="#498054"
-    android:gravity="center_horizontal"
-    android:layout_marginTop="30dp"/>
+    android:layout_height="match_parent"
+    android:background="@drawable/img_nav_zai"
+    android:orientation="vertical"
+    tools:context=".ComprarActivityValor">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/lbl_valor"
-    android:id="@+id/idLblValor"
-    android:textColor="#498054"
-    android:textSize="13pt"
-    android:textStyle="bold"
-    android:layout_marginTop="30dp"/>
+    <TextView
+        android:id="@+id/idComprarValor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:gravity="center_horizontal"
+        android:text="COMPRAR"
+        android:textColor="#2a2b34"
+        android:textSize="15pt"
+        android:textStyle="bold" />
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="numberDecimal"
-    android:ems="10"
-    android:id="@+id/idTxtValor"
-    android:textColor="#583b3b"
-    android:textSize="20pt"
-    android:background="#dfd2d2" />
+    <TextView
+        android:id="@+id/idLblValor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/lbl_valor"
+        android:textColor="#2a2b34"
+        android:textSize="13pt"
+        android:textStyle="bold" />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/lbl_observaciones"
-    android:id="@+id/idLblObservaciones"
-    android:textColor="#498054"
-    android:textSize="13pt"
-    android:textStyle="bold"
-    android:layout_marginTop="30dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="horizontal">
 
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:inputType="textMultiLine"
-    android:minLines="4"
-    android:lines="4"
-    android:maxLines="4"
-    android:gravity="top|left"
-    android:id="@+id/idTxtObservaciones"
-    android:textColor="#583b3b"
-    android:textSize="20pt"
-    android:background="#dfd2d2"
-    android:scrollbars="vertical"/>
+        <EditText
+            android:id="@+id/idTxtValor"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#dfd2d2"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:inputType="numberDecimal"
+            android:textColor="#583b3b"
+            android:textSize="20pt" />
 
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:text="CONTINUAR"
-    android:id="@+id/button3"
-    android:layout_marginTop="40dp"
-    android:onClick="btnRegistrarHuella"
-    android:background="#62bb71"
-    android:textColor="#0a0a0a"
-    android:textSize="15pt" />
+        <ImageButton
+            android:id="@+id/imgBorrarValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="left"
+            android:onClick="btnBorrarValor"
+            android:src="@drawable/btn_cancel_edt_xs" />
+    </LinearLayout>
 
+    <TextView
+        android:id="@+id/idLblObservaciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/lbl_observaciones"
+        android:textColor="#2a2b34"
+        android:textSize="13pt"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/idTxtObservaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#dfd2d2"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:maxLines="4"
+            android:minLines="4"
+            android:scrollbars="vertical"
+            android:textColor="#583b3b"
+            android:textSize="15pt" />
+
+        <ImageButton
+            android:id="@+id/imgBorrarObservacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="left"
+            android:onClick="btnBorrarObservacion"
+            android:src="@drawable/btn_cancel_edt_xs" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/transparent"
+            android:onClick="btnRegistrarHuella"
+            android:src="@drawable/btn_go_p"/>
+
+        <ImageButton
+            android:id="@+id/imgComprarHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/transparent"
+            android:onClick="btnRegistrarMenu"
+            android:src="@drawable/btn_home_p"/>
+    </LinearLayout>
 </LinearLayout>

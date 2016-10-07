@@ -5,18 +5,18 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               tools:context="com.zaimella.snacks.zaimellasnacks.ConfirmarCompraActivity"
-              android:background="@drawable/fondo">
+              android:background="@drawable/img_nav_zai">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/lbl_confirmar_comprar"
+        android:text="CONFIRMAR"
         android:id="@+id/idComprarValor"
         android:textSize="15pt"
         android:textStyle="bold"
-        android:textColor="#498054"
+        android:textColor="#2a2b34"
         android:gravity="center_horizontal"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="45dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,28 +42,31 @@
         android:text="@string/lbl_observaciones"
         android:layout_marginTop="30dp"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="@string/lbl_confirmar_comprar"
-        android:id="@+id/idButConfirmarCompra"
-        android:layout_marginTop="40dp"
-        android:onClick="btnConfirmarCompra"
-        android:background="#62bb71"
-        android:textColor="#0a0a0a"
-        android:textSize="15pt"
-        android:paddingTop="30dp"/>
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/imgConfirmarCompra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/transparent"
+            android:onClick="btnConfirmarCompra"
+            android:src="@drawable/btn_ok_p"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="@string/lbl_cancelar"
-        android:id="@+id/idCancelarCompra"
-        android:layout_marginTop="40dp"
-        android:onClick="btnCancelarCompra"
-        android:background="#62bb71"
-        android:textColor="#0a0a0a"
-        android:textSize="15pt"
-        android:paddingTop="30dp"/>
+        <ImageButton
+            android:id="@+id/imgConfirmarCancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginTop="40dp"
+            android:background="@android:color/transparent"
+            android:onClick="btnCancelarCompra"
+            android:src="@drawable/btn_home_p"/>
+
+    </LinearLayout>
 
 </LinearLayout>
