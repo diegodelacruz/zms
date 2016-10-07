@@ -9,9 +9,10 @@ public class Registro {
     private String idHuella;
     private String huellaAratek;
 
-    public Registro(){}
+    public Registro() {
+    }
 
-    public Registro(int idcmp, String cedula, String idhuella, String huellaaratek){
+    public Registro(int idcmp, String cedula, String idhuella, String huellaaratek) {
         this.cedula = cedula;
         idHuella = idhuella;
         huellaAratek = huellaaratek;
@@ -47,5 +48,15 @@ public class Registro {
 
     public void setHuellaAratek(String huellaAratek) {
         this.huellaAratek = huellaAratek;
+    }
+
+    @Override
+    public String toString() {
+        return "Registro{" +
+                "idcmp=" + idcmp +
+                ", cedula='" + cedula + '\'' +
+                ", idHuella='" + idHuella + '\'' +
+                ", huellaAratek='" + huellaAratek + '\'' +
+                '}';
     }
 }
