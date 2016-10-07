@@ -6,7 +6,7 @@
               android:orientation="vertical"
               tools:context="com.zaimella.snacks.zaimellasnacks.RegistrarActivity"
               android:gravity="center_horizontal"
-              android:background="@drawable/fondo">
+              android:background="@drawable/img_nav_zai">
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,11 +71,14 @@
         android:textSize="15pt"
         android:textColor="#498054" />
 
-    <Button
+    <ImageButton
+        android:id="@+id/imgRegistrarEscanear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CAPTURAR"
-        android:id="@+id/button3"
-        android:onClick="btnCapturar"/>
+        android:background="@android:color/transparent"
+        android:onClick="btnCapturar"
+        android:src="@drawable/btn_finger_p"
+        android:maxWidth="64dp"
+        android:maxHeight="64dp" />
 
 </LinearLayout>
