@@ -459,7 +459,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                             showInfoToast(getString( R.string.enroll_failed_because_of_make_template) );
                             logger.addRecordToLog("onPostExecute - enroll_failed_because_of_make_template");
 
-                            ((RegistrarActivity)context).invocarPaginaMenu();
+                            ((RegistrarActivity)context).invocarPaginaMenu(null);
                             return;
                         }
 
@@ -471,7 +471,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                             showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
                             logger.addRecordToLog("onPostExecute - enroll_failed_because_of_get_id");
 
-                            ((RegistrarActivity)context).invocarPaginaMenu();
+                            ((RegistrarActivity)context).invocarPaginaMenu(null);
                             return;
                         }
 
@@ -481,7 +481,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                             showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
 
                             logger.addRecordToLog("onPostExecute - enroll_failed_because_of_error");
-                            ((RegistrarActivity)context).invocarPaginaMenu();
+                            ((RegistrarActivity)context).invocarPaginaMenu(null);
                             return;
                         }
 
@@ -489,7 +489,7 @@ public class RegistrarActivity extends AppCompatActivity  {
 
                         showInfoToast(getString(R.string.enroll_success) + id);
 
-                        ((RegistrarActivity)context).invocarPaginaMenu();
+                        ((RegistrarActivity)context).invocarPaginaMenu(id);
 
                     }else{
 
@@ -534,11 +534,13 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     }
 
-    public void invocarPaginaMenu(){
+    public void invocarPaginaMenu(Integer idUsuarioAratek){
 
         logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu");
 
         try{
+
+            //Método
 
             Intent intent = new Intent(this, MenuActivity.class);
             startActivity(intent);
