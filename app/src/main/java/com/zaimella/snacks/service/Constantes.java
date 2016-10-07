@@ -17,4 +17,7 @@ public class Constantes {
     public static final String ESTADO_EMPLEADO_A = "A";
     public static final String ESTADO_EMPLEADO_E = "E";
 
+    public static final String CONFIRMAR_COMPRA_NOMBRE = "Nombre: ";
+    public static final String CONFIRMAR_COMPRA_VALOR = "Valor: ";
+    public static final String CONFIRMAR_COMPRA_OBSERVACION = "Observación: ";
 }

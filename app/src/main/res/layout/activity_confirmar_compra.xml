@@ -10,36 +10,45 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CONFIRMAR"
+        android:layout_marginTop="60dp"
+        android:text="@string/lbl_confirmar_comprar"
         android:id="@+id/idComprarValor"
         android:textSize="15pt"
         android:textStyle="bold"
         android:textColor="#2a2b34"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="45dp"/>
+        android:gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="10pt"
+        android:textStyle="bold"
         android:id="@+id/idNombrePersona"
         android:textColor="#498054"
-        android:text="NOMBRE PERSONA:"
+        android:text="@string/lbl_confirmar_nombre"
         android:layout_marginTop="30dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="10pt"
+        android:textStyle="bold"
         android:id="@+id/idValorCompra"
         android:textColor="#498054"
-        android:text="VALOR COMPRA:"
+        android:text="@string/lbl_comprar_valor"
         android:layout_marginTop="30dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="10pt"
+        android:textStyle="bold"
         android:id="@+id/idObservacionesCompra"
         android:textColor="#498054"
-        android:text="@string/lbl_observaciones"
+        android:text="@string/lbl_comprar_observacion"
         android:layout_marginTop="30dp"/>
 
     <LinearLayout
