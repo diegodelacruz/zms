@@ -12,6 +12,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
+import com.zaimella.snacks.service.Constantes;
 import com.zaimella.snacks.service.EmpleadoVO;
 import com.zaimella.snacks.service.RespuestaVO;
 import com.zaimella.snacks.service.ServicioBDD;
@@ -41,14 +42,15 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         new SincronizacionTask(this).execute();
-        srvEmpleado = new ServicioBDD(this);
-        BaseHelper base = new BaseHelper(context);
-        ultEmpleado = base.ultimoEmpleado();
+
+        //srvEmpleado = new ServicioBDD(this);
+        //BaseHelper base = new BaseHelper(context);
+        //ultEmpleado = base.ultimoEmpleado();
     }
 
     private class SincronizacionTask extends AsyncTask<Void, Void, Void> {
@@ -74,23 +76,49 @@ public class SplashActivity extends AppCompatActivity {
             try {
                 logger.addRecordToLog("_HttpRequestTask.doInBackground");
 
-                BaseHelper ultimoEmpleado = new BaseHelper(context);
-                int codigoMaximo = ultimoEmpleado.ultimoEmpleado();
+                //Crea la BDD y obtiene el último empleado registrado
+                srvEmpleado = new ServicioBDD(context);
+                BaseHelper bddSnacks = new BaseHelper(context);
 
+                //Validar la existencia de la BDD y crearla
+                //checkDataBase();
+
+                //Obtiene el último empleado
+                int codigoMaximo = bddSnacks.ultimoEmpleado();
+
+                //Obtener el listado de usuarios (con estado A) desde el último empleado
                 RespuestaVO usuariosTipoA = this.obtenerUsuariosTipoA(codigoMaximo);
-                checkDataBase();
 
-                if (usuariosTipoA.getCodigo().equalsIgnoreCase("OK")) {
+                if (usuariosTipoA.getCodigo().equalsIgnoreCase(Constantes.RESPUESTA_OK)) {
+
                     srvEmpleado.abrirBD();
+
                     for (EmpleadoVO empleado : usuariosTipoA.getEmpleados()) {
                         srvEmpleado.insertarEmpleado(empleado);
                         contadorCarga++;
                     }
-                    srvEmpleado.cerrarBD();
+
+                    //srvEmpleado.cerrarBD();
                     Log.d(TAG_SPLASH, "Termina el FOR. Se cargaron " + contadorCarga + " nuevos empleados.");
                 } else {
                     Log.d(TAG_SPLASH, "Ingresa al ELSE");
+                    //TODO:Mostar un mensaje de error "No es posible sincronizar los usuarios, consulte con el administrador"
                 }
+
+
+                Log.d(TAG_SPLASH, "Actualización de usuarios");
+                RespuestaVO desvinculados = this.obtenerUsuario(Constantes.ESTADO_EMPLEADO_E);
+                if (desvinculados.getCodigo().equalsIgnoreCase(Constantes.RESPUESTA_OK)) {
+                    Log.d(TAG_SPLASH, "Ingresa al IF de ACTUALIZAR");
+                    //srvEmpleado.abrirBD();
+                    for (EmpleadoVO empleadoDesv : desvinculados.getEmpleados()) {
+                        srvEmpleado.actualizarEstado(empleadoDesv);
+                    }
+                    srvEmpleado.cerrarBD();
+                } else {
+                    Log.d(TAG_SPLASH, "Ingresa al ELSE de ACTUALIZAR");
+                }
+
 
             } catch (ClientProtocolException e) {
 
@@ -107,19 +135,8 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             /*Obtiene los usuario que se han desvinculado*/
-            try {
-                Log.d(TAG_SPLASH, "Ingresa al TRY de ACTUALIZAR");
-                RespuestaVO desvinculados = this.obtenerUsuario("E");
-                if (desvinculados.getCodigo().equalsIgnoreCase("OK")) {
-                    Log.d(TAG_SPLASH, "Ingresa al IF de ACTUALIZAR");
-                    srvEmpleado.abrirBD();
-                    for (EmpleadoVO empleadoDesv : desvinculados.getEmpleados()) {
-                        srvEmpleado.actualizarEstado(empleadoDesv);
-                    }
-                    srvEmpleado.cerrarBD();
-                } else {
-                    Log.d(TAG_SPLASH, "Ingresa al ELSE de ACTUALIZAR");
-                }
+            /*try {
+
             } catch (ClientProtocolException e) {
 
                 Log.d(TAG_SPLASH, "ClientProtocolException  : " + e.getMessage());
@@ -132,7 +149,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 Log.d(TAG_SPLASH, "Exception general doInBackground : " + e.getMessage());
                 e.printStackTrace();
-            }
+            }*/
             return null;
         }
 
@@ -152,10 +169,12 @@ public class SplashActivity extends AppCompatActivity {
 
             Gson gson = new Gson();
             HttpClient httpclient = new DefaultHttpClient();
-            String urlWS = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/listadoEmpleadosPorCodigo/" + codigoMaximo;
             Log.d(TAG_SPLASH, "codigoMaximo: " + codigoMaximo);
 
-            HttpGet httpGet = new HttpGet(urlWS);
+            StringBuilder url = new StringBuilder();
+            url.append( Constantes.URL_SERVICIO_EMPLEADOS_POR_CODIGO ).append( codigoMaximo );
+
+            HttpGet httpGet = new HttpGet( url.toString() );
             logger.addRecordToLog("antes httpclient.execute(httpGet)");
 
             HttpResponse response = httpclient.execute(httpGet);
@@ -170,9 +189,12 @@ public class SplashActivity extends AppCompatActivity {
         private RespuestaVO obtenerUsuario(String estado) throws Exception {
             Gson gson = new Gson();
             HttpClient httpclient = new DefaultHttpClient();
-            String urlEstado = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/listadoEmpleados/" + estado;
 
-            HttpGet httpGet = new HttpGet(urlEstado);
+            StringBuilder url = new StringBuilder();
+            url.append(Constantes.URL_SERVICIO_EMPLEADOS_POR_ESTADO).append(estado);
+
+            HttpGet httpGet = new HttpGet(url.toString());
+
             HttpResponse response = httpclient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             String responseString = EntityUtils.toString(entity, "UTF-8");
@@ -182,19 +204,19 @@ public class SplashActivity extends AppCompatActivity {
             return respuestaVO;
         }
 
-        public boolean checkDataBase() {
-            boolean existe = true;
+        /*public void checkDataBase() {
+
             File db = getApplicationContext().getDatabasePath("zai.db");
 
             if (!db.exists()) {
                 Log.d(TAG_SPLASH, "No Existe la BD.");
-                existe = false;
-            } else {
-                Log.d(TAG_SPLASH, "Existe la BD.");
-                existe = true;
+                //CRear la BD
+
+                return;
             }
-            return existe;
-        }
+
+            Log.d(TAG_SPLASH, "Existe la BD.");
+        }*/
     }
 
     public void menuPrincipal() {

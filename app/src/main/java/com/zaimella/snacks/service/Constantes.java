@@ -10,5 +10,11 @@ public class Constantes {
     public static final String ID_USUARIO_ARATEK = "_ID_USUARIO_ARATEK_";
     public static final String NUMERO_CEDULA = "_NUMERO_CEDULA_";
     public static final String NOMBRE_USUARIO = "_NOMBRE_USUARIO_";
+    public static final String DATABASE_NAME = "/sdcard/zaiSnacks.db";
+    public static final String URL_SERVICIO_EMPLEADOS_POR_CODIGO = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/listadoEmpleadosPorCodigo/";
+    public static final String URL_SERVICIO_EMPLEADOS_POR_ESTADO = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/listadoEmpleados/";
+    public static final String RESPUESTA_OK = "OK";
+    public static final String ESTADO_EMPLEADO_A = "A";
+    public static final String ESTADO_EMPLEADO_E = "E";
 
 }

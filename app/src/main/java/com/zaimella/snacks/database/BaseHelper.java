@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.zaimella.snacks.service.Constantes;
+
 import java.io.File;
 
 /**
@@ -14,7 +16,6 @@ import java.io.File;
  */
 public class BaseHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "zai.db";
     public static final String TAG_SQL = "DLC BDD";
 
     String empleados =
@@ -42,7 +43,7 @@ public class BaseHelper extends SQLiteOpenHelper {
                     "estado TEXT)";
 
     public BaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, Constantes.DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

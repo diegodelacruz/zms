@@ -60,6 +60,7 @@ public class ServicioBDD<SQLiteDataBase> {
             sqLiteDatabase.insert("empleados", null, values);
         } catch (Exception e) {
             Log.d(TAG_SERVICIO_BDD, "Error: " + e.getMessage());
+            //TODO: Validar la existencia de los usuarios con error
         }
     }
 
