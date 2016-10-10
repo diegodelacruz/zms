@@ -28,8 +28,7 @@
         android:id="@+id/idNombrePersona"
         android:textColor="#498054"
         android:text="@string/lbl_confirmar_nombre"
-        android:layout_marginTop="30dp"
-        android:visibility="invisible"/>
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"

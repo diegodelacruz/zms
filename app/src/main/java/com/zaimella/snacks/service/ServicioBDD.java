@@ -2,6 +2,7 @@ package com.zaimella.snacks.service;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -85,6 +86,35 @@ public class ServicioBDD<SQLiteDataBase> {
         values.put("estado", empleado.getEstado());
 
         sqLiteDatabase.update("empleados", values, "codigo = " + empleado.getCodigoNomina(), null);
+    }
+
+    public String obtenerNombreUsuario(String idUsuarioAratek){
+
+        String nombreCompleto = null;
+        //String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula.trim();
+        StringBuilder consulta = new StringBuilder();
+        consulta.append("SELECT nombres ")
+                .append("  FROM empleados ")
+                .append(" WHERE cedula = ( SELECT cedula FROM comprador WHERE idaratek=").append( idUsuarioAratek ).append(")");
+
+        logger.addRecordToLog("consulta : " + consulta.toString());
+
+        try {
+            Cursor cursor = sqLiteDatabase.rawQuery( consulta.toString() , null );
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                nombreCompleto = cursor.getString(0);
+
+                cursor.close();
+                nombreCompleto = nombreCompleto;
+            }
+        }catch(Exception e){
+
+            logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
+
+        }
+        return nombreCompleto;
     }
 
 }

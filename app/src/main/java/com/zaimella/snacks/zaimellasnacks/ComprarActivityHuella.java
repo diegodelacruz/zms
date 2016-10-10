@@ -502,18 +502,20 @@ public class ComprarActivityHuella extends AppCompatActivity {
         logger.addRecordToLog("valorCompra : " + valorCompra);
         logger.addRecordToLog("observaciones : " + observaciones);
 
+        ServicioBDD servicioBDD = new ServicioBDD(this);
+
         //Inserta el registro en la BDD
-        //servicioBDD.abrirBD();
-        //Registro registro = new Registro( numeroCedula , idUsuarioAratek.toString() , null );
-        //servicioBDD.
-        //servicioBDD.cerrarBD();
+        servicioBDD.abrirBD();
+        String nombreUsuario = servicioBDD.obtenerNombreUsuario( idUsuarioAratek.toString() );
+        logger.addRecordToLog("ConfirmarCompra - nombreUsuario : " + nombreUsuario);
+        servicioBDD.cerrarBD();
 
         Intent intent = new Intent(this, ConfirmarCompraActivity.class);
         Bundle bundle = new Bundle();
         bundle.putFloat(Constantes.VALOR_COMPRA, valorCompra);
         bundle.putString(Constantes.OBSERVACIONES, observaciones);
         bundle.putInt(Constantes.ID_USUARIO_ARATEK, idUsuarioAratek);
-        bundle.putInt(Constantes.NOMBRE_USUARIO, idUsuarioAratek);
+        bundle.putString(Constantes.NOMBRE_USUARIO, nombreUsuario);
 
         intent.putExtras(bundle);
 

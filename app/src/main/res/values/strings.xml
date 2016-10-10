@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Snacks</string>
-    <string name="lbl_comprar">Comprar</string>
+    <string name="lbl_comprar">COMPRAR</string>
     <string name="lbl_comprar_inicio">Comprar</string>
     <string name="lbl_comprar_huella">Captura de Huella</string>
     <string name="lbl_comprar_valor">Valor: </string>

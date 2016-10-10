@@ -31,14 +31,16 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         mObservacionesCompra = (TextView) findViewById(R.id.idObservacionesCompra);
 
         Intent intent = getIntent();
-        logger.addRecordToLog("idUsuarioAratek : " + intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0));
-        logger.addRecordToLog("valorCompra : " + intent.getFloatExtra(Constantes.VALOR_COMPRA, 0));
-        logger.addRecordToLog("observaciones : " + intent.getStringExtra(Constantes.OBSERVACIONES));
+        logger.addRecordToLog("ID_USUARIO_ARATEK : " + intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0));
+        logger.addRecordToLog("VALOR_COMPRA   : " + intent.getFloatExtra(Constantes.VALOR_COMPRA, 0));
+        logger.addRecordToLog("OBSERVACIONES  : " + intent.getStringExtra(Constantes.OBSERVACIONES));
+        logger.addRecordToLog("NOMBRE_USUARIO : " + intent.getStringExtra(Constantes.NOMBRE_USUARIO));
 
         StringBuilder sbNombrePersona = new StringBuilder();
-        sbNombrePersona.append(Constantes.CONFIRMAR_COMPRA_NOMBRE).append(Integer.toString(intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0)));
-        //mNombrePersona.setText(Integer.toString(intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0)));
-        mNombrePersona.setText(sbNombrePersona.toString());
+        sbNombrePersona.append(Constantes.CONFIRMAR_COMPRA_NOMBRE)
+                       .append(" ")
+                       .append( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
+        mNombrePersona.setText( sbNombrePersona.toString() );
 
         StringBuilder sbValorCompra = new StringBuilder();
         sbValorCompra.append(Constantes.CONFIRMAR_COMPRA_VALOR).append(Float.toString(intent.getFloatExtra(Constantes.VALOR_COMPRA, 0)));
