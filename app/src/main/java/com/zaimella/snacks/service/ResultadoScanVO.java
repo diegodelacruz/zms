@@ -21,6 +21,8 @@ public class ResultadoScanVO {
 
     private Integer idUsuarioAratek;
 
+    private String numeroCedula;
+
     public ResultadoScanVO(){}
 
     public ResultadoScanVO(TiposRespuesta respuesta , Integer numeroHuella , FingerprintImage fingerprintImage , byte[] fingerPrintFeature, String mensaje , Integer idUsuarioAratek){
@@ -78,6 +80,14 @@ public class ResultadoScanVO {
 
     public void setIdUsuarioAratek(Integer idUsuarioAratek) {
         this.idUsuarioAratek = idUsuarioAratek;
+    }
+
+    public String getNumeroCedula() {
+        return numeroCedula;
+    }
+
+    public void setNumeroCedula(String numeroCedula) {
+        this.numeroCedula = numeroCedula;
     }
 
     @Override

@@ -54,31 +54,56 @@
         android:id="@+id/imagenHuella"
         android:layout_width="150px"
         android:layout_height="150px"
+        android:maxWidth="150px"
+        android:maxHeight="150px"
         android:adjustViewBounds="true"
         android:src="@drawable/sinhuella" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/idNumeroCedula"
-        android:textSize="15pt"
-        android:textColor="#498054" />
+        android:textSize="10pt"
+        android:textColor="#498054"
+        android:paddingTop="30dp"
+        android:gravity="center_horizontal"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/idNombreUsuario"
-        android:textSize="15pt"
-        android:textColor="#498054" />
+        android:textSize="10pt"
+        android:textColor="#498054"
+        android:paddingTop="10dp"
+        android:gravity="center_horizontal"/>
 
-    <ImageButton
-        android:id="@+id/imgRegistrarEscanear"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:onClick="btnCapturar"
-        android:src="@drawable/btn_finger_p"
-        android:maxWidth="64dp"
-        android:maxHeight="64dp" />
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/imgRegistrarEscanear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnCapturar"
+            android:src="@drawable/btn_finger_p"
+            android:maxWidth="64dp"
+            android:maxHeight="64dp" />
+
+        <ImageButton
+            android:id="@+id/imgRegistrarHomeCompra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnCancelarRegistro"
+            android:src="@drawable/btn_home_p"
+            android:maxWidth="64dp"
+            android:maxHeight="64dp"/>
+    </LinearLayout>
 
 </LinearLayout>

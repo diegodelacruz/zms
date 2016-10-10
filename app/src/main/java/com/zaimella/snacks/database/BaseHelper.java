@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.zaimella.log.Logger;
 import com.zaimella.snacks.service.Constantes;
 
 import java.io.File;
@@ -15,6 +16,8 @@ import java.io.File;
  * Created by ddelacruz on 05/10/2016.
  */
 public class BaseHelper extends SQLiteOpenHelper {
+
+    Logger logger;
     public static final int DATABASE_VERSION = 1;
     public static final String TAG_SQL = "DLC BDD";
 
@@ -30,13 +33,13 @@ public class BaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE comprador " +
                     "(idcmp INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "cedula TEXT NOT NULL, " +
-                    "idhuella TEXT, " +// NOT NULL
-                    "huellaaratek TEXT)";// NOT NULL
+                    "idaratek TEXT NOT NULL)";
 
     String compras =
             "CREATE TABLE compras " +
                     "(idcpr INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "cedula TEXT NOT NULL, " +
+                    "idaratek TEXT NOT NULL, " +
                     "fechacompra DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "valorcompra NUMERIC NOT NULL, " +
                     "comentario TEXT, " +
@@ -84,19 +87,47 @@ public class BaseHelper extends SQLiteOpenHelper {
     }
 
     public String buscarEmpleado(String cedula) {
-        String nombreCompleto = "";
+
+        logger.addRecordToLog("BaseHelper.buscarEmpleado: " + cedula);
+
+        String nombreCompleto = null;
         String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula.trim();
-        Cursor cursor = getWritableDatabase().rawQuery(qry, null);
 
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            nombreCompleto = cursor.getString(0);
+        try {
+            Cursor cursor = getWritableDatabase().rawQuery(qry, null);
 
-            cursor.close();
-            return nombreCompleto;
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                nombreCompleto = cursor.getString(0);
+
+                cursor.close();
+                nombreCompleto = nombreCompleto;
+            }
+        }catch(Exception e){
+
+            logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
+
+        }
+        return nombreCompleto;
+    }
+
+    public Boolean existeComprador(String cedula) throws Exception{
+        logger.addRecordToLog("BaseHelper.existeComprador : " + cedula);
+
+        String qry = "SELECT count(*) FROM comprador WHERE cedula = ?";
+        logger.addRecordToLog("qry : " + qry);
+
+        Cursor cursor = getWritableDatabase().rawQuery(qry , new String[]{cedula});
+        cursor.moveToFirst();
+        int i = cursor.getInt(0);
+        cursor.close();
+
+        logger.addRecordToLog("count :  " + i);
+        if( i>0 ){
+            return  Boolean.TRUE;
         }
 
-        return null;
+        return Boolean.FALSE;
     }
 
 }

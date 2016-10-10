@@ -35,9 +35,15 @@ public class MenuActivity extends AppCompatActivity {
 
         Log.d("MV","btnRegistrar");
 
-        //Intent intent = new Intent(this, RegistrarActivity.class);
         Intent intent = new Intent(this, RegistraCedulaActivity.class);
         startActivity(intent);
+
+    }
+
+    public void btnSincronizar(View view){
+
+        Log.d("MV","btnSincronizar");
+
 
     }
 

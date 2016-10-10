@@ -1,5 +1,8 @@
 package com.zaimella.snacks.zaimellasnacks;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,9 +52,25 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
     }
 
     public void btnConfirmarCompra(View view) {
-        Intent intent = new Intent(this, ComprarActivityValor.class);
+
+        final Context context = this;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        builder.setMessage("Compra realizada exitosamente!!!");
+        builder.setTitle(R.string.mns_titulo)
+                .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent( context , MenuActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .show();
+
+
+        /*Intent intent = new Intent( this , MenuActivity.class);
         startActivity(intent);
-        finish();
+        finish();*/
     }
 
     public void btnCancelarCompra(View view) {

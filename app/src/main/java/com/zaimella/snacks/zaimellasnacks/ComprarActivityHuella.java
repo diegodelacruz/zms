@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.service.Constantes;
+import com.zaimella.snacks.service.Registro;
 import com.zaimella.snacks.service.ResultadoScanVO;
+import com.zaimella.snacks.service.ServicioBDD;
 import com.zaimella.snacks.service.TiposRespuesta;
 
 import java.io.PrintWriter;
@@ -37,12 +39,12 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
     private Float valorCompra;
     private String observaciones;
+    //private ServicioBDD servicioBDD;
 
     private FingerprintTask mTask;
     private ImageView mImgHuella;
     private FingerprintScanner mHuellaScanner;
 
-    private static final String FP_DB_PATH = "/sdcard/zaimella.db";
     private static final int MSG_SHOW_ERROR = 0;
     private static final int MSG_SHOW_INFO = 1;
     private static final int MSG_UPDATE_IMAGE = 2;
@@ -201,7 +203,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
                     enableControl(true);*/
                 }
 
-                if ((error = Bione.initialize(ComprarActivityHuella.this, FP_DB_PATH)) == Bione.RESULT_OK) {
+                if ((error = Bione.initialize(ComprarActivityHuella.this, Constantes.FP_DB_PATH)) == Bione.RESULT_OK) {
                     logger.addRecordToLog("algorithm_initialization_success");
                 } else {
                     logger.addRecordToLog("algorithm_initialization_failed");
@@ -500,12 +502,18 @@ public class ComprarActivityHuella extends AppCompatActivity {
         logger.addRecordToLog("valorCompra : " + valorCompra);
         logger.addRecordToLog("observaciones : " + observaciones);
 
-        Intent intent = new Intent(this, ConfirmarCompraActivity.class);
+        //Inserta el registro en la BDD
+        //servicioBDD.abrirBD();
+        //Registro registro = new Registro( numeroCedula , idUsuarioAratek.toString() , null );
+        //servicioBDD.
+        //servicioBDD.cerrarBD();
 
+        Intent intent = new Intent(this, ConfirmarCompraActivity.class);
         Bundle bundle = new Bundle();
         bundle.putFloat(Constantes.VALOR_COMPRA, valorCompra);
         bundle.putString(Constantes.OBSERVACIONES, observaciones);
         bundle.putInt(Constantes.ID_USUARIO_ARATEK, idUsuarioAratek);
+        bundle.putInt(Constantes.NOMBRE_USUARIO, idUsuarioAratek);
 
         intent.putExtras(bundle);
 

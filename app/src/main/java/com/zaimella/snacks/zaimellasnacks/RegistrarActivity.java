@@ -1,7 +1,9 @@
 package com.zaimella.snacks.zaimellasnacks;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,7 +21,9 @@ import android.widget.Toast;
 
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.service.Constantes;
+import com.zaimella.snacks.service.Registro;
 import com.zaimella.snacks.service.ResultadoScanVO;
+import com.zaimella.snacks.service.ServicioBDD;
 import com.zaimella.snacks.service.TiposRespuesta;
 
 import org.apache.http.HttpEntity;
@@ -55,13 +59,11 @@ public class RegistrarActivity extends AppCompatActivity  {
     private ImageView mHuella1;
     private ImageView mHuella2;
     private ImageView mHuella3;
-    //private TextView mMensaje;
     private Integer numeroHuella;
     byte[][] huellas = new byte[3][];
     private String numeroCedula;
     private String nombrePersona;
 
-    private static final String FP_DB_PATH = "/sdcard/zaimella.db";
     private static final int MSG_SHOW_ERROR = 0;
     private static final int MSG_SHOW_INFO = 1;
     private static final int MSG_UPDATE_IMAGE = 2;
@@ -224,7 +226,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                     enableControl(true);*/
                 }
 
-                if ((error = Bione.initialize(RegistrarActivity.this, FP_DB_PATH)) == Bione.RESULT_OK) {
+                if ((error = Bione.initialize(RegistrarActivity.this, Constantes.FP_DB_PATH)) == Bione.RESULT_OK) {
                     logger.addRecordToLog("algorithm_initialization_success");
                 }else{
                     logger.addRecordToLog("algorithm_initialization_failed");
@@ -332,6 +334,12 @@ public class RegistrarActivity extends AppCompatActivity  {
 
             logger.addRecordToLog("Exception btnCapturar : " + s);
         }
+    }
+
+    public void btnCancelarRegistro(View view){
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void updateFingerprintImage(FingerprintImage fi) {
@@ -459,7 +467,8 @@ public class RegistrarActivity extends AppCompatActivity  {
                             showInfoToast(getString( R.string.enroll_failed_because_of_make_template) );
                             logger.addRecordToLog("onPostExecute - enroll_failed_because_of_make_template");
 
-                            ((RegistrarActivity)context).invocarPaginaMenu(null);
+                            //invocarPaginaMenu(final Context context , String numeroCedula , Integer idUsuarioAratek){
+                            ((RegistrarActivity)context).invocarPaginaMenu(context,null,null);
                             return;
                         }
 
@@ -471,7 +480,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                             showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
                             logger.addRecordToLog("onPostExecute - enroll_failed_because_of_get_id");
 
-                            ((RegistrarActivity)context).invocarPaginaMenu(null);
+                            ((RegistrarActivity)context).invocarPaginaMenu(context,null,null);
                             return;
                         }
 
@@ -481,7 +490,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                             showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
 
                             logger.addRecordToLog("onPostExecute - enroll_failed_because_of_error");
-                            ((RegistrarActivity)context).invocarPaginaMenu(null);
+                            ((RegistrarActivity)context).invocarPaginaMenu(context,null,null);
                             return;
                         }
 
@@ -489,7 +498,8 @@ public class RegistrarActivity extends AppCompatActivity  {
 
                         showInfoToast(getString(R.string.enroll_success) + id);
 
-                        ((RegistrarActivity)context).invocarPaginaMenu(id);
+                        //invocarPaginaMenu(final Context context , String numeroCedula , Integer idUsuarioAratek){
+                        ((RegistrarActivity)context).invocarPaginaMenu(context , respuestaScan.getNumeroCedula() , id );
 
                     }else{
 
@@ -534,118 +544,83 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     }
 
-    public void invocarPaginaMenu(Integer idUsuarioAratek){
+    public void invocarPaginaMenu(final Context context , String numeroCedula , Integer idUsuarioAratek){
 
         logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu");
+        logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu numeroCedula : " + numeroCedula);
+        logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu idUsuarioAratek : " + idUsuarioAratek);
+
+        StringBuilder mensaje = new StringBuilder();
+        AlertDialog.Builder builder = new AlertDialog.Builder( this );
 
         try{
+            ServicioBDD servicioBDD = new ServicioBDD(this);
 
             //Método
+            if( idUsuarioAratek==null ){
 
-            Intent intent = new Intent(this, MenuActivity.class);
-            startActivity(intent);
-            finish();
+                builder.setMessage(R.string.mns_error_creacion_usuario);
+                builder.setTitle(R.string.mns_titulo)
+                        .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent( context , MenuActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .show();
+
+            }else{
+
+                logger.addRecordToLog("Número de cédula : " + mNumeroCedula.getText().toString());
+                logger.addRecordToLog("idUsuarioAratek  : " + idUsuarioAratek.toString());
+
+                //Inserta el registro en la BDD
+                servicioBDD.abrirBD();
+                Registro registro = new Registro( mNumeroCedula.getText().toString() , idUsuarioAratek.toString() );
+                servicioBDD.insertarRegistro( registro );
+                servicioBDD.cerrarBD();
+
+                mensaje.append("El usuario ha sido creado exitosamente id(")
+                        .append( idUsuarioAratek )
+                        .append(")");
+                builder.setMessage( mensaje.toString() );
+                builder.setTitle(R.string.mns_titulo)
+                        .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent intent = new Intent( context , MenuActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .show();
+            }
 
         }catch(Exception e){
 
             Log.e("MV" , e.getMessage());
+
+            builder.setMessage("No es posible crear el usuario");
+            builder.setTitle(R.string.mns_titulo)
+                    .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent( context , MenuActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .show();
+
             logger.addRecordToLog("Exception : RegistrarACtivity.invocarPaginaMenu: " + e.getMessage());
         }
 
     }
 
 
-    /*
-    private class HttpRequestTask extends AsyncTask<Object, Void, Void>{
-
-        private ProgressDialog dialog = new ProgressDialog(RegistrarActivity.this);
-        String data ="";
-
-        protected void onPreExecute() {
-
-            logger.addRecordToLog("HttpRquestTask.onPreExecute");
-
-            dialog.setMessage("Procesando...");
-            dialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Object... params) {
-
-            BufferedReader reader=null;
-
-            try {
-                logger.addRecordToLog("_HttpRequestTask.doInBackground");
-
-                logger.addRecordToLog("antes httpclient");
-
-                // Create a new HttpClient and Post Header
-                HttpClient httpclient = new DefaultHttpClient();
-                //HttpPost httppost = new HttpPost("http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/test");
-
-                String ci = (String)params[0];
-                byte[] huella = (byte[])params[1];
-                String huellaString = URLEncoder.encode( Base64.encodeToString( huella , Base64.DEFAULT) ,  "UTF-8");
-
-                logger.addRecordToLog("ci : " + ci);
-                logger.addRecordToLog("huellaString : " + huellaString);
-
-                HttpPost httppost = new HttpPost("http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/registrar/" + ci + "/" + huellaString);
-
-                try {
-                    logger.addRecordToLog("antes httpclient.execute(httppost)");
-
-                    // Execute HTTP Post Request
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity entity = response.getEntity();
-                    String responseString = EntityUtils.toString(entity, "UTF-8");
-
-                    logger.addRecordToLog("despues responseString : " + responseString);
-
-                } catch (ClientProtocolException e) {
-
-                    logger.addRecordToLog("ClientProtocolException  : " + e.getMessage());
-
-                } catch (IOException e) {
-                    logger.addRecordToLog("IOException : " + e.getMessage());
-                }
-
-                logger.addRecordToLog("despues");
-                return null;
-            }catch (Exception e) {
-                //Log.e("RegistrarActivity.HttpRequestTask ", e.getMessage());
-                logger.addRecordToLog("doInBackground : " + e.getMessage());
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void greeting) {
-
-            logger.addRecordToLog("onPostExecute : " + greeting);
-
-            dialog.dismiss();
-        }
-
-    }
-
-    public void btnServicio(View view){
-
-        //Log.i("MV","btnServicio");
-        logger.addRecordToLog("btnServicio");
-
-        //new HttpRequestTask().execute("171123432" , mFpFeature);
-
-    }*/
-
     private void showInfoToast(String info) {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_INFO, info));
     }
 
-    /*@Override
-    public void onBackPressed() {
-    }*/
 
 }
 

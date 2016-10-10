@@ -5,12 +5,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
 
 /**
  * Created by ddelacruz on 05/10/2016.
  */
 public class ServicioBDD<SQLiteDataBase> {
+
+    Logger logger;
     private BaseHelper baseHelper;
     private SQLiteDatabase sqLiteDatabase;
     public static final String TAG_SERVICIO_BDD = "DLC BDD";
@@ -20,6 +23,7 @@ public class ServicioBDD<SQLiteDataBase> {
     }
 
     public void abrirBD() {
+
         sqLiteDatabase = baseHelper.getWritableDatabase();
     }
 
@@ -39,13 +43,24 @@ public class ServicioBDD<SQLiteDataBase> {
     }
 
     public void insertarRegistro(Registro registro) {
-        ContentValues values = new ContentValues();
+        logger.addRecordToLog("ServicioBDD.insertarRegistro");
 
-        values.put("cedula", registro.getCedula());
-        values.put("idhuella", registro.getIdHuella());
-        values.put("huellaaratek", registro.getHuellaAratek());
+        try {
+            logger.addRecordToLog("ServicioBDD.insertarRegistro -1-");
 
-        sqLiteDatabase.insert("comprador", null, values);
+            ContentValues values = new ContentValues();
+            values.put("cedula", registro.getCedula());
+            values.put("idaratek", registro.getIdaratek());
+
+            logger.addRecordToLog("ServicioBDD.insertarRegistro -2- "+ registro.getCedula() +" " + registro.getIdaratek());
+            long resultado = sqLiteDatabase.insertOrThrow("comprador", null, values);
+            logger.addRecordToLog("ServicioBDD.insertarRegistro -3- : " + resultado);
+
+        }catch (Exception e){
+            logger.addRecordToLog("ServicioBDD.insertarRegistro -4-");
+            logger.addRecordToLog("Exception insertarRegistro: " + e.getMessage());
+            Log.d("MV", "Error: " + e.getMessage());
+        }
     }
 
     public void insertarEmpleado(EmpleadoVO empleado) {
@@ -71,4 +86,5 @@ public class ServicioBDD<SQLiteDataBase> {
 
         sqLiteDatabase.update("empleados", values, "codigo = " + empleado.getCodigoNomina(), null);
     }
+
 }

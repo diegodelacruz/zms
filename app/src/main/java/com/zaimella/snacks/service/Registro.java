@@ -6,48 +6,38 @@ package com.zaimella.snacks.service;
 public class Registro {
     private int idcmp;
     private String cedula;
-    private String idHuella;
-    private String huellaAratek;
+    private String idaratek;
 
     public Registro() {
     }
 
-    public Registro(int idcmp, String cedula, String idhuella, String huellaaratek) {
+    public Registro(String cedula, String idaratek) {
         this.cedula = cedula;
-        idHuella = idhuella;
-        huellaAratek = huellaaratek;
+        this.idaratek = idaratek;
     }
 
-    public int getIdcmp() {
-        return idcmp;
+    public String getIdaratek() {
+        return idaratek;
+    }
+
+    public void setIdaratek(String idaratek) {
+        this.idaratek = idaratek;
     }
 
     public String getCedula() {
         return cedula;
     }
 
-    public String getIdHuella() {
-        return idHuella;
-    }
-
-    public String getHuellaAratek() {
-        return huellaAratek;
-    }
-
-    public void setIdcmp(int idcmp) {
-        this.idcmp = idcmp;
-    }
-
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
 
-    public void setIdHuella(String idHuella) {
-        this.idHuella = idHuella;
+    public int getIdcmp() {
+        return idcmp;
     }
 
-    public void setHuellaAratek(String huellaAratek) {
-        this.huellaAratek = huellaAratek;
+    public void setIdcmp(int idcmp) {
+        this.idcmp = idcmp;
     }
 
     @Override
@@ -55,8 +45,8 @@ public class Registro {
         return "Registro{" +
                 "idcmp=" + idcmp +
                 ", cedula='" + cedula + '\'' +
-                ", idHuella='" + idHuella + '\'' +
-                ", huellaAratek='" + huellaAratek + '\'' +
+                ", idaratek='" + idaratek + '\'' +
                 '}';
     }
+
 }
