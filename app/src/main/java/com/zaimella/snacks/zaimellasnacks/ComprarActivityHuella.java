@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.service.Constantes;
+import com.zaimella.snacks.service.EmpleadoVO;
 import com.zaimella.snacks.service.Registro;
 import com.zaimella.snacks.service.ResultadoScanVO;
 import com.zaimella.snacks.service.ServicioBDD;
@@ -506,16 +507,17 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
         //Inserta el registro en la BDD
         servicioBDD.abrirBD();
-        String nombreUsuario = servicioBDD.obtenerNombreUsuario( idUsuarioAratek.toString() );
-        logger.addRecordToLog("ConfirmarCompra - nombreUsuario : " + nombreUsuario);
+        EmpleadoVO empleadoVO = servicioBDD.obtenerNombreUsuario( idUsuarioAratek.toString() );
+        //logger.addRecordToLog("ConfirmarCompra - nombreUsuario : " + nombreUsuario);
         servicioBDD.cerrarBD();
 
         Intent intent = new Intent(this, ConfirmarCompraActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putString(Constantes.NUMERO_CEDULA , empleadoVO.getNumeroDocumento());
         bundle.putFloat(Constantes.VALOR_COMPRA, valorCompra);
         bundle.putString(Constantes.OBSERVACIONES, observaciones);
         bundle.putInt(Constantes.ID_USUARIO_ARATEK, idUsuarioAratek);
-        bundle.putString(Constantes.NOMBRE_USUARIO, nombreUsuario);
+        bundle.putString(Constantes.NOMBRE_USUARIO, empleadoVO.getNombresCompletos());
 
         intent.putExtras(bundle);
 

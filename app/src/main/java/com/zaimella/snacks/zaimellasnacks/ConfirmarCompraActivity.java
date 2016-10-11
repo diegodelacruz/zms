@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zaimella.log.Logger;
+import com.zaimella.snacks.service.Compra;
 import com.zaimella.snacks.service.Constantes;
+import com.zaimella.snacks.service.Registro;
+import com.zaimella.snacks.service.ServicioBDD;
 
 public class ConfirmarCompraActivity extends AppCompatActivity {
 
@@ -31,6 +34,8 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         mObservacionesCompra = (TextView) findViewById(R.id.idObservacionesCompra);
 
         Intent intent = getIntent();
+
+        logger.addRecordToLog("NUMERO_CEDULA : " + intent.getStringExtra(Constantes.NUMERO_CEDULA));
         logger.addRecordToLog("ID_USUARIO_ARATEK : " + intent.getIntExtra(Constantes.ID_USUARIO_ARATEK, 0));
         logger.addRecordToLog("VALOR_COMPRA   : " + intent.getFloatExtra(Constantes.VALOR_COMPRA, 0));
         logger.addRecordToLog("OBSERVACIONES  : " + intent.getStringExtra(Constantes.OBSERVACIONES));
@@ -55,8 +60,18 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
 
     public void btnConfirmarCompra(View view) {
 
-        final Context context = this;
+        //Insertar en la bdd la conpra realizada
+        ServicioBDD servicioBDD = new ServicioBDD(this);
+        servicioBDD.abrirBD();
+        //Registro registro = new Registro( mNumeroCedula.getText().toString() , idUsuarioAratek.toString() );
+        Compra compra = new Compra();
+        servicioBDD.insertarCompra( compra );
+        servicioBDD.cerrarBD();
 
+
+
+
+        final Context context = this;
         AlertDialog.Builder builder = new AlertDialog.Builder( this );
         builder.setMessage("Compra realizada exitosamente!!!");
         builder.setTitle(R.string.mns_titulo)

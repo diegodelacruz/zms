@@ -88,12 +88,12 @@ public class ServicioBDD<SQLiteDataBase> {
         sqLiteDatabase.update("empleados", values, "codigo = " + empleado.getCodigoNomina(), null);
     }
 
-    public String obtenerNombreUsuario(String idUsuarioAratek){
+    public EmpleadoVO obtenerNombreUsuario(String idUsuarioAratek){
 
-        String nombreCompleto = null;
+        EmpleadoVO empleado = null;
         //String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula.trim();
         StringBuilder consulta = new StringBuilder();
-        consulta.append("SELECT nombres ")
+        consulta.append("SELECT cedula , nombres ")
                 .append("  FROM empleados ")
                 .append(" WHERE cedula = ( SELECT cedula FROM comprador WHERE idaratek=").append( idUsuarioAratek ).append(")");
 
@@ -104,17 +104,18 @@ public class ServicioBDD<SQLiteDataBase> {
 
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                nombreCompleto = cursor.getString(0);
+
+                empleado = new EmpleadoVO( cursor.getString(0) , cursor.getString(1) );
 
                 cursor.close();
-                nombreCompleto = nombreCompleto;
+
             }
         }catch(Exception e){
 
             logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
 
         }
-        return nombreCompleto;
+        return empleado;
     }
 
 }

@@ -39,7 +39,6 @@ public class BaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE compras " +
                     "(idcpr INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "cedula TEXT NOT NULL, " +
-                    "idaratek TEXT NOT NULL, " +
                     "fechacompra DATETIME DEFAULT CURRENT_TIMESTAMP, " +
                     "valorcompra NUMERIC NOT NULL, " +
                     "comentario TEXT, " +
