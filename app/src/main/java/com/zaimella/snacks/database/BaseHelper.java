@@ -8,9 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.zaimella.log.Logger;
+import com.zaimella.snacks.service.Compra;
 import com.zaimella.snacks.service.Constantes;
+import com.zaimella.snacks.service.TiposRespuesta;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ddelacruz on 05/10/2016.
@@ -40,7 +44,7 @@ public class BaseHelper extends SQLiteOpenHelper {
                     "(idcpr INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "cedula TEXT NOT NULL, " +
                     "fechacompra DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-                    "valorcompra NUMERIC NOT NULL, " +
+                    "valorcompra TEXT NOT NULL, " +
                     "comentario TEXT, " +
                     "estado TEXT)";
 
@@ -102,7 +106,7 @@ public class BaseHelper extends SQLiteOpenHelper {
                 cursor.close();
                 nombreCompleto = nombreCompleto;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
             logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
 
@@ -110,23 +114,49 @@ public class BaseHelper extends SQLiteOpenHelper {
         return nombreCompleto;
     }
 
-    public Boolean existeComprador(String cedula) throws Exception{
+    public Boolean existeComprador(String cedula) throws Exception {
         logger.addRecordToLog("BaseHelper.existeComprador : " + cedula);
 
         String qry = "SELECT count(*) FROM comprador WHERE cedula = ?";
         logger.addRecordToLog("qry : " + qry);
 
-        Cursor cursor = getWritableDatabase().rawQuery(qry , new String[]{cedula});
+        Cursor cursor = getWritableDatabase().rawQuery(qry, new String[]{cedula});
         cursor.moveToFirst();
         int i = cursor.getInt(0);
         cursor.close();
 
         logger.addRecordToLog("count :  " + i);
-        if( i>0 ){
-            return  Boolean.TRUE;
+        if (i > 0) {
+            return Boolean.TRUE;
         }
 
         return Boolean.FALSE;
     }
 
+    //Método que retorna los datos de la tabla COMPRAS
+    public List<Compra> obtenerCompras() {
+        String qryCompras = "SELECT cedula, fechacompra, valorcompra, comentario, estado" +
+                "FROM compras WHERE estado = " + TiposRespuesta.NO_SINCRONIZADO;
+        Cursor cursor = getWritableDatabase().rawQuery(qryCompras, null);
+
+        List<Compra> compras = new ArrayList<Compra>();
+
+        Compra compra = null;
+        if (cursor.moveToFirst()) {
+            do {
+                compra = new Compra();
+                compra.setCedula(cursor.getString(0));
+                //compra.setFecha(cursor.getString(1));
+                compra.setValorCompra(cursor.getDouble(2));
+                compra.setComentario(cursor.getString(3));
+                //compra.setEstado(cursor.getClass(TiposRespuesta.NO_SINCRONIZADO));
+
+                compras.add(compra);
+                Log.d("DLC BDD Compras",compras.toString());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return compras;
+    }
 }
