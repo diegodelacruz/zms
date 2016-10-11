@@ -14,14 +14,23 @@ import com.zaimella.snacks.service.Compra;
 import com.zaimella.snacks.service.Constantes;
 import com.zaimella.snacks.service.Registro;
 import com.zaimella.snacks.service.ServicioBDD;
+import com.zaimella.snacks.service.TiposRespuesta;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
 public class ConfirmarCompraActivity extends AppCompatActivity {
 
     Logger logger;
 
+    private TextView mNumeroCedula;
     private TextView mNombrePersona;
     private TextView mValorCompra;
     private TextView mObservacionesCompra;
+    private float valorCompra;
+    private String cedula;
+    private String observaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,7 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar_compra);
 
+        mNumeroCedula = (TextView) findViewById(R.id.idNumeroCedula);
         mNombrePersona = (TextView) findViewById(R.id.idNombrePersona);
         mValorCompra = (TextView) findViewById(R.id.idValorCompra);
         mObservacionesCompra = (TextView) findViewById(R.id.idObservacionesCompra);
@@ -41,53 +51,66 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         logger.addRecordToLog("OBSERVACIONES  : " + intent.getStringExtra(Constantes.OBSERVACIONES));
         logger.addRecordToLog("NOMBRE_USUARIO : " + intent.getStringExtra(Constantes.NOMBRE_USUARIO));
 
-        StringBuilder sbNombrePersona = new StringBuilder();
-        sbNombrePersona.append(Constantes.CONFIRMAR_COMPRA_NOMBRE)
-                       .append(" ")
-                       .append( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
-        mNombrePersona.setText( sbNombrePersona.toString() );
+        this.cedula = intent.getStringExtra(Constantes.NUMERO_CEDULA);
+        mNumeroCedula.setText( intent.getStringExtra(Constantes.NUMERO_CEDULA) );
+        mNombrePersona.setText( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
 
-        StringBuilder sbValorCompra = new StringBuilder();
-        sbValorCompra.append(Constantes.CONFIRMAR_COMPRA_VALOR).append(Float.toString(intent.getFloatExtra(Constantes.VALOR_COMPRA, 0)));
-        mValorCompra.setText(sbValorCompra.toString());
+        this.valorCompra = intent.getFloatExtra(Constantes.VALOR_COMPRA, 0);
+        mValorCompra.setText(  String.valueOf(this.valorCompra) );
 
-        StringBuilder sbObservacion = new StringBuilder();
-        sbObservacion.append(Constantes.CONFIRMAR_COMPRA_OBSERVACION).append(intent.getStringExtra(Constantes.OBSERVACIONES));
-        //mObservacionesCompra.setText(intent.getStringExtra(Constantes.OBSERVACIONES));
-        mObservacionesCompra.setText(sbObservacion.toString());
-
+        this.observaciones = intent.getStringExtra(Constantes.OBSERVACIONES);
+        mObservacionesCompra.setText( intent.getStringExtra(Constantes.OBSERVACIONES) );
     }
 
     public void btnConfirmarCompra(View view) {
 
-        //Insertar en la bdd la conpra realizada
-        ServicioBDD servicioBDD = new ServicioBDD(this);
-        servicioBDD.abrirBD();
-        //Registro registro = new Registro( mNumeroCedula.getText().toString() , idUsuarioAratek.toString() );
-        Compra compra = new Compra();
-        servicioBDD.insertarCompra( compra );
-        servicioBDD.cerrarBD();
+        Boolean exito = Boolean.TRUE;
+        try {
+            logger.addRecordToLog("ConfirmarCompraActivity.btnConfirmarCompra - mValorCompra.toString() : " + mValorCompra.toString());
 
+            //Insertar en la bdd la conpra realizada
+            ServicioBDD servicioBDD = new ServicioBDD(this);
+            servicioBDD.abrirBD();
+            //Registro registro = new Registro( mNumeroCedula.getText().toString() , idUsuarioAratek.toString() );
+            Compra compra = new Compra();
+            compra.setValorCompra( this.valorCompra );
+            compra.setComentario( this.observaciones );
+            compra.setCedula( this.cedula );
+            compra.setEstado(TiposRespuesta.EXITO);
 
+            servicioBDD.insertarCompra(compra);
+            servicioBDD.cerrarBD();
 
+        }catch(Exception e){
+
+            Writer writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(writer);
+            e.printStackTrace(printWriter);
+            String s = writer.toString();
+
+            exito = Boolean.FALSE;
+            logger.addRecordToLog("Exception ConfirmarCompraActivity.btnConfirmarCompra: "+ s);
+
+        }
 
         final Context context = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder( this );
-        builder.setMessage("Compra realizada exitosamente!!!");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if( exito ){
+            builder.setMessage("Compra realizada exitosamente!!!");
+        }else{
+            builder.setMessage("No es posible completar la compra!!!");
+        }
+
         builder.setTitle(R.string.mns_titulo)
-                .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent( context , MenuActivity.class);
+                        Intent intent = new Intent(context, MenuActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 })
                 .show();
 
-
-        /*Intent intent = new Intent( this , MenuActivity.class);
-        startActivity(intent);
-        finish();*/
     }
 
     public void btnCancelarCompra(View view) {

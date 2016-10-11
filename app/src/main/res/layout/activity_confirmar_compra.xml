@@ -15,9 +15,28 @@
         android:id="@+id/idComprarValor"
         android:textSize="15pt"
         android:textStyle="bold"
-        android:paddingTop="40dp"
+        android:paddingTop="30dp"
         android:textColor="#498054"
         android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:textStyle="bold"
+        android:id="@+id/idLblNumeroCedula"
+        android:textColor="#498054"
+        android:text="@string/lbl_numero_cedula_confirmar"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10pt"
+        android:id="@+id/idNumeroCedula"
+        android:layout_marginLeft="10dp"
+        android:textColor="#212121"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,27 +46,26 @@
         android:id="@+id/idLblNombrePersona"
         android:textColor="#498054"
         android:text="@string/lbl_confirmar_nombre"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="10pt"
-        android:textStyle="bold"
         android:id="@+id/idNombrePersona"
-        android:textColor="#498054"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:textColor="#212121"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10pt"
-        android:textStyle="bold"
         android:id="@+id/idLblValor"
         android:textColor="#498054"
         android:text="@string/lbl_comprar_valor"
-        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -55,9 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textSize="10pt"
-        android:textStyle="bold"
-        android:id="@+id/idValorCompra"
-        android:textColor="#498054"/>
+        android:textColor="#212121"
+        android:id="@+id/idValorCompra"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +84,7 @@
         android:id="@+id/idLblObservaciones"
         android:textColor="#498054"
         android:text="@string/lbl_comprar_observacion"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -75,10 +92,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:textSize="10pt"
-        android:textStyle="bold"
-        android:id="@+id/idObservacionesCompra"
-        android:textColor="#498054"
-        android:layout_marginTop="40dp"/>
+        android:textColor="#212121"
+        android:id="@+id/idObservacionesCompra"/>
 
     <LinearLayout
         android:layout_width="match_parent"

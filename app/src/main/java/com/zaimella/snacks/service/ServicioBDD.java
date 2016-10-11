@@ -32,7 +32,7 @@ public class ServicioBDD<SQLiteDataBase> {
         baseHelper.close();
     }
 
-    public void insertarCompra(Compra compra) {
+    public void insertarCompra(Compra compra) throws Exception{
         ContentValues values = new ContentValues();
 
         values.put("valorcompra", compra.getValorCompra());
@@ -40,7 +40,7 @@ public class ServicioBDD<SQLiteDataBase> {
         values.put("cedula", compra.getCedula());
         values.put("estado", compra.getEstado().toString());
 
-        sqLiteDatabase.insert("compras", null, values);
+        long resultado = sqLiteDatabase.insertOrThrow("compras", null, values);
     }
 
     public void insertarRegistro(Registro registro) {

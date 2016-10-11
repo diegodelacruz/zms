@@ -9,6 +9,7 @@
     <string name="lbl_confirmar_nombre">Nombre: </string>
     <string name="lbl_nueva_compra">NUEVA COMPRA</string>
     <string name="lbl_valor">Valor</string>
+    <string name="lbl_numero_cedula_confirmar">Número de cédula:</string>
     <string name="lbl_numero_cedula">Número de cédula</string>
     <string name="lbl_observaciones">Observaciones</string>
     <string name="lbl_continuar">CONTINUAR</string>
