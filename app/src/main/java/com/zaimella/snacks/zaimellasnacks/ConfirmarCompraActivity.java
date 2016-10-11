@@ -76,7 +76,7 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
             compra.setValorCompra( this.valorCompra );
             compra.setComentario( this.observaciones );
             compra.setCedula( this.cedula );
-            compra.setEstado( TiposRespuesta.EXITO.toString() );
+            //compra.setEstado( TiposRespuesta.EXITO.toString() );
 
             servicioBDD.insertarCompra(compra);
             servicioBDD.cerrarBD();
