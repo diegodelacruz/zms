@@ -136,7 +136,7 @@ public class BaseHelper extends SQLiteOpenHelper {
     //Método que retorna los datos de la tabla COMPRAS
     public List<Compra> obtenerCompras() {
         String qryCompras = "SELECT cedula, fechacompra, valorcompra, comentario, estado" +
-                "FROM compras WHERE estado = " + TiposRespuesta.NO_SINCRONIZADO;
+                "FROM compras WHERE estado = " + TiposRespuesta.NO_SINCRONIZADO.toString();
         Cursor cursor = getWritableDatabase().rawQuery(qryCompras, null);
 
         List<Compra> compras = new ArrayList<Compra>();
@@ -146,7 +146,7 @@ public class BaseHelper extends SQLiteOpenHelper {
             do {
                 compra = new Compra();
                 compra.setCedula(cursor.getString(0));
-                //compra.setFecha(cursor.getString(1));
+                compra.setFechaNumero(cursor.getLong(1));
                 compra.setValorCompra(cursor.getString(2));
                 compra.setComentario(cursor.getString(3));
                 compra.setEstado(TiposRespuesta.NO_SINCRONIZADO.toString());
