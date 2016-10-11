@@ -8,20 +8,20 @@ import java.util.Date;
 public class Compra {
     private int idcpr;
     private String cedula;
-    private Float valorCompra;
+    private String valorCompra;
     private String comentario;
     private Date fecha;
-    private TiposRespuesta estado;
+    private String estado;
 
     public Compra(){
-        estado = TiposRespuesta.NO_SINCRONIZADO;
+        estado = TiposRespuesta.NO_SINCRONIZADO.toString();
     }
 
-    public Compra(int idcpr, String cedula, Float valorcompra, String comentario){
+    public Compra(int idcpr, String cedula, String valorcompra, String comentario){
         this.cedula = cedula;
         this.valorCompra = valorcompra;
         this.comentario = comentario;
-        estado = TiposRespuesta.NO_SINCRONIZADO;
+        estado = TiposRespuesta.NO_SINCRONIZADO.toString();
     }
 
     public int getIdcpr() {
@@ -40,11 +40,11 @@ public class Compra {
         this.cedula = cedula;
     }
 
-    public Float getValorCompra() {
+    public String getValorCompra() {
         return valorCompra;
     }
 
-    public void setValorCompra(Float valorCompra) {
+    public void setValorCompra(String valorCompra) {
         this.valorCompra = valorCompra;
     }
 
@@ -64,11 +64,11 @@ public class Compra {
         this.fecha = fecha;
     }
 
-    public TiposRespuesta getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(TiposRespuesta estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

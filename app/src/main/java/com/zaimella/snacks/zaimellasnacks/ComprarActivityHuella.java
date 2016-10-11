@@ -38,7 +38,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
     Logger logger;
 
-    private Float valorCompra;
+    private String valorCompra;
     private String observaciones;
     //private ServicioBDD servicioBDD;
 
@@ -142,8 +142,8 @@ public class ComprarActivityHuella extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        valorCompra = intent.getFloatExtra(Constantes.VALOR_COMPRA, 0);
-        Toast.makeText(ComprarActivityHuella.this, "valorCompra : " + valorCompra, Toast.LENGTH_LONG).show();
+        this.valorCompra = intent.getStringExtra( Constantes.VALOR_COMPRA );
+        Toast.makeText(ComprarActivityHuella.this, "valorCompra : " + this.valorCompra, Toast.LENGTH_LONG).show();
 
         observaciones = intent.getStringExtra(Constantes.OBSERVACIONES);
         Toast.makeText(ComprarActivityHuella.this, "observaciones: " + observaciones, Toast.LENGTH_LONG).show();
@@ -500,7 +500,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
     public void confirmarCompra(Integer idUsuarioAratek) {
         logger.addRecordToLog("ComprarActivityHuella.confirmarCompra");
         logger.addRecordToLog("idUsuarioAratek : " + idUsuarioAratek);
-        logger.addRecordToLog("valorCompra : " + valorCompra);
+        logger.addRecordToLog("valorCompra : " + this.valorCompra);
         logger.addRecordToLog("observaciones : " + observaciones);
 
         ServicioBDD servicioBDD = new ServicioBDD(this);
@@ -514,7 +514,7 @@ public class ComprarActivityHuella extends AppCompatActivity {
         Intent intent = new Intent(this, ConfirmarCompraActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString(Constantes.NUMERO_CEDULA , empleadoVO.getNumeroDocumento());
-        bundle.putFloat(Constantes.VALOR_COMPRA, valorCompra);
+        bundle.putString(Constantes.VALOR_COMPRA, this.valorCompra);
         bundle.putString(Constantes.OBSERVACIONES, observaciones);
         bundle.putInt(Constantes.ID_USUARIO_ARATEK, idUsuarioAratek);
         bundle.putString(Constantes.NOMBRE_USUARIO, empleadoVO.getNombresCompletos());

@@ -59,7 +59,7 @@ public class ComprarActivityValor extends AppCompatActivity {
         Intent intent = new Intent(this, ComprarActivityHuella.class);
 
         Bundle bundle = new Bundle();
-        bundle.putFloat(Constantes.VALOR_COMPRA, Float.parseFloat(mTxtValor.getText().toString()));
+        bundle.putString(Constantes.VALOR_COMPRA, mTxtValor.getText().toString());
         bundle.putString(Constantes.OBSERVACIONES, mTxtObservaciones.getText().toString());
         intent.putExtras(bundle);
 

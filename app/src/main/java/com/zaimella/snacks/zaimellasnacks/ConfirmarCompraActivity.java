@@ -28,7 +28,7 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
     private TextView mNombrePersona;
     private TextView mValorCompra;
     private TextView mObservacionesCompra;
-    private float valorCompra;
+    private String valorCompra;
     private String cedula;
     private String observaciones;
 
@@ -55,7 +55,7 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         mNumeroCedula.setText( intent.getStringExtra(Constantes.NUMERO_CEDULA) );
         mNombrePersona.setText( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
 
-        this.valorCompra = intent.getFloatExtra(Constantes.VALOR_COMPRA, 0);
+        this.valorCompra = intent.getStringExtra(Constantes.VALOR_COMPRA);
         mValorCompra.setText(  String.valueOf(this.valorCompra) );
 
         this.observaciones = intent.getStringExtra(Constantes.OBSERVACIONES);
@@ -66,7 +66,7 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
 
         Boolean exito = Boolean.TRUE;
         try {
-            logger.addRecordToLog("ConfirmarCompraActivity.btnConfirmarCompra - mValorCompra.toString() : " + mValorCompra.toString());
+            logger.addRecordToLog("ConfirmarCompraActivity.btnConfirmarCompra - mValorCompra.toString() : " + this.valorCompra);
 
             //Insertar en la bdd la conpra realizada
             ServicioBDD servicioBDD = new ServicioBDD(this);
@@ -76,7 +76,7 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
             compra.setValorCompra( this.valorCompra );
             compra.setComentario( this.observaciones );
             compra.setCedula( this.cedula );
-            compra.setEstado(TiposRespuesta.EXITO);
+            compra.setEstado( TiposRespuesta.EXITO.toString() );
 
             servicioBDD.insertarCompra(compra);
             servicioBDD.cerrarBD();

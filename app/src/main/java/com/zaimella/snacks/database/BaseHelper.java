@@ -147,9 +147,9 @@ public class BaseHelper extends SQLiteOpenHelper {
                 compra = new Compra();
                 compra.setCedula(cursor.getString(0));
                 //compra.setFecha(cursor.getString(1));
-                compra.setValorCompra(cursor.getDouble(2));
+                compra.setValorCompra(cursor.getString(2));
                 compra.setComentario(cursor.getString(3));
-                //compra.setEstado(cursor.getClass(TiposRespuesta.NO_SINCRONIZADO));
+                compra.setEstado(TiposRespuesta.NO_SINCRONIZADO.toString());
 
                 compras.add(compra);
                 Log.d("DLC BDD Compras",compras.toString());
