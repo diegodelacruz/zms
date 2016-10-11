@@ -122,7 +122,7 @@ public class ServicioBDD<SQLiteDataBase> {
     }
 
     //Método que retorna los datos de la tabla COMPRAS
-    public List<Compra> obtenerCompras() {
+    public List<Compra> obtenerCompras() throws Exception{
         logger.addRecordToLog("ServiciosBDD.obtenerCompras");
 
         String qryCompras = "SELECT cedula, fechacompra, valorcompra, comentario, estado" +
