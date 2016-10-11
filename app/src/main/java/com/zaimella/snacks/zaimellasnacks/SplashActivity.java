@@ -119,6 +119,9 @@ public class SplashActivity extends AppCompatActivity {
                     Log.d(TAG_SPLASH, "Ingresa al ELSE de ACTUALIZAR");
                 }
 
+                Log.d(TAG_SPLASH, "Lee de la tabla de compras");
+                bddSnacks.obtenerCompras();
+
 
             } catch (ClientProtocolException e) {
 
