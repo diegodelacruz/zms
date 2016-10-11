@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.zaimella.log.Logger;
+import com.zaimella.snacks.database.BaseHelper;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -42,9 +43,9 @@ public class MenuActivity extends AppCompatActivity {
 
     public void btnSincronizar(View view){
 
+        BaseHelper sincronizacion = new BaseHelper(this);
         Log.d("MV","btnSincronizar");
-
-
+        sincronizacion.obtenerCompras();
     }
 
 }

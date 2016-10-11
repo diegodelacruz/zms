@@ -11,6 +11,7 @@ public class Compra {
     private String valorCompra;
     private String comentario;
     private Date fecha;
+    private Long fechaNumero;
     private String estado;
 
     public Compra(){
@@ -22,6 +23,14 @@ public class Compra {
         this.valorCompra = valorcompra;
         this.comentario = comentario;
         estado = TiposRespuesta.NO_SINCRONIZADO.toString();
+    }
+
+    public Long getFechaNumero() {
+        return fechaNumero;
+    }
+
+    public void setFechaNumero(Long fechaNumero) {
+        this.fechaNumero = fechaNumero;
     }
 
     public int getIdcpr() {
