@@ -621,6 +621,11 @@ public class RegistrarActivity extends AppCompatActivity  {
         mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_INFO, info));
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        //Toast.makeText(getApplicationContext(), "No está permitido regresar. Presione Aceptar.", Toast.LENGTH_SHORT).show();
+    }
 
 }
 

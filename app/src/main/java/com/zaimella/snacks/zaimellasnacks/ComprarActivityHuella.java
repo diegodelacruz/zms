@@ -525,4 +525,10 @@ public class ComprarActivityHuella extends AppCompatActivity {
         //finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        //Toast.makeText(getApplicationContext(), "No está permitido regresar. Presione Aceptar.", Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -8,6 +8,13 @@ import android.view.View;
 
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
+import com.zaimella.snacks.service.Compra;
+import com.zaimella.snacks.service.ServicioBDD;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -42,10 +49,32 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void btnSincronizar(View view){
+        logger.addRecordToLog("MenuActivity.sincronizar");
 
-        BaseHelper sincronizacion = new BaseHelper(this);
-        Log.d("MV","btnSincronizar");
-        sincronizacion.obtenerCompras();
+        /*try {
+            ServicioBDD servicioBDD = new ServicioBDD(this);
+            servicioBDD.abrirBD();
+
+            List<Compra> compras = servicioBDD.obtenerCompras();
+
+            servicioBDD.cerrarBD();
+
+        }catch(Exception e){
+
+            Writer writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(writer);
+            e.printStackTrace(printWriter);
+            String s = writer.toString();
+
+            logger.addRecordToLog("Exception MenuActivity.sincronizar : " + s);
+
+        }*/
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        //Toast.makeText(getApplicationContext(), "No está permitido regresar. Presione Aceptar.", Toast.LENGTH_SHORT).show();
     }
 
 }

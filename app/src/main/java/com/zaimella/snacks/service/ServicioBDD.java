@@ -9,6 +9,9 @@ import android.util.Log;
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by ddelacruz on 05/10/2016.
  */
@@ -116,6 +119,82 @@ public class ServicioBDD<SQLiteDataBase> {
 
         }
         return empleado;
+    }
+
+    //Método que retorna los datos de la tabla COMPRAS
+    public List<Compra> obtenerCompras() {
+        logger.addRecordToLog("ServiciosBDD.obtenerCompras");
+
+        String qryCompras = "SELECT cedula, fechacompra, valorcompra, comentario, estado" +
+                "  FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'";
+        Cursor cursor = sqLiteDatabase.rawQuery( qryCompras , null );
+
+        List<Compra> compras = new ArrayList<Compra>();
+
+        Compra compra = null;
+        if (cursor.moveToFirst()) {
+            do {
+                compra = new Compra();
+                compra.setCedula(cursor.getString(0));
+                compra.setFechaNumero(cursor.getLong(1));
+                compra.setValorCompra(cursor.getString(2));
+                compra.setComentario(cursor.getString(3));
+                compra.setEstado(TiposRespuesta.NO_SINCRONIZADO.toString());
+
+                Log.d("DLC BDD Compras", compra.toString() );
+
+                compras.add(compra);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return compras;
+    }
+
+    public Boolean existeComprador(String cedula) throws Exception {
+        logger.addRecordToLog("BaseHelper.existeComprador : " + cedula);
+
+        String qry = "SELECT count(*) FROM comprador WHERE cedula = '"+cedula+"'";
+        logger.addRecordToLog("qry : " + qry);
+
+        Cursor cursor = sqLiteDatabase.rawQuery( qry , null );
+        //Cursor cursor = getWritableDatabase().rawQuery(qry, new String[]{cedula});
+        cursor.moveToFirst();
+        int i = cursor.getInt(0);
+        cursor.close();
+
+        logger.addRecordToLog("count :  " + i);
+        if (i > 0) {
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
+
+    public String buscarEmpleado(String cedula) {
+
+        logger.addRecordToLog("BaseHelper.buscarEmpleado: " + cedula);
+
+        String nombreCompleto = null;
+        String qry = "SELECT nombres FROM empleados WHERE cedula = '" + cedula + "'";
+
+        try {
+            Cursor cursor = sqLiteDatabase.rawQuery(qry, null);
+
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                nombreCompleto = cursor.getString(0);
+
+                cursor.close();
+                nombreCompleto = nombreCompleto;
+            }
+        } catch (Exception e) {
+
+            logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
+
+        }
+        return nombreCompleto;
     }
 
 }

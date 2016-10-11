@@ -86,9 +86,12 @@ public class Compra {
         return "Compra{" +
                 "idcpr=" + idcpr +
                 ", cedula='" + cedula + '\'' +
-                ", valorCompra=" + valorCompra +
+                ", valorCompra='" + valorCompra + '\'' +
                 ", comentario='" + comentario + '\'' +
-                ", estado=" + estado +
+                ", fecha=" + fecha +
+                ", fechaNumero=" + fechaNumero +
+                ", estado='" + estado + '\'' +
                 '}';
     }
+
 }

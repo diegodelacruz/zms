@@ -32,6 +32,7 @@
     <string name="mns_usuario_creado_exitosamente">El usuario ha sido creado exitosamente con ID </string>
     <string name="mns_error_creacion_usuario">Se ha producido un error al crer el usuario indicado</string>
     <string name="mns_ingrese_cedula">Ingrese un número de cédula</string>
+    <string name="mns_ingrese_valor_menor_10">Ingrese un valor menor a 10$</string>
     <string name="mns_titulo">ZAIMELLA SNACKS</string>
     <string name="mns_ok">OK</string>
     <string name="hello_blank_fragment">hello_blank_fragment</string>

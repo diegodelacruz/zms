@@ -1,5 +1,6 @@
 package com.zaimella.snacks.zaimellasnacks;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.annotation.FloatRange;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,17 @@ public class ComprarActivityValor extends AppCompatActivity {
         ComprarFragment fragment = new ComprarFragment();
         fragmentTransaction.replace( R.id.fragments_container , fragment);
         fragmentTransaction.commit();*/
+
+        float valor = Float.parseFloat( mTxtValor.getText().toString() );
+        if( valor>10 ){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.mns_ingrese_valor_menor_10)
+                    .setTitle(R.string.mns_titulo)
+                    .setPositiveButton("OK", null)
+                    .show();
+            return;
+        }
+
 
         Intent intent = new Intent(this, ComprarActivityHuella.class);
 
@@ -131,4 +143,11 @@ public class ComprarActivityValor extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        //Toast.makeText(getApplicationContext(), "No está permitido regresar. Presione Aceptar.", Toast.LENGTH_SHORT).show();
+    }
+
 }
