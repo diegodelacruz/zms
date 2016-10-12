@@ -7,5 +7,7 @@ public enum TiposRespuesta {
     EXITO,
     ERROR,
     NO_SINCRONIZADO,
-    SINCRONIZADO
+    SINCRONIZADO,
+    SINCRONIZADO_ERROR
+
 }

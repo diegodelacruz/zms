@@ -13,6 +13,7 @@ public class Compra {
     private Date fecha;
     private Long fechaNumero;
     private String estado;
+    private String fechaCompra;
 
     public Compra(){
         estado = TiposRespuesta.NO_SINCRONIZADO.toString();
@@ -23,14 +24,6 @@ public class Compra {
         this.valorCompra = valorcompra;
         this.comentario = comentario;
         estado = TiposRespuesta.NO_SINCRONIZADO.toString();
-    }
-
-    public Long getFechaNumero() {
-        return fechaNumero;
-    }
-
-    public void setFechaNumero(Long fechaNumero) {
-        this.fechaNumero = fechaNumero;
     }
 
     public int getIdcpr() {
@@ -73,12 +66,28 @@ public class Compra {
         this.fecha = fecha;
     }
 
+    public Long getFechaNumero() {
+        return fechaNumero;
+    }
+
+    public void setFechaNumero(Long fechaNumero) {
+        this.fechaNumero = fechaNumero;
+    }
+
     public String getEstado() {
         return estado;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(String fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
 
     @Override
@@ -91,7 +100,7 @@ public class Compra {
                 ", fecha=" + fecha +
                 ", fechaNumero=" + fechaNumero +
                 ", estado='" + estado + '\'' +
+                ", fechaCompra='" + fechaCompra + '\'' +
                 '}';
     }
-
 }

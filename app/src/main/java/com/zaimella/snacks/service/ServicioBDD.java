@@ -3,12 +3,18 @@ package com.zaimella.snacks.service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,30 +131,57 @@ public class ServicioBDD<SQLiteDataBase> {
     public List<Compra> obtenerCompras() throws Exception{
         logger.addRecordToLog("ServiciosBDD.obtenerCompras");
 
-        String qryCompras = "SELECT cedula, fechacompra, valorcompra, comentario, estado" +
-                "  FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'";
-        Cursor cursor = sqLiteDatabase.rawQuery( qryCompras , null );
+        List<Compra> compras = null;
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        List<Compra> compras = new ArrayList<Compra>();
+        try{
 
-        Compra compra = null;
-        if (cursor.moveToFirst()) {
-            do {
-                compra = new Compra();
-                compra.setCedula(cursor.getString(0));
-                compra.setFechaNumero(cursor.getLong(1));
-                compra.setValorCompra(cursor.getString(2));
-                compra.setComentario(cursor.getString(3));
-                compra.setEstado(TiposRespuesta.NO_SINCRONIZADO.toString());
+            String qryCompras = " SELECT idcpr , cedula, fechacompra, valorcompra , comentario , estado " +
+                                "   FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'";
 
-                Log.d("DLC BDD Compras", compra.toString() );
+            logger.addRecordToLog("qryCompras : " + qryCompras);
 
-                compras.add(compra);
+            Cursor cursor = sqLiteDatabase.rawQuery(qryCompras, null);
 
-            } while (cursor.moveToNext());
+            compras = new ArrayList<Compra>();
+
+            Compra compra = null;
+            if (cursor.moveToFirst()) {
+                do {
+                    compra = new Compra();
+
+                    compra.setIdcpr(cursor.getInt(0));
+
+                    compra.setCedula(cursor.getString(1));
+
+                    compra.setFechaCompra(cursor.getString(2));
+                    compra.setFechaNumero( formatoFecha.parse(cursor.getString(2)).getTime() );
+
+                    compra.setValorCompra(cursor.getString(3));
+
+                    compra.setComentario(cursor.getString(4));
+                    compra.setEstado(TiposRespuesta.NO_SINCRONIZADO.toString());
+
+                    Log.d("DLC BDD Compras", compra.toString());
+
+                    compras.add(compra);
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+
+        }catch(Exception e){
+
+            Log.d("MV",e.toString());
+
+            Writer writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(writer);
+            e.printStackTrace(printWriter);
+            String s = writer.toString();
+
+            logger.addRecordToLog("ServicioBDD.obtenerCompras : " + s);
+
         }
-        cursor.close();
-
         return compras;
     }
 
@@ -196,5 +229,66 @@ public class ServicioBDD<SQLiteDataBase> {
         }
         return nombreCompleto;
     }
+
+    public void actualizarCompra(int idCompra, String estadoSincronizacion) {
+
+        try {
+            String qry = "UPDATE compras SET estado = '" + estadoSincronizacion + "' WHERE idcpr = " + idCompra;
+            logger.addRecordToLog("qry : " + qry);
+
+            logger.addRecordToLog("ServicioBDD.actualizarCompra - 1 - ");
+            sqLiteDatabase.execSQL( qry );
+            logger.addRecordToLog("ServicioBDD.actualizarCompra - 2 - ");
+
+        } catch (Exception s) {
+            logger.addRecordToLog("BaseHelper.SQLException: " + s.getMessage());
+        }
+    }
+
+    public void borrarTablaCompras(int opcion) {
+
+        try {
+            String qry = "";
+
+            switch (opcion) {
+                case 1:
+                    qry = "DELETE FROM compras";
+                    logger.addRecordToLog("ServicioBDD.borrarTablaCompras Borra Todo");
+                    break;
+
+                case 2:
+                    qry = "DELETE FROM compras WHERE estado = 'SINCRONIZADO'";
+                    logger.addRecordToLog("ServicioBDD.borrarTablaCompras Borra SINCRONIZADO_OK");
+                    break;
+
+                default:
+                    logger.addRecordToLog("ServicioBDD.borrarTablaCompras Opción no Válida");
+                    break;
+            }
+
+            sqLiteDatabase.execSQL( qry );
+        }catch(Exception e){
+
+            Writer writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(writer);
+            e.printStackTrace(printWriter);
+            String s = writer.toString();
+
+            logger.addRecordToLog("BaseHelper..borrarTablaCompras SQLException: " + s);
+
+        }
+    }
+
+    /*public void actualizarCompra(Compra compra){
+        logger.addRecordToLog("ServicioBDD.actualizarCompra  ");
+
+        ContentValues values = new ContentValues();
+        values.put("estado", compra.getEstado());
+        int resultado = sqLiteDatabase.update("compras", values, "idcpr = " + compra.getIdcpr(), null);
+
+        if( resultado<=0 ){
+            logger.addRecordToLog("Error ServicioBDD.actualizarCompra  ");
+        }
+    }*/
 
 }

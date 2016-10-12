@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zaimella.log.Logger;
@@ -24,6 +25,8 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
 
     Logger logger;
 
+    private ImageButton mButConfirmarCompra;
+    private ImageButton mButCancelarCompra;
     private TextView mNumeroCedula;
     private TextView mNombrePersona;
     private TextView mValorCompra;
@@ -37,6 +40,9 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar_compra);
+
+        mButConfirmarCompra = (ImageButton)findViewById(R.id.imgConfirmarCompra);
+        mButCancelarCompra = (ImageButton)findViewById(R.id.imgConfirmarCancelar);
 
         mNumeroCedula = (TextView) findViewById(R.id.idNumeroCedula);
         mNombrePersona = (TextView) findViewById(R.id.idNombrePersona);
@@ -104,11 +110,14 @@ public class ConfirmarCompraActivity extends AppCompatActivity {
         builder.setTitle(R.string.mns_titulo)
                 .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+
                         Intent intent = new Intent(context, MenuActivity.class);
                         startActivity(intent);
                         finish();
+
                     }
                 })
+                .setCancelable(false)
                 .show();
 
     }

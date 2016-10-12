@@ -109,6 +109,12 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
+            /* OJO Borra la tabla de compras
+            this.servicioBDD.abrirBD();
+            this.servicioBDD.borrarTablaCompras( 1 );
+            servicioBDD.cerrarBD();
+            */
+
             try{
                 logger.addRecordToLog("SincronizarApexTask.doInBackground");
                 RespuestaVO respuestaVO = null;
@@ -125,15 +131,25 @@ public class MenuActivity extends AppCompatActivity {
 
                         //Sincronización OK
                         logger.addRecordToLog("SINCRONIZACION OK : " + compra);
+                        this.servicioBDD.actualizarCompra( compra.getIdcpr() , TiposRespuesta.SINCRONIZADO.toString() );
+                        //compra.setEstado( TiposRespuesta.SINCRONIZADO.toString() );
+                        //this.servicioBDD.actualizarCompra( compra );
 
                     }else{
 
                         ////Sincronización ERROR
                         logger.addRecordToLog("SINCRONIZACION ERROR : " + compra);
+                        //compra.setEstado( TiposRespuesta.SINCRONIZADO_ERROR.toString() );
+                        this.servicioBDD.actualizarCompra( compra.getIdcpr() , TiposRespuesta.SINCRONIZADO_ERROR.toString() );
 
                     }
 
+                    //this.servicioBDD.actualizarCompra( compra );
+
                 }
+
+                //Borrar los registros con estado SINCRONIZADO_OK
+                this.servicioBDD.borrarTablaCompras( 2 );
 
                 servicioBDD.cerrarBD();
 
