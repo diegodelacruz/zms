@@ -4,7 +4,7 @@
     android:id="@+id/menu_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_nav_zai"
+    android:background="@drawable/img_adn_nav"
     android:gravity="center_vertical|center_horizontal"
     android:orientation="vertical"
     tools:context=".MenuActivity">
@@ -16,7 +16,11 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:onClick="btnComprar"
-        android:src="@drawable/btn_cart_edt_txt" />
+        android:src="@drawable/btn_comprar" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <ImageButton
         android:id="@+id/imgRegistrar"
@@ -25,7 +29,11 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:onClick="btnRegistrar"
-        android:src="@drawable/btn_person_edt_txt" />
+        android:src="@drawable/btn_registrar" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <ImageButton
         android:id="@+id/imgSincronizar"
@@ -34,6 +42,6 @@
         android:layout_weight="1"
         android:background="@android:color/transparent"
         android:onClick="btnSincronizar"
-        android:src="@drawable/btn_sync_edt_txt" />
+        android:src="@drawable/btn_sincronizar" />
 
 </LinearLayout>

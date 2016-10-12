@@ -58,7 +58,7 @@
             android:layout_margin="20dp"
             android:background="@android:color/transparent"
             android:onClick="btnContinuarRegistroHuella"
-            android:src="@drawable/btn_go_p"/>
+            android:src="@drawable/btn_continuar"/>
 
         <ImageButton
             android:id="@+id/idRegistraCedulaMenu"
@@ -67,7 +67,7 @@
             android:layout_margin="20dp"
             android:background="@android:color/transparent"
             android:onClick="btnRegistrarMenu"
-            android:src="@drawable/btn_home_p"/>
+            android:src="@drawable/btn_menu"/>
     </LinearLayout>
 
 </LinearLayout>

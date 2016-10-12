@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnCapturarCompra"
-            android:src="@drawable/btn_finger_p" />
+            android:src="@drawable/btn_finger" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnEditarCompra"
-            android:src="@drawable/btn_edit_m" />
+            android:src="@drawable/btn_editar" />
 
         <ImageButton
             android:id="@+id/imgHomeCompra"
@@ -74,6 +74,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnCancelarCompra"
-            android:src="@drawable/btn_home_p" />
+            android:src="@drawable/btn_menu" />
     </LinearLayout>
 </LinearLayout>
