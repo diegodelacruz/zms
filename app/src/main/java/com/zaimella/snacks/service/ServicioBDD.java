@@ -3,6 +3,7 @@ package com.zaimella.snacks.service;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -35,7 +36,7 @@ public class ServicioBDD<SQLiteDataBase> {
         baseHelper.close();
     }
 
-    public void insertarCompra(Compra compra) throws Exception{
+    public void insertarCompra(Compra compra) throws Exception {
         ContentValues values = new ContentValues();
 
         values.put("valorcompra", compra.getValorCompra());
@@ -56,11 +57,11 @@ public class ServicioBDD<SQLiteDataBase> {
             values.put("cedula", registro.getCedula());
             values.put("idaratek", registro.getIdaratek());
 
-            logger.addRecordToLog("ServicioBDD.insertarRegistro -2- "+ registro.getCedula() +" " + registro.getIdaratek());
+            logger.addRecordToLog("ServicioBDD.insertarRegistro -2- " + registro.getCedula() + " " + registro.getIdaratek());
             long resultado = sqLiteDatabase.insertOrThrow("comprador", null, values);
             logger.addRecordToLog("ServicioBDD.insertarRegistro -3- : " + resultado);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.addRecordToLog("ServicioBDD.insertarRegistro -4-");
             logger.addRecordToLog("Exception insertarRegistro: " + e.getMessage());
             Log.d("MV", "Error: " + e.getMessage());
@@ -91,29 +92,29 @@ public class ServicioBDD<SQLiteDataBase> {
         sqLiteDatabase.update("empleados", values, "codigo = " + empleado.getCodigoNomina(), null);
     }
 
-    public EmpleadoVO obtenerNombreUsuario(String idUsuarioAratek){
+    public EmpleadoVO obtenerNombreUsuario(String idUsuarioAratek) {
 
         EmpleadoVO empleado = null;
         //String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula.trim();
         StringBuilder consulta = new StringBuilder();
         consulta.append("SELECT cedula , nombres ")
                 .append("  FROM empleados ")
-                .append(" WHERE cedula = ( SELECT cedula FROM comprador WHERE idaratek=").append( idUsuarioAratek ).append(")");
+                .append(" WHERE cedula = ( SELECT cedula FROM comprador WHERE idaratek=").append(idUsuarioAratek).append(")");
 
         logger.addRecordToLog("consulta : " + consulta.toString());
 
         try {
-            Cursor cursor = sqLiteDatabase.rawQuery( consulta.toString() , null );
+            Cursor cursor = sqLiteDatabase.rawQuery(consulta.toString(), null);
 
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
 
-                empleado = new EmpleadoVO( cursor.getString(0) , cursor.getString(1) );
+                empleado = new EmpleadoVO(cursor.getString(0), cursor.getString(1));
 
                 cursor.close();
 
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
             logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
 
@@ -122,12 +123,12 @@ public class ServicioBDD<SQLiteDataBase> {
     }
 
     //Método que retorna los datos de la tabla COMPRAS
-    public List<Compra> obtenerCompras() throws Exception{
+    public List<Compra> obtenerCompras() throws Exception {
         logger.addRecordToLog("ServiciosBDD.obtenerCompras");
 
         String qryCompras = "SELECT cedula, fechacompra, valorcompra, comentario, estado" +
                 "  FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'";
-        Cursor cursor = sqLiteDatabase.rawQuery( qryCompras , null );
+        Cursor cursor = sqLiteDatabase.rawQuery(qryCompras, null);
 
         List<Compra> compras = new ArrayList<Compra>();
 
@@ -141,7 +142,7 @@ public class ServicioBDD<SQLiteDataBase> {
                 compra.setComentario(cursor.getString(3));
                 compra.setEstado(TiposRespuesta.NO_SINCRONIZADO.toString());
 
-                Log.d("DLC BDD Compras", compra.toString() );
+                Log.d("DLC BDD Compras", compra.toString());
 
                 compras.add(compra);
 
@@ -155,10 +156,10 @@ public class ServicioBDD<SQLiteDataBase> {
     public Boolean existeComprador(String cedula) throws Exception {
         logger.addRecordToLog("BaseHelper.existeComprador : " + cedula);
 
-        String qry = "SELECT count(*) FROM comprador WHERE cedula = '"+cedula+"'";
+        String qry = "SELECT count(*) FROM comprador WHERE cedula = '" + cedula + "'";
         logger.addRecordToLog("qry : " + qry);
 
-        Cursor cursor = sqLiteDatabase.rawQuery( qry , null );
+        Cursor cursor = sqLiteDatabase.rawQuery(qry, null);
         //Cursor cursor = getWritableDatabase().rawQuery(qry, new String[]{cedula});
         cursor.moveToFirst();
         int i = cursor.getInt(0);
@@ -197,4 +198,13 @@ public class ServicioBDD<SQLiteDataBase> {
         return nombreCompleto;
     }
 
+    public void actualizarCompra(int idCompra, String estadoSincronizacion) {
+
+        String qry = "UPDATE compras SET estado = '" + estadoSincronizacion + "'" + "WHERE idcpr = " + idCompra;
+        try {
+            sqLiteDatabase.rawQuery(qry, null);
+        } catch (SQLException s) {
+            logger.addRecordToLog("BaseHelper.SQLException: " + s.getMessage());
+        }
+    }
 }
