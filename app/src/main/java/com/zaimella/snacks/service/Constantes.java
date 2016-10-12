@@ -14,6 +14,7 @@ public class Constantes {
     public static final String FP_DB_PATH = "/sdcard/zaiAratek.db";
     public static final String URL_SERVICIO_EMPLEADOS_POR_CODIGO = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/listadoEmpleadosPorCodigo/";
     public static final String URL_SERVICIO_EMPLEADOS_POR_ESTADO = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/listadoEmpleados/";
+    public static final String URL_SERVICIO_CARGA = "http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/registrarCompra/";
     public static final String RESPUESTA_OK = "OK";
     public static final String ESTADO_EMPLEADO_A = "A";
     public static final String ESTADO_EMPLEADO_E = "E";
