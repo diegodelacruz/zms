@@ -108,7 +108,7 @@
             android:layout_marginTop="40dp"
             android:background="@android:color/transparent"
             android:onClick="btnConfirmarCompra"
-            android:src="@drawable/btn_ok_p"/>
+            android:src="@drawable/btn_confirmar"/>
 
         <ImageButton
             android:id="@+id/imgConfirmarCancelar"
@@ -118,7 +118,7 @@
             android:layout_marginTop="40dp"
             android:background="@android:color/transparent"
             android:onClick="btnCancelarCompra"
-            android:src="@drawable/btn_home_p"/>
+            android:src="@drawable/btn_menu"/>
     </LinearLayout>
 
 </LinearLayout>

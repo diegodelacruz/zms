@@ -118,7 +118,7 @@
             android:layout_marginTop="40dp"
             android:background="@android:color/transparent"
             android:onClick="btnRegistrarHuella"
-            android:src="@drawable/btn_go_p"/>
+            android:src="@drawable/btn_continuar"/>
 
         <ImageButton
             android:id="@+id/imgComprarHome"
@@ -128,6 +128,6 @@
             android:layout_marginTop="40dp"
             android:background="@android:color/transparent"
             android:onClick="btnRegistrarMenu"
-            android:src="@drawable/btn_home_p"/>
+            android:src="@drawable/btn_menu"/>
     </LinearLayout>
 </LinearLayout>
