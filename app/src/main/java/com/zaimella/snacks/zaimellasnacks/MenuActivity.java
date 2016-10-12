@@ -10,16 +10,29 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
 import com.zaimella.snacks.service.Compra;
+import com.zaimella.snacks.service.Constantes;
+import com.zaimella.snacks.service.RespuestaVO;
 import com.zaimella.snacks.service.ResultadoScanVO;
 import com.zaimella.snacks.service.ServicioBDD;
 import com.zaimella.snacks.service.TiposRespuesta;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.util.List;
 
 import cn.com.aratek.fp.Bione;
@@ -37,7 +50,6 @@ public class MenuActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
     }
 
     public void btnComprar(View view){
@@ -90,7 +102,7 @@ public class MenuActivity extends AppCompatActivity {
             //super.onPreExecute();
             logger.addRecordToLog("SincronizarApexTask.onPreExecute");
 
-            dialog.setMessage("Procesando...");
+            dialog.setMessage("Sincronizando...");
             dialog.show();
         }
 
@@ -99,7 +111,7 @@ public class MenuActivity extends AppCompatActivity {
 
             try{
                 logger.addRecordToLog("SincronizarApexTask.doInBackground");
-
+                RespuestaVO respuestaVO = null;
                 this.servicioBDD.abrirBD();
 
                 List<Compra> compras = servicioBDD.obtenerCompras();
@@ -108,6 +120,19 @@ public class MenuActivity extends AppCompatActivity {
                 for( Compra compra  : compras ){
                     //System.out.println("compra: " + compra);
                     logger.addRecordToLog("compra: " + compra);
+
+                    if( this.invocarServicioCarga(compra) ) {
+
+                        //Sincronización OK
+                        logger.addRecordToLog("SINCRONIZACION OK : " + compra);
+
+                    }else{
+
+                        ////Sincronización ERROR
+                        logger.addRecordToLog("SINCRONIZACION ERROR : " + compra);
+
+                    }
+
                 }
 
                 servicioBDD.cerrarBD();
@@ -136,6 +161,56 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
+        private Boolean invocarServicioCarga(Compra compra){
+            try {
+                logger.addRecordToLog("MenuActivity.invocarServicioCarga");
+
+                Gson gson = new Gson();
+                HttpClient httpclient = new DefaultHttpClient();
+
+                //http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/registrarCompra/1711441418/1476222478896/0.2/NA
+                StringBuilder url = new StringBuilder();
+                url.append(Constantes.URL_SERVICIO_CARGA)
+                        .append(compra.getCedula())
+                        .append("/").append(compra.getFechaNumero())
+                        .append("/").append(compra.getValorCompra());
+
+                if( compra.getComentario()!=null &&  compra.getComentario().length()>0 ){
+                    url.append("/").append( URLEncoder.encode( compra.getComentario() , "UTF-8")  );
+                }else{
+                    url.append("/").append("NA");
+                }
+
+                HttpPost httpPost = new HttpPost(url.toString());
+
+                HttpResponse response = httpclient.execute(httpPost);
+                HttpEntity entity = response.getEntity();
+                String responseString = EntityUtils.toString(entity, "UTF-8");
+
+                logger.addRecordToLog("despues responseString : " + responseString);
+
+                RespuestaVO respuestaVO = gson.fromJson(responseString, RespuestaVO.class);
+
+                if( !respuestaVO.getCodigo().equalsIgnoreCase("OK") ){
+                    //error al insertar el registro
+                    return Boolean.FALSE;
+                }
+
+                return Boolean.TRUE;
+            }catch(Exception e){
+
+                Writer writer = new StringWriter();
+                PrintWriter printWriter = new PrintWriter(writer);
+                e.printStackTrace(printWriter);
+                String s = writer.toString();
+
+                logger.addRecordToLog("Exception MenuActivity.invocarServicioCarga : " + s);
+
+                return Boolean.FALSE;
+            }
+        }
+
     }
+
 }
 

@@ -48,9 +48,6 @@ public class SplashActivity extends AppCompatActivity {
 
         new SincronizacionTask(this).execute();
 
-        //srvEmpleado = new ServicioBDD(this);
-        //BaseHelper base = new BaseHelper(context);
-        //ultEmpleado = base.ultimoEmpleado();
     }
 
     private class SincronizacionTask extends AsyncTask<Void, Void, Void> {
@@ -64,8 +61,6 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         protected void onPreExecute() {
-            logger.addRecordToLog("HttpRquestTask.onPreExecute");
-
             dialog.setMessage("Procesando...");
             dialog.show();
         }
@@ -74,7 +69,7 @@ public class SplashActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             /*Obtiene los nuevo usuarios de acuerdo al código*/
             try {
-                logger.addRecordToLog("_HttpRequestTask.doInBackground");
+                //logger.addRecordToLog("_HttpRequestTask.doInBackground");
 
                 //Crea la BDD y obtiene el último empleado registrado
                 srvEmpleado = new ServicioBDD(context);
@@ -136,38 +131,20 @@ public class SplashActivity extends AppCompatActivity {
                 logger.addRecordToLog("Exception general doInBackground : " + e.getMessage());
             }
 
-            /*Obtiene los usuario que se han desvinculado*/
-            /*try {
-
-            } catch (ClientProtocolException e) {
-
-                Log.d(TAG_SPLASH, "ClientProtocolException  : " + e.getMessage());
-
-            } catch (IOException e) {
-
-                Log.d(TAG_SPLASH, "IOException : " + e.getMessage());
-
-            } catch (Exception e) {
-
-                Log.d(TAG_SPLASH, "Exception general doInBackground : " + e.getMessage());
-                e.printStackTrace();
-            }*/
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
 
-            logger.addRecordToLog("onPostExecute");
-
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
             ((SplashActivity) context).menuPrincipal();
+
         }
 
         private RespuestaVO obtenerUsuariosTipoA(int codigoMaximo) throws Exception {
-            logger.addRecordToLog("obtenerUsuariosTipoA");
 
             Gson gson = new Gson();
             HttpClient httpclient = new DefaultHttpClient();
@@ -206,19 +183,6 @@ public class SplashActivity extends AppCompatActivity {
             return respuestaVO;
         }
 
-        /*public void checkDataBase() {
-
-            File db = getApplicationContext().getDatabasePath("zai.db");
-
-            if (!db.exists()) {
-                Log.d(TAG_SPLASH, "No Existe la BD.");
-                //CRear la BD
-
-                return;
-            }
-
-            Log.d(TAG_SPLASH, "Existe la BD.");
-        }*/
     }
 
     public void menuPrincipal() {
@@ -226,4 +190,5 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }
