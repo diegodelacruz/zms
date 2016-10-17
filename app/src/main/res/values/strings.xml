@@ -18,6 +18,8 @@
     <string name="lbl_registro_huella">REGISTRO DE HUELLA</string>
     <string name="lbl_registro_cedula">REGISTRO DE CÉDULA</string>
     <string name="lbl_registro">REGISTRO</string>
+    <string name="idLblNumeroCedula">Cédula de Identidad</string>
+    <string name="idLblNombrePersona">Cédula de Identidad</string>
     <string name="not_done">Not done yet</string>
     <string name="loading">Loading</string>
     <string name="preparing_device">Device is preparing, please wait…</string>

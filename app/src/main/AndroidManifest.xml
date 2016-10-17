@@ -20,16 +20,19 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".RegistrarActivity" />
         <activity android:name=".ComprarActivityHuella" />
-        <activity android:name=".ComprarActivityValor"
-                  android:windowSoftInputMode="stateVisible|adjustPan"/>
+        <activity
+            android:name=".ComprarActivityValor"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity android:name=".ConfirmarCompraActivity" />
         <activity android:name=".RegistraCedulaActivity" />
+        <activity android:name=".UnicaCompraActivity"></activity>
     </application>
 
 </manifest>
