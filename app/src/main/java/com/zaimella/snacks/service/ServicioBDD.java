@@ -198,7 +198,7 @@ public class ServicioBDD<SQLiteDataBase> {
         cursor.close();
 
         logger.addRecordToLog("count :  " + i);
-        if (i > 0) {
+        if (i >= 3) {
             return Boolean.TRUE;
         }
 
