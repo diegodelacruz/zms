@@ -186,7 +186,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void menuPrincipal() {
-        Intent intent = new Intent(this, MenuActivity.class);
+        //Intent intent = new Intent(this, MenuActivity.class);
+        Intent intent = new Intent(this, UnicaCompraActivity.class);
         startActivity(intent);
         finish();
     }
