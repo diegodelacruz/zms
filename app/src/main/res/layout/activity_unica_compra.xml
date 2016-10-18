@@ -114,7 +114,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
@@ -123,7 +122,6 @@
             android:id="@+id/idBebida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnOnClickBebidas"
@@ -133,7 +131,6 @@
             android:id="@+id/idHelado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnOnClickHelados"
@@ -143,7 +140,6 @@
             android:id="@+id/idSnacks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnOnClickSnacks"
@@ -153,19 +149,15 @@
             android:id="@+id/idVarios"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnOnClickVarios"
             android:src="@drawable/cb_varios_ss" />
     </LinearLayout>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
@@ -174,7 +166,6 @@
             android:id="@+id/idConfirmarCompra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnConfirmarCompraUnica"
@@ -184,21 +175,20 @@
             android:id="@+id/idCancelarCompra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:onClick="btnCancelarCompraUnica"
             android:src="@drawable/cancelar2" />
-    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/idMenuPrincipal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@android:color/transparent"
-        android:onClick="btnMenuCompraUnica"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/btn_menu" />
+        <ImageButton
+            android:id="@+id/idMenuPrincipal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:onClick="btnMenuCompraUnica"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/btn_menu" />
+    </LinearLayout>
 
 </LinearLayout>
