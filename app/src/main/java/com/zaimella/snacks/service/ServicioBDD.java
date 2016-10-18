@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.zaimella.log.Logger;
 import com.zaimella.snacks.database.BaseHelper;
+import com.zaimella.snacks.util.SnacksUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -100,7 +101,6 @@ public class ServicioBDD<SQLiteDataBase> {
     public EmpleadoVO obtenerNombreUsuario(String idUsuarioAratek){
 
         EmpleadoVO empleado = null;
-        //String qry = "SELECT nombres FROM empleados WHERE cedula = " + cedula.trim();
         StringBuilder consulta = new StringBuilder();
         consulta.append("SELECT cedula , nombres ")
                 .append("  FROM empleados ")
@@ -121,7 +121,7 @@ public class ServicioBDD<SQLiteDataBase> {
             }
         }catch(Exception e){
 
-            logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
+            logger.addRecordToLog("BaseHelper.exception : " + SnacksUtil.obtenerStackErrores( e ));
 
         }
         return empleado;

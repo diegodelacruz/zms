@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/activity_unica_compra"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/img_nav_zai"
-                tools:context="com.zaimella.snacks.zaimellasnacks.UnicaCompraActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_unica_compra"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@drawable/img_adn_nav"
+              tools:context="com.zaimella.snacks.zaimellasnacks.UnicaCompraActivity">
 
     <TextView
         android:id="@+id/idComprarValor"
@@ -21,7 +22,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="110dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -33,21 +34,21 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imgHuellaVerificar"
-                android:layout_width="90px"
-                android:layout_height="90px"
-                android:maxWidth="90px"
-                android:maxHeight="90px"
+                android:id="@+id/imgUCHuellaVerificar"
+                android:layout_width="130px"
+                android:layout_height="130px"
+                android:maxWidth="130px"
+                android:maxHeight="130px"
                 android:src="@drawable/img_huella_p" />
 
             <ImageButton
                 android:id="@+id/imgComprarHuella"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_width="110px"
+                android:layout_height="110px"
+                android:layout_marginTop="20dp"
                 android:background="@android:color/transparent"
-                android:maxWidth="90px"
-                android:maxHeight="90px"
+                android:maxWidth="110px"
+                android:maxHeight="110px"
                 android:onClick="btnCapturarCompra"
                 android:src="@drawable/btn_finger" />
         </LinearLayout>
@@ -65,8 +66,10 @@
                 android:layout_weight="1"
                 android:id="@+id/idLblNumeroCedula"
                 android:layout_marginTop="30dp"
-                android:paddingLeft="10dp"
-                android:textColor="#498054" />
+                android:layout_marginLeft="10dp"
+                android:textColor="#498054"
+                android:textSize="20sp"
+                android:textStyle="normal|bold"/>
 
             <TextView
                 android:text="TextView"
@@ -75,20 +78,127 @@
                 android:layout_weight="1"
                 android:id="@+id/idLblNombrePersona"
                 android:layout_marginTop="30dp"
-                android:paddingLeft="10dp"
-                android:textColor="#498054"/>
+                android:layout_marginLeft="10dp"
+                android:textColor="#498054"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="#498054"
                 android:hint="0.00"
-                android:ems="10"
-                android:id="@+id/idTxtValor" />
+                android:id="@+id/idTxtValor"
+                android:textSize="36sp"
+                android:textStyle="normal|bold" />
         </LinearLayout>
     </LinearLayout>
 
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/idProductos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:text="@string/lbl_productos"
+        android:textColor="#498054"
+        android:layout_marginLeft="10dp"
+        android:textSize="10pt"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/idBebida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnOnClickBebidas"
+            android:src="@drawable/cb_bebida_ss" />
+
+        <ImageButton
+            android:id="@+id/idHelado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnOnClickHelados"
+            android:src="@drawable/cb_helado_ss" />
+
+        <ImageButton
+            android:id="@+id/idSnacks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnOnClickSnacks"
+            android:src="@drawable/cb_snacks_ss" />
+
+        <ImageButton
+            android:id="@+id/idVarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnOnClickVarios"
+            android:src="@drawable/cb_varios_ss" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/idConfirmarCompra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnConfirmarCompraUnica"
+            android:src="@drawable/btn_confirmar" />
+
+        <ImageButton
+            android:id="@+id/idCancelarCompra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="btnCancelarCompraUnica"
+            android:src="@drawable/cancelar2" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/idMenuPrincipal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:onClick="btnMenuCompraUnica"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/btn_menu" />
+
+</LinearLayout>

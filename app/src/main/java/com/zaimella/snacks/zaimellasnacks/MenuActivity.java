@@ -56,9 +56,9 @@ public class MenuActivity extends AppCompatActivity {
 
         Log.d("MV","btnComprar");
 
-        Intent intent = new Intent(this, ComprarActivityValor.class);
+        Intent intent = new Intent(this, UnicaCompraActivity.class);
         startActivity(intent);
-        //finish();
+        finish();
 
     }
 
@@ -68,6 +68,7 @@ public class MenuActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, RegistraCedulaActivity.class);
         startActivity(intent);
+        finish();
 
     }
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Snacks</string>
     <string name="lbl_comprar">COMPRAR</string>
+    <string name="lbl_productos">PRODUCTOS</string>
     <string name="lbl_comprar_inicio">Comprar</string>
     <string name="lbl_comprar_huella">Captura de Huella</string>
     <string name="lbl_comprar_valor">Valor: </string>
@@ -22,7 +23,7 @@
     <string name="idLblNombrePersona">Cédula de Identidad</string>
     <string name="not_done">Not done yet</string>
     <string name="loading">Loading</string>
-    <string name="preparing_device">Device is preparing, please wait…</string>
+    <string name="preparing_device">Preparando el dispositivo, por favor espere...</string>
     <string name="closing_device">Device is closing, please wait…</string>
     <string name="enroll_success">Registro exitoso!!! El ID generado es : </string>
     <string name="enroll_failed_because_of_make_template">enroll_failed_because_of_make_template</string>
@@ -37,5 +38,6 @@
     <string name="mns_ingrese_valor_menor_10">Ingrese un valor menor a 10$</string>
     <string name="mns_titulo">ZAIMELLA SNACKS</string>
     <string name="mns_ok">OK</string>
+    <string name="mns_cancel">CANCEL</string>
     <string name="hello_blank_fragment">hello_blank_fragment</string>
 </resources>
