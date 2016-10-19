@@ -131,17 +131,15 @@ public class RegistrarActivity extends AppCompatActivity  {
                 }
                 case MSG_SHOW_PROGRESS_DIALOG: {
                     logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
-
-                    /*String[] info = (String[]) msg.obj;
+                    String[] info = (String[]) msg.obj;
                     mProgressDialog.setTitle(info[0]);
                     mProgressDialog.setMessage(info[1]);
-                    mProgressDialog.show();*/
-
+                    mProgressDialog.show();
                     break;
                 }
                 case MSG_DISMISS_PROGRESS_DIALOG: {
                     logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
-                    //mProgressDialog.dismiss();
+                    mProgressDialog.dismiss();
                     break;
                 }
             }
@@ -169,6 +167,12 @@ public class RegistrarActivity extends AppCompatActivity  {
         Intent intent = getIntent();
         mNumeroCedula.setText( intent.getStringExtra(Constantes.NUMERO_CEDULA) );
         mNombreUsuario.setText( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
 
         //Instancia dispositivo
         mScanner = FingerprintScanner.getInstance();

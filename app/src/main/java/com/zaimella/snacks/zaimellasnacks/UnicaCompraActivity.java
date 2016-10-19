@@ -647,9 +647,8 @@ public class UnicaCompraActivity extends AppCompatActivity {
         try {
             logger.addRecordToLog("UnicaCompraActivity.btnConfirmarCompraUnica");
 
-            if( this.mCedulaIdentidad.getText()==null || this.mCedulaIdentidad.getText().toString().contains("CI") ||
-                 this.mCedulaIdentidad.getText().toString().contains("NOMBRE") ||
-                    this.mCedulaIdentidad.getText().length()<=0 ){
+            if( this.mCedulaIdentidad.getText()==null || this.mCedulaIdentidad.getText().length()<=0 || this.mCedulaIdentidad.getText().toString().contains("CI") ||
+                this.mNombrePersona.getText()==null || this.mNombrePersona.getText().length()<=0 || this.mNombrePersona.getText().toString().contains("NOMBRE") ){
 
                 //Ingrese la cedula
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -683,10 +682,10 @@ public class UnicaCompraActivity extends AppCompatActivity {
 
 
             BigDecimal valorCompra = new BigDecimal( this.mValorCompra.getText().toString() );
-            if( valorCompra.compareTo( new BigDecimal(0) )<=0 ){
+            if( valorCompra.compareTo( new BigDecimal(0) )<=0 || valorCompra.compareTo( new BigDecimal(10) )>0){
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Ingrese un valor mayor a 0.00");
+                builder.setMessage("Ingrese un valor mayor a 0 y menor a 10");
                 builder.setTitle(R.string.mns_titulo)
                         .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -698,16 +697,45 @@ public class UnicaCompraActivity extends AppCompatActivity {
                 return;
             }
 
+            //Generar las observaciones
+            StringBuilder observaciones = new StringBuilder();
+
+            if( this.bebidaSeleccionado ){
+                observaciones.append("bebidas");
+            }
+
+            if( this.snacksSeleccionado ){
+                if( observaciones.length()>0 ){
+                    observaciones.append(",");
+                }
+                observaciones.append("snacks");
+            }
+
+            if( this.heladoSeleccionado ){
+                if( observaciones.length()>0 ){
+                    observaciones.append(",");
+                }
+                observaciones.append("helados");
+            }
+
+            if( this.variosSeleccionado ){
+                if( observaciones.length()>0 ){
+                    observaciones.append(",");
+                }
+                observaciones.append("varios");
+            }
+
+            if( observaciones.length()==0 ){
+                observaciones.append("NA");
+            }
 
             //Insertar en la bdd la conpra realizada
             ServicioBDD servicioBDD = new ServicioBDD(this);
             servicioBDD.abrirBD();
-            //Registro registro = new Registro( mNumeroCedula.getText().toString() , idUsuarioAratek.toString() );
             Compra compra = new Compra();
             compra.setValorCompra( valorCompra.toString() );
-            compra.setComentario("NA");
+            compra.setComentario( observaciones.toString() );
             compra.setCedula( this.mCedulaIdentidad.getText().toString() );
-            //compra.setEstado( TiposRespuesta.EXITO.toString() );
 
             servicioBDD.insertarCompra(compra);
             servicioBDD.cerrarBD();
@@ -784,6 +812,10 @@ public class UnicaCompraActivity extends AppCompatActivity {
         this.mNombrePersona.setText("NOMBRE:");
         this.mValorCompra.setText("");
         this.mImgHuella.setImageResource(R.drawable.sinhuella);
+        this.mImgBebida.setImageResource(R.drawable.cb_bebida_ss);
+        this.mImgHelado.setImageResource(R.drawable.cb_helado_ss);
+        this.mImgSnacks.setImageResource(R.drawable.cb_snacks_ss);
+        this.mImgVarios.setImageResource(R.drawable.cb_varios_ss);
 
     }
 

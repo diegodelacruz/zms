@@ -137,7 +137,8 @@ public class ServicioBDD<SQLiteDataBase> {
         try{
 
             String qryCompras = " SELECT idcpr , cedula, fechacompra, valorcompra , comentario , estado " +
-                                "   FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'";
+                                "   FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'" +
+                                "     OR estado = '" + TiposRespuesta.SINCRONIZADO_ERROR.toString() + "'";
 
             logger.addRecordToLog("qryCompras : " + qryCompras);
 
