@@ -46,7 +46,7 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        logger.addRecordToLog("MenuActivity.onCreate");
+        //logger.addRecordToLog("MenuActivity.onCreate");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
