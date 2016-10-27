@@ -116,19 +116,20 @@ public class SplashActivity extends AppCompatActivity {
 
                 Log.d(TAG_SPLASH, "Lee de la tabla de compras");
 
-
             } catch (ClientProtocolException e) {
 
-                logger.addRecordToLog("ClientProtocolException  : " + e.getMessage());
+                Log.d(TAG_SPLASH, "ClientProtocolException" + e.getMessage());
+                //logger.addRecordToLog("ClientProtocolException  : " + e.getMessage());
 
             } catch (IOException e) {
-
-                logger.addRecordToLog("IOException : " + e.getMessage());
+                Log.d(TAG_SPLASH, "IOException" + e.getMessage());
+                //logger.addRecordToLog("IOException : " + e.getMessage());
 
             } catch (Exception e) {
 
                 e.printStackTrace();
-                logger.addRecordToLog("Exception general doInBackground : " + e.getMessage());
+                //Log.d(TAG_SPLASH, "Exception" + e.getMessage());
+                //logger.addRecordToLog("Exception general doInBackground : " + e.getMessage());
             }
 
             return null;
@@ -151,15 +152,15 @@ public class SplashActivity extends AppCompatActivity {
             Log.d(TAG_SPLASH, "codigoMaximo: " + codigoMaximo);
 
             StringBuilder url = new StringBuilder();
-            url.append( Constantes.URL_SERVICIO_EMPLEADOS_POR_CODIGO ).append( codigoMaximo );
+            url.append(Constantes.URL_SERVICIO_EMPLEADOS_POR_CODIGO).append(codigoMaximo);
 
-            HttpGet httpGet = new HttpGet( url.toString() );
-            logger.addRecordToLog("antes httpclient.execute(httpGet)");
+            HttpGet httpGet = new HttpGet(url.toString());
+            //logger.addRecordToLog("antes httpclient.execute(httpGet)");
 
             HttpResponse response = httpclient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             String responseString = EntityUtils.toString(entity, "UTF-8");
-            logger.addRecordToLog("despues responseString : " + responseString);
+            //logger.addRecordToLog("despues responseString : " + responseString);
 
             RespuestaVO respuestaVO = gson.fromJson(responseString, RespuestaVO.class);
             return respuestaVO;

@@ -42,7 +42,7 @@ public class ServicioBDD<SQLiteDataBase> {
         baseHelper.close();
     }
 
-    public void insertarCompra(Compra compra) throws Exception{
+    public void insertarCompra(Compra compra) throws Exception {
         ContentValues values = new ContentValues();
 
         values.put("valorcompra", compra.getValorCompra());
@@ -54,22 +54,22 @@ public class ServicioBDD<SQLiteDataBase> {
     }
 
     public void insertarRegistro(Registro registro) {
-        logger.addRecordToLog("ServicioBDD.insertarRegistro");
+        //logger.addRecordToLog("ServicioBDD.insertarRegistro");
 
         try {
-            logger.addRecordToLog("ServicioBDD.insertarRegistro -1-");
+            //logger.addRecordToLog("ServicioBDD.insertarRegistro -1-");
 
             ContentValues values = new ContentValues();
             values.put("cedula", registro.getCedula());
             values.put("idaratek", registro.getIdaratek());
 
-            logger.addRecordToLog("ServicioBDD.insertarRegistro -2- "+ registro.getCedula() +" " + registro.getIdaratek());
+            //logger.addRecordToLog("ServicioBDD.insertarRegistro -2- "+ registro.getCedula() +" " + registro.getIdaratek());
             long resultado = sqLiteDatabase.insertOrThrow("comprador", null, values);
-            logger.addRecordToLog("ServicioBDD.insertarRegistro -3- : " + resultado);
+            //logger.addRecordToLog("ServicioBDD.insertarRegistro -3- : " + resultado);
 
-        }catch (Exception e){
-            logger.addRecordToLog("ServicioBDD.insertarRegistro -4-");
-            logger.addRecordToLog("Exception insertarRegistro: " + e.getMessage());
+        } catch (Exception e) {
+            //logger.addRecordToLog("ServicioBDD.insertarRegistro -4-");
+            //logger.addRecordToLog("Exception insertarRegistro: " + e.getMessage());
             Log.d("MV", "Error: " + e.getMessage());
         }
     }
@@ -98,49 +98,49 @@ public class ServicioBDD<SQLiteDataBase> {
         sqLiteDatabase.update("empleados", values, "codigo = " + empleado.getCodigoNomina(), null);
     }
 
-    public EmpleadoVO obtenerNombreUsuario(String idUsuarioAratek){
+    public EmpleadoVO obtenerNombreUsuario(String idUsuarioAratek) {
 
         EmpleadoVO empleado = null;
         StringBuilder consulta = new StringBuilder();
         consulta.append("SELECT cedula , nombres ")
                 .append("  FROM empleados ")
-                .append(" WHERE cedula = ( SELECT cedula FROM comprador WHERE idaratek=").append( idUsuarioAratek ).append(")");
+                .append(" WHERE cedula = ( SELECT cedula FROM comprador WHERE idaratek=").append(idUsuarioAratek).append(")");
 
-        logger.addRecordToLog("consulta : " + consulta.toString());
+        //logger.addRecordToLog("consulta : " + consulta.toString());
 
         try {
-            Cursor cursor = sqLiteDatabase.rawQuery( consulta.toString() , null );
+            Cursor cursor = sqLiteDatabase.rawQuery(consulta.toString(), null);
 
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
 
-                empleado = new EmpleadoVO( cursor.getString(0) , cursor.getString(1) );
+                empleado = new EmpleadoVO(cursor.getString(0), cursor.getString(1));
 
                 cursor.close();
 
             }
-        }catch(Exception e){
+        } catch (Exception e) {
 
-            logger.addRecordToLog("BaseHelper.exception : " + SnacksUtil.obtenerStackErrores( e ));
+            //logger.addRecordToLog("BaseHelper.exception : " + SnacksUtil.obtenerStackErrores( e ));
 
         }
         return empleado;
     }
 
     //Método que retorna los datos de la tabla COMPRAS
-    public List<Compra> obtenerCompras() throws Exception{
-        logger.addRecordToLog("ServiciosBDD.obtenerCompras");
+    public List<Compra> obtenerCompras() throws Exception {
+        //logger.addRecordToLog("ServiciosBDD.obtenerCompras");
 
         List<Compra> compras = null;
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        try{
+        try {
 
             String qryCompras = " SELECT idcpr , cedula, fechacompra, valorcompra , comentario , estado " +
-                                "   FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'" +
-                                "     OR estado = '" + TiposRespuesta.SINCRONIZADO_ERROR.toString() + "'";
+                    "   FROM compras WHERE estado = '" + TiposRespuesta.NO_SINCRONIZADO.toString() + "'" +
+                    "     OR estado = '" + TiposRespuesta.SINCRONIZADO_ERROR.toString() + "'";
 
-            logger.addRecordToLog("qryCompras : " + qryCompras);
+            //logger.addRecordToLog("qryCompras : " + qryCompras);
 
             Cursor cursor = sqLiteDatabase.rawQuery(qryCompras, null);
 
@@ -156,7 +156,7 @@ public class ServicioBDD<SQLiteDataBase> {
                     compra.setCedula(cursor.getString(1));
 
                     compra.setFechaCompra(cursor.getString(2));
-                    compra.setFechaNumero( formatoFecha.parse(cursor.getString(2)).getTime() );
+                    compra.setFechaNumero(formatoFecha.parse(cursor.getString(2)).getTime());
 
                     compra.setValorCompra(cursor.getString(3));
 
@@ -171,34 +171,34 @@ public class ServicioBDD<SQLiteDataBase> {
             }
             cursor.close();
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
-            Log.d("MV",e.toString());
+            Log.d("MV", e.toString());
 
             Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             e.printStackTrace(printWriter);
             String s = writer.toString();
 
-            logger.addRecordToLog("ServicioBDD.obtenerCompras : " + s);
+            //logger.addRecordToLog("ServicioBDD.obtenerCompras : " + s);
 
         }
         return compras;
     }
 
     public Boolean existeComprador(String cedula) throws Exception {
-        logger.addRecordToLog("BaseHelper.existeComprador : " + cedula);
+        //logger.addRecordToLog("BaseHelper.existeComprador : " + cedula);
 
-        String qry = "SELECT count(*) FROM comprador WHERE cedula = '"+cedula+"'";
-        logger.addRecordToLog("qry : " + qry);
+        String qry = "SELECT count(*) FROM comprador WHERE cedula = '" + cedula + "'";
+        //logger.addRecordToLog("qry : " + qry);
 
-        Cursor cursor = sqLiteDatabase.rawQuery( qry , null );
+        Cursor cursor = sqLiteDatabase.rawQuery(qry, null);
         //Cursor cursor = getWritableDatabase().rawQuery(qry, new String[]{cedula});
         cursor.moveToFirst();
         int i = cursor.getInt(0);
         cursor.close();
 
-        logger.addRecordToLog("count :  " + i);
+        //logger.addRecordToLog("count :  " + i);
         if (i >= 3) {
             return Boolean.TRUE;
         }
@@ -208,7 +208,7 @@ public class ServicioBDD<SQLiteDataBase> {
 
     public String buscarEmpleado(String cedula) {
 
-        logger.addRecordToLog("BaseHelper.buscarEmpleado: " + cedula);
+        //logger.addRecordToLog("BaseHelper.buscarEmpleado: " + cedula);
 
         String nombreCompleto = null;
         String qry = "SELECT nombres FROM empleados WHERE cedula = '" + cedula + "'";
@@ -225,7 +225,7 @@ public class ServicioBDD<SQLiteDataBase> {
             }
         } catch (Exception e) {
 
-            logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
+            //logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
 
         }
         return nombreCompleto;
@@ -235,14 +235,14 @@ public class ServicioBDD<SQLiteDataBase> {
 
         try {
             String qry = "UPDATE compras SET estado = '" + estadoSincronizacion + "' WHERE idcpr = " + idCompra;
-            logger.addRecordToLog("qry : " + qry);
+            //logger.addRecordToLog("qry : " + qry);
 
-            logger.addRecordToLog("ServicioBDD.actualizarCompra - 1 - ");
-            sqLiteDatabase.execSQL( qry );
-            logger.addRecordToLog("ServicioBDD.actualizarCompra - 2 - ");
+            //logger.addRecordToLog("ServicioBDD.actualizarCompra - 1 - ");
+            sqLiteDatabase.execSQL(qry);
+            //logger.addRecordToLog("ServicioBDD.actualizarCompra - 2 - ");
 
         } catch (Exception s) {
-            logger.addRecordToLog("BaseHelper.SQLException: " + s.getMessage());
+            //logger.addRecordToLog("BaseHelper.SQLException: " + s.getMessage());
         }
     }
 
@@ -254,28 +254,28 @@ public class ServicioBDD<SQLiteDataBase> {
             switch (opcion) {
                 case 1:
                     qry = "DELETE FROM compras";
-                    logger.addRecordToLog("ServicioBDD.borrarTablaCompras Borra Todo");
+                    //logger.addRecordToLog("ServicioBDD.borrarTablaCompras Borra Todo");
                     break;
 
                 case 2:
                     qry = "DELETE FROM compras WHERE estado = 'SINCRONIZADO'";
-                    logger.addRecordToLog("ServicioBDD.borrarTablaCompras Borra SINCRONIZADO_OK");
+                    //logger.addRecordToLog("ServicioBDD.borrarTablaCompras Borra SINCRONIZADO_OK");
                     break;
 
                 default:
-                    logger.addRecordToLog("ServicioBDD.borrarTablaCompras Opción no Válida");
+                    //logger.addRecordToLog("ServicioBDD.borrarTablaCompras Opción no Válida");
                     break;
             }
 
-            sqLiteDatabase.execSQL( qry );
-        }catch(Exception e){
+            sqLiteDatabase.execSQL(qry);
+        } catch (Exception e) {
 
             Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             e.printStackTrace(printWriter);
             String s = writer.toString();
 
-            logger.addRecordToLog("BaseHelper..borrarTablaCompras SQLException: " + s);
+            //logger.addRecordToLog("BaseHelper..borrarTablaCompras SQLException: " + s);
 
         }
     }

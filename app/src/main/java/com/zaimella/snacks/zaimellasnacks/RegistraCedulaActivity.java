@@ -28,14 +28,14 @@ public class RegistraCedulaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registra_cedula);
 
-        mNumeroCedula = (EditText)findViewById(R.id.idTxtNumeroCedula);
+        mNumeroCedula = (EditText) findViewById(R.id.idTxtNumeroCedula);
 
     }
 
-    public void btnContinuarRegistroHuella(View view){
+    public void btnContinuarRegistroHuella(View view) {
 
         try {
-            logger.addRecordToLog("RegistraCedulaActivity.btnContinuarRegistroHuella");
+            //logger.addRecordToLog("RegistraCedulaActivity.btnContinuarRegistroHuella");
             ServicioBDD servicioBDD = new ServicioBDD(this);
             servicioBDD.abrirBD();
 
@@ -43,7 +43,7 @@ public class RegistraCedulaActivity extends AppCompatActivity {
             BaseHelper bddSnacks = new BaseHelper(this);
             String numeroCedula = mNumeroCedula.getText().toString();
 
-            logger.addRecordToLog("RegistraCedulaActivity.numeroCedula : " + numeroCedula);
+            //logger.addRecordToLog("RegistraCedulaActivity.numeroCedula : " + numeroCedula);
 
             if (numeroCedula == null || numeroCedula.length() == 0) {
                 //Ingrese el número de cédula
@@ -58,7 +58,7 @@ public class RegistraCedulaActivity extends AppCompatActivity {
             //Validar si la cédula ingresada ya existe
             Boolean existeComprador = servicioBDD.existeComprador(numeroCedula);
 
-            logger.addRecordToLog("RegistraCedulaActivity.existeComprador : " + existeComprador);
+            //logger.addRecordToLog("RegistraCedulaActivity.existeComprador : " + existeComprador);
 
             if (existeComprador) {
 
@@ -73,7 +73,7 @@ public class RegistraCedulaActivity extends AppCompatActivity {
 
 
             String nombreEmpleado = servicioBDD.buscarEmpleado(numeroCedula);
-            logger.addRecordToLog("RegistraCedulaActivity.nombreEmpleado : " + nombreEmpleado);
+            //logger.addRecordToLog("RegistraCedulaActivity.nombreEmpleado : " + nombreEmpleado);
             if (nombreEmpleado == null || nombreEmpleado.length() == 0) {
                 //No existe el empleado
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -94,7 +94,7 @@ public class RegistraCedulaActivity extends AppCompatActivity {
             intent.putExtras(bundle);
             startActivity(intent);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             //Log.d("MV", e.getMessage());
 
@@ -103,12 +103,12 @@ public class RegistraCedulaActivity extends AppCompatActivity {
             e.printStackTrace(printWriter);
             String s = writer.toString();
 
-            logger.addRecordToLog("RegistraCedulaActivity.btnContinuarRegistroHuella : " + s);
+            //logger.addRecordToLog("RegistraCedulaActivity.btnContinuarRegistroHuella : " + s);
         }
 
     }
 
-    public void btnRegistrarMenu(View view){
+    public void btnRegistrarMenu(View view) {
 
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);

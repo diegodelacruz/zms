@@ -52,9 +52,9 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
     }
 
-    public void btnComprar(View view){
+    public void btnComprar(View view) {
 
-        Log.d("MV","btnComprar");
+        Log.d("MV", "btnComprar");
 
         Intent intent = new Intent(this, UnicaCompraActivity.class);
         startActivity(intent);
@@ -62,9 +62,9 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void btnRegistrar(View view){
+    public void btnRegistrar(View view) {
 
-        Log.d("MV","btnRegistrar");
+        Log.d("MV", "btnRegistrar");
 
         Intent intent = new Intent(this, RegistraCedulaActivity.class);
         startActivity(intent);
@@ -72,11 +72,11 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void btnSincronizar(View view){
-        logger.addRecordToLog("MenuActivity.sincronizar");
+    public void btnSincronizar(View view) {
+        //logger.addRecordToLog("MenuActivity.sincronizar");
 
         ServicioBDD servicioBDD = new ServicioBDD(this);
-        new SincronizarApexTask( this , servicioBDD ).execute();
+        new SincronizarApexTask(this, servicioBDD).execute();
 
     }
 
@@ -86,14 +86,14 @@ public class MenuActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), "No está permitido regresar. Presione Aceptar.", Toast.LENGTH_SHORT).show();
     }
 
-    private class SincronizarApexTask extends AsyncTask<Void,Void,Void>{
+    private class SincronizarApexTask extends AsyncTask<Void, Void, Void> {
 
         public Context context;
         private ServicioBDD servicioBDD;
         private ProgressDialog dialog;
 
-        public SincronizarApexTask(Context context,ServicioBDD servicioBDD) {
-            logger.addRecordToLog("SincronizarApexTask");
+        public SincronizarApexTask(Context context, ServicioBDD servicioBDD) {
+            //logger.addRecordToLog("SincronizarApexTask");
             this.servicioBDD = servicioBDD;
             this.dialog = new ProgressDialog(context);
         }
@@ -101,7 +101,7 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //super.onPreExecute();
-            logger.addRecordToLog("SincronizarApexTask.onPreExecute");
+            //logger.addRecordToLog("SincronizarApexTask.onPreExecute");
 
             dialog.setMessage("Sincronizando...");
             dialog.show();
@@ -116,32 +116,32 @@ public class MenuActivity extends AppCompatActivity {
             servicioBDD.cerrarBD();
             */
 
-            try{
-                logger.addRecordToLog("SincronizarApexTask.doInBackground");
+            try {
+                //logger.addRecordToLog("SincronizarApexTask.doInBackground");
                 RespuestaVO respuestaVO = null;
                 this.servicioBDD.abrirBD();
 
                 List<Compra> compras = servicioBDD.obtenerCompras();
-                logger.addRecordToLog("SincronizarApexTask.doInBackground compras : " + compras);
+                //logger.addRecordToLog("SincronizarApexTask.doInBackground compras : " + compras);
 
-                for( Compra compra  : compras ){
+                for (Compra compra : compras) {
                     //System.out.println("compra: " + compra);
-                    logger.addRecordToLog("compra: " + compra);
+                    //logger.addRecordToLog("compra: " + compra);
 
-                    if( this.invocarServicioCarga(compra) ) {
+                    if (this.invocarServicioCarga(compra)) {
 
                         //Sincronización OK
-                        logger.addRecordToLog("SINCRONIZACION OK : " + compra);
-                        this.servicioBDD.actualizarCompra( compra.getIdcpr() , TiposRespuesta.SINCRONIZADO.toString() );
+                        //logger.addRecordToLog("SINCRONIZACION OK : " + compra);
+                        this.servicioBDD.actualizarCompra(compra.getIdcpr(), TiposRespuesta.SINCRONIZADO.toString());
                         //compra.setEstado( TiposRespuesta.SINCRONIZADO.toString() );
                         //this.servicioBDD.actualizarCompra( compra );
 
-                    }else{
+                    } else {
 
                         ////Sincronización ERROR
-                        logger.addRecordToLog("SINCRONIZACION ERROR : " + compra);
+                        //logger.addRecordToLog("SINCRONIZACION ERROR : " + compra);
                         //compra.setEstado( TiposRespuesta.SINCRONIZADO_ERROR.toString() );
-                        this.servicioBDD.actualizarCompra( compra.getIdcpr() , TiposRespuesta.SINCRONIZADO_ERROR.toString() );
+                        this.servicioBDD.actualizarCompra(compra.getIdcpr(), TiposRespuesta.SINCRONIZADO_ERROR.toString());
 
                     }
 
@@ -150,18 +150,18 @@ public class MenuActivity extends AppCompatActivity {
                 }
 
                 //Borrar los registros con estado SINCRONIZADO_OK
-                this.servicioBDD.borrarTablaCompras( 2 );
+                this.servicioBDD.borrarTablaCompras(2);
 
                 servicioBDD.cerrarBD();
 
-            }catch(Exception e){
+            } catch (Exception e) {
 
                 Writer writer = new StringWriter();
                 PrintWriter printWriter = new PrintWriter(writer);
                 e.printStackTrace(printWriter);
                 String s = writer.toString();
 
-                logger.addRecordToLog("Exception MenuActivity.sincronizar : " + s);
+                //logger.addRecordToLog("Exception MenuActivity.sincronizar : " + s);
 
             }
 
@@ -171,16 +171,16 @@ public class MenuActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             //super.onPostExecute(aVoid);
-            logger.addRecordToLog("Exception MenuActivity.onPostExecute");
+            //logger.addRecordToLog("Exception MenuActivity.onPostExecute");
 
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
         }
 
-        private Boolean invocarServicioCarga(Compra compra){
+        private Boolean invocarServicioCarga(Compra compra) {
             try {
-                logger.addRecordToLog("MenuActivity.invocarServicioCarga");
+                //logger.addRecordToLog("MenuActivity.invocarServicioCarga");
 
                 Gson gson = new Gson();
                 HttpClient httpclient = new DefaultHttpClient();
@@ -192,9 +192,9 @@ public class MenuActivity extends AppCompatActivity {
                         .append("/").append(compra.getFechaNumero())
                         .append("/").append(compra.getValorCompra());
 
-                if( compra.getComentario()!=null &&  compra.getComentario().length()>0 ){
-                    url.append("/").append( URLEncoder.encode( compra.getComentario() , "UTF-8")  );
-                }else{
+                if (compra.getComentario() != null && compra.getComentario().length() > 0) {
+                    url.append("/").append(URLEncoder.encode(compra.getComentario(), "UTF-8"));
+                } else {
                     url.append("/").append("NA");
                 }
 
@@ -204,24 +204,24 @@ public class MenuActivity extends AppCompatActivity {
                 HttpEntity entity = response.getEntity();
                 String responseString = EntityUtils.toString(entity, "UTF-8");
 
-                logger.addRecordToLog("despues responseString : " + responseString);
+                //logger.addRecordToLog("despues responseString : " + responseString);
 
                 RespuestaVO respuestaVO = gson.fromJson(responseString, RespuestaVO.class);
 
-                if( !respuestaVO.getCodigo().equalsIgnoreCase("OK") ){
+                if (!respuestaVO.getCodigo().equalsIgnoreCase("OK")) {
                     //error al insertar el registro
                     return Boolean.FALSE;
                 }
 
                 return Boolean.TRUE;
-            }catch(Exception e){
+            } catch (Exception e) {
 
                 Writer writer = new StringWriter();
                 PrintWriter printWriter = new PrintWriter(writer);
                 e.printStackTrace(printWriter);
                 String s = writer.toString();
 
-                logger.addRecordToLog("Exception MenuActivity.invocarServicioCarga : " + s);
+                //logger.addRecordToLog("Exception MenuActivity.invocarServicioCarga : " + s);
 
                 return Boolean.FALSE;
             }

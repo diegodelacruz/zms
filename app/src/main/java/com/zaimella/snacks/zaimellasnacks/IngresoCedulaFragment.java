@@ -112,7 +112,6 @@ public class IngresoCedulaFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
 
 
-
     }
 
 }

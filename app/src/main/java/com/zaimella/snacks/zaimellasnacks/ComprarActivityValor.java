@@ -28,7 +28,7 @@ public class ComprarActivityValor extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        logger.addRecordToLog("ComprarActivityValor.onCreate");
+        //logger.addRecordToLog("ComprarActivityValor.onCreate");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comprar_valor);
@@ -57,8 +57,8 @@ public class ComprarActivityValor extends AppCompatActivity {
         fragmentTransaction.replace( R.id.fragments_container , fragment);
         fragmentTransaction.commit();*/
 
-        float valor = Float.parseFloat( mTxtValor.getText().toString() );
-        if( valor>10 ){
+        float valor = Float.parseFloat(mTxtValor.getText().toString());
+        if (valor > 10) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.mns_ingrese_valor_menor_10)
                     .setTitle(R.string.mns_titulo)

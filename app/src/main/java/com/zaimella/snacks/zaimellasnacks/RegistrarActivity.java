@@ -46,7 +46,7 @@ import cn.com.aratek.fp.FingerprintImage;
 import cn.com.aratek.fp.FingerprintScanner;
 import cn.com.aratek.util.Result;
 
-public class RegistrarActivity extends AppCompatActivity  {
+public class RegistrarActivity extends AppCompatActivity {
 
     Logger logger;
 
@@ -78,25 +78,25 @@ public class RegistrarActivity extends AppCompatActivity  {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_SHOW_ERROR: {
-                    logger.addRecordToLog("MSG_SHOW_ERROR");
+                    //logger.addRecordToLog("MSG_SHOW_ERROR");
                     showDialog(0, (Bundle) msg.obj);
                     break;
                 }
                 case MSG_SHOW_INFO: {
-                    logger.addRecordToLog("MSG_SHOW_INFO");
+                    //logger.addRecordToLog("MSG_SHOW_INFO");
 
                     Toast.makeText(RegistrarActivity.this, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
                 }
                 case MSG_UPDATE_IMAGE: {
-                    logger.addRecordToLog("MSG_UPDATE_IMAGE");
+                    //logger.addRecordToLog("MSG_UPDATE_IMAGE");
 
                     mFingerprintImage.setImageBitmap((Bitmap) msg.obj);
                     //mMensaje.setText("Ingrese la huella No: " + numeroHuella);
                     break;
                 }
                 case MSG_UPDATE_TEXT: {
-                    logger.addRecordToLog("MSG_UPDATE_TEXT");
+                    //logger.addRecordToLog("MSG_UPDATE_TEXT");
 
                     String[] texts = (String[]) msg.obj;
                     /*mCaptureTime.setText(texts[0]);
@@ -107,7 +107,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                     break;
                 }
                 case MSG_UPDATE_BUTTON: {
-                    logger.addRecordToLog("MSG_UPDATE_BUTTON");
+                    //logger.addRecordToLog("MSG_UPDATE_BUTTON");
 
                     Boolean enable = (Boolean) msg.obj;
                     /*mBtnEnroll.setEnabled(enable);
@@ -118,19 +118,19 @@ public class RegistrarActivity extends AppCompatActivity  {
                     break;
                 }
                 case MSG_UPDATE_SN: {
-                    logger.addRecordToLog("MSG_UPDATE_SN");
+                    //logger.addRecordToLog("MSG_UPDATE_SN");
 
                     //mSN.setText((String) msg.obj);
                     break;
                 }
                 case MSG_UPDATE_FW_VERSION: {
-                    logger.addRecordToLog("MSG_UPDATE_FW_VERSION");
+                    //logger.addRecordToLog("MSG_UPDATE_FW_VERSION");
 
                     //mFwVersion.setText((String) msg.obj);
                     break;
                 }
                 case MSG_SHOW_PROGRESS_DIALOG: {
-                    logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
+                    //logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
                     String[] info = (String[]) msg.obj;
                     mProgressDialog.setTitle(info[0]);
                     mProgressDialog.setMessage(info[1]);
@@ -138,7 +138,7 @@ public class RegistrarActivity extends AppCompatActivity  {
                     break;
                 }
                 case MSG_DISMISS_PROGRESS_DIALOG: {
-                    logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
+                    //logger.addRecordToLog("MSG_SHOW_PROGRESS_DIALOG");
                     mProgressDialog.dismiss();
                     break;
                 }
@@ -156,17 +156,17 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         //Atributos
         numeroHuella = 0;
-        mNumeroCedula =(TextView)findViewById(R.id.idNumeroCedula);
-        mNombreUsuario = (TextView)findViewById(R.id.idNombreUsuario);
-        mFingerprintImage = (ImageView)findViewById(R.id.imagenHuella);
-        mHuella1 = (ImageView)findViewById(R.id.huella1);
-        mHuella2 = (ImageView)findViewById(R.id.huella2);
-        mHuella3 = (ImageView)findViewById(R.id.huella3);
+        mNumeroCedula = (TextView) findViewById(R.id.idNumeroCedula);
+        mNombreUsuario = (TextView) findViewById(R.id.idNombreUsuario);
+        mFingerprintImage = (ImageView) findViewById(R.id.imagenHuella);
+        mHuella1 = (ImageView) findViewById(R.id.huella1);
+        mHuella2 = (ImageView) findViewById(R.id.huella2);
+        mHuella3 = (ImageView) findViewById(R.id.huella3);
         //mMensaje = (TextView)findViewById(R.id.mensaje);
 
         Intent intent = getIntent();
-        mNumeroCedula.setText( intent.getStringExtra(Constantes.NUMERO_CEDULA) );
-        mNombreUsuario.setText( intent.getStringExtra(Constantes.NOMBRE_USUARIO) );
+        mNumeroCedula.setText(intent.getStringExtra(Constantes.NUMERO_CEDULA));
+        mNombreUsuario.setText(intent.getStringExtra(Constantes.NOMBRE_USUARIO));
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -176,20 +176,20 @@ public class RegistrarActivity extends AppCompatActivity  {
 
         //Instancia dispositivo
         mScanner = FingerprintScanner.getInstance();
-        logger.addRecordToLog("AFTER FingerprintScanner.getInstance : " + mScanner.hasFinger().error);
+        //logger.addRecordToLog("AFTER FingerprintScanner.getInstance : " + mScanner.hasFinger().error);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        Log.i("MV","BEFORE openDevice()");
+        Log.i("MV", "BEFORE openDevice()");
         openDevice();
-        Log.i("MV","AFTER openDevice()");
+        Log.i("MV", "AFTER openDevice()");
     }
 
     public void openDevice() {
-        Log.i("MV","_openDevice_");
+        Log.i("MV", "_openDevice_");
 
         new Thread() {
 
@@ -200,29 +200,29 @@ public class RegistrarActivity extends AppCompatActivity  {
                 int error;
                 if ((error = mScanner.powerOn()) != FingerprintScanner.RESULT_OK) {
                     //showErrorDialog(getString(R.string.fingerprint_device_power_on_failed), getFingerprintErrorString(error));
-                    logger.addRecordToLog("fingerprint_device_power_on_failed : " + error);
-                }else{
-                    logger.addRecordToLog("mScanner.powerOn() success : " + error);
+                    //logger.addRecordToLog("fingerprint_device_power_on_failed : " + error);
+                } else {
+                    //logger.addRecordToLog("mScanner.powerOn() success : " + error);
                 }
 
                 Log.i("MV", "before mScanner.open()");
                 //error = mScanner.open();
                 //Log.i("MV", "after mScanner.open() : " + error);
-                //logger.addRecordToLog("after mScanner.open() : " + error);
+                ////logger.addRecordToLog("after mScanner.open() : " + error);
                 if ((error = mScanner.open()) != FingerprintScanner.RESULT_OK) {
-                    Log.i("MV","mScanner.open() error");
-                    Log.i("MV","MSG_UPDATE_SN");
-                    Log.i("MV","MSG_UPDATE_FW_VERSION");
+                    Log.i("MV", "mScanner.open() error");
+                    Log.i("MV", "MSG_UPDATE_SN");
+                    Log.i("MV", "MSG_UPDATE_FW_VERSION");
 
-                    logger.addRecordToLog("mScanner.open() error");
-                    logger.addRecordToLog("MSG_UPDATE_SN");
-                    logger.addRecordToLog("MSG_UPDATE_FW_VERSION");
+                    //logger.addRecordToLog("mScanner.open() error");
+                    //logger.addRecordToLog("MSG_UPDATE_SN");
+                    //logger.addRecordToLog("MSG_UPDATE_FW_VERSION");
 
-                }else{
+                } else {
 
                     Result res = mScanner.getSN();
                     res = mScanner.getFirmwareVersion();
-                    logger.addRecordToLog("MSG_UPDATE_FW_VERSION : " + (String) res.data);
+                    //logger.addRecordToLog("MSG_UPDATE_FW_VERSION : " + (String) res.data);
 
                     /*mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_SN, getString(R.string.fps_sn, (String) res.data)));
                     mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_FW_VERSION, getString(R.string.fps_fw, (String) res.data)));
@@ -231,9 +231,9 @@ public class RegistrarActivity extends AppCompatActivity  {
                 }
 
                 if ((error = Bione.initialize(RegistrarActivity.this, Constantes.FP_DB_PATH)) == Bione.RESULT_OK) {
-                    logger.addRecordToLog("algorithm_initialization_success");
-                }else{
-                    logger.addRecordToLog("algorithm_initialization_failed");
+                    //logger.addRecordToLog("algorithm_initialization_success");
+                } else {
+                    //logger.addRecordToLog("algorithm_initialization_failed");
                 }
 
                 dismissProgressDialog();
@@ -243,7 +243,7 @@ public class RegistrarActivity extends AppCompatActivity  {
     }
 
     private void showProgressDialog(String title, String message) {
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_PROGRESS_DIALOG, new String[] { title, message }));
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SHOW_PROGRESS_DIALOG, new String[]{title, message}));
     }
 
     private void dismissProgressDialog() {
@@ -266,15 +266,15 @@ public class RegistrarActivity extends AppCompatActivity  {
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.i("MV","before closeDevice");
+        Log.i("MV", "before closeDevice");
         this.closeDevice();
-        Log.i("MV","after closeDevice");
+        Log.i("MV", "after closeDevice");
 
         this.mScanner = null;
     }
 
     private void closeDevice() {
-        Log.i("MV","_closeDevice_");
+        Log.i("MV", "_closeDevice_");
 
         new Thread() {
 
@@ -287,30 +287,30 @@ public class RegistrarActivity extends AppCompatActivity  {
                     Log.i("MV", "BEFORE mScanner.close()");
                     if ((error = mScanner.close()) != FingerprintScanner.RESULT_OK) {
                         Log.i("MV", "fingerprint_device_close_failed");
-                        logger.addRecordToLog("fingerprint_device_close_failed");
+                        //logger.addRecordToLog("fingerprint_device_close_failed");
                     } else {
                         Log.i("MV", "fingerprint_device_close_success");
-                        logger.addRecordToLog("fingerprint_device_close_success");
+                        //logger.addRecordToLog("fingerprint_device_close_success");
                     }
 
                     if ((error = mScanner.powerOff()) != FingerprintScanner.RESULT_OK) {
                         Log.i("MV", "fingerprint_device_power_off_failed");
-                        logger.addRecordToLog("fingerprint_device_power_off_failed");
+                        //logger.addRecordToLog("fingerprint_device_power_off_failed");
                     } else {
-                        logger.addRecordToLog("power_off success");
+                        //logger.addRecordToLog("power_off success");
                     }
 
                     if ((error = Bione.exit()) != Bione.RESULT_OK) {
                         //showErrorDialog(getString(R.string.algorithm_cleanup_failed), getFingerprintErrorString(error));
                         Log.i("MV", "algorithm_cleanup_failed");
-                        logger.addRecordToLog("algorithm_cleanup_failed");}
-                    else {
-                        logger.addRecordToLog("algorithm_cleanup_failed success");
+                        //logger.addRecordToLog("algorithm_cleanup_failed");
+                    } else {
+                        //logger.addRecordToLog("algorithm_cleanup_failed success");
                     }
 
-                }catch(Exception e){
+                } catch (Exception e) {
 
-                    logger.addRecordToLog("Exception close device : " + e.getMessage());
+                    //logger.addRecordToLog("Exception close device : " + e.getMessage());
                 }
 
             }
@@ -318,51 +318,51 @@ public class RegistrarActivity extends AppCompatActivity  {
 
     }
 
-    public void btnCapturar(View view){
+    public void btnCapturar(View view) {
         try {
-            logger.addRecordToLog("btnCapturar -0-");
+            //logger.addRecordToLog("btnCapturar -0-");
 
             mFingerprintImage.setImageResource(R.drawable.nuevahuella);
             //mMensaje.setText("Ingrese la huella No: " + numeroHuella);
 
             //Lanza la tarea asíncrona para ingreso de huella
             (new FingerprintTask(this)).execute(numeroHuella);
-            logger.addRecordToLog("btnCapturar -3-");
+            //logger.addRecordToLog("btnCapturar -3-");
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
             Writer writer = new StringWriter();
             PrintWriter printWriter = new PrintWriter(writer);
             e.printStackTrace(printWriter);
             String s = writer.toString();
 
-            logger.addRecordToLog("Exception btnCapturar : " + s);
+            //logger.addRecordToLog("Exception btnCapturar : " + s);
         }
     }
 
-    public void btnCancelarRegistro(View view){
+    public void btnCancelarRegistro(View view) {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void updateFingerprintImage(FingerprintImage fi) {
-        logger.addRecordToLog("updateFingerprintImage : " + fi);
+        //logger.addRecordToLog("updateFingerprintImage : " + fi);
 
         try {
 
             byte[] fpBmp = null;
             Bitmap bitmap;
             if (fi == null || (fpBmp = fi.convert2Bmp()) == null || (bitmap = BitmapFactory.decodeByteArray(fpBmp, 0, fpBmp.length)) == null) {
-                logger.addRecordToLog("updateFingerprintImage sin huella ");
+                //logger.addRecordToLog("updateFingerprintImage sin huella ");
                 bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sinhuella);
             }
             mHandler.sendMessage(mHandler.obtainMessage(MSG_UPDATE_IMAGE, bitmap));
             //mFingerprintImage.setImageBitmap(bitmap);
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
-            logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
+            //logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
 
         }
 
@@ -373,14 +373,14 @@ public class RegistrarActivity extends AppCompatActivity  {
         public Context context;
         private boolean mIsDone = false;
 
-        public FingerprintTask(Context context){
+        public FingerprintTask(Context context) {
             this.context = context;
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             //enableControl(false);
-            logger.addRecordToLog("FingerprintTask.onPreExecute");
+            //logger.addRecordToLog("FingerprintTask.onPreExecute");
         }
 
         @Override
@@ -391,7 +391,7 @@ public class RegistrarActivity extends AppCompatActivity  {
             Result res = null;
 
             try {
-                logger.addRecordToLog("FingerprintTask.doInBackground");
+                //logger.addRecordToLog("FingerprintTask.doInBackground");
 
                 do {
                     //Prepara el scanner
@@ -403,31 +403,31 @@ public class RegistrarActivity extends AppCompatActivity  {
                     } while (res.error == FingerprintScanner.NO_FINGER && !isCancelled());
                     mScanner.finish();
                     if (isCancelled()) {
-                        logger.addRecordToLog("FingerprintTask.doInBackground isCancelled()");
-                        return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Cancelado",null);
+                        //logger.addRecordToLog("FingerprintTask.doInBackground isCancelled()");
+                        return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Cancelado", null);
                     }
 
-                }while(res.error != FingerprintScanner.RESULT_OK);
+                } while (res.error != FingerprintScanner.RESULT_OK);
 
                 //Huella ok
                 fingerprintImage = (FingerprintImage) res.data;
                 res = Bione.extractFeature(fingerprintImage);
                 if (res.error != Bione.RESULT_OK) {
                     //Tomar la huella nuevamente
-                    return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al extraer la huella",null);
+                    return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, "Error al extraer la huella", null);
                 }
 
                 fingerPrintFeature = (byte[]) res.data;
 
                 mIsDone = true;
-                return new ResultadoScanVO(TiposRespuesta.EXITO, params[0], fingerprintImage, fingerPrintFeature, "Error al extraer la huella",null);
+                return new ResultadoScanVO(TiposRespuesta.EXITO, params[0], fingerprintImage, fingerPrintFeature, "Error al extraer la huella", null);
 
-            }catch(Exception e){
+            } catch (Exception e) {
 
-                Log.e("MV" , e.getMessage() );
-                logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
+                Log.e("MV", e.getMessage());
+                //logger.addRecordToLog("Exception updateFingerprintImage : " + e.getMessage());
 
-                return new ResultadoScanVO(TiposRespuesta.ERROR , null , null , null , e.getMessage(),null);
+                return new ResultadoScanVO(TiposRespuesta.ERROR, null, null, null, e.getMessage(), null);
             }
         }
 
@@ -436,14 +436,14 @@ public class RegistrarActivity extends AppCompatActivity  {
             try {
                 super.onPostExecute(respuestaScan);
 
-                logger.addRecordToLog("FingerprintTask.onPostExecute");
+                //logger.addRecordToLog("FingerprintTask.onPostExecute");
 
                 if (respuestaScan.getRespuesta().equals(TiposRespuesta.EXITO)) {
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - EXITO");
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getNumeroHuella() : " + respuestaScan.getNumeroHuella());
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getFingerPrintFeature() : " + respuestaScan.getFingerPrintFeature());
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getFingerprintImage() : " + respuestaScan.getFingerprintImage());
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - huellas : " + huellas);
+                    //logger.addRecordToLog("FingerprintTask.onPostExecute - EXITO");
+                    //logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getNumeroHuella() : " + respuestaScan.getNumeroHuella());
+                    //logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getFingerPrintFeature() : " + respuestaScan.getFingerPrintFeature());
+                    //logger.addRecordToLog("FingerprintTask.onPostExecute - respuestaScan.getFingerprintImage() : " + respuestaScan.getFingerprintImage());
+                    //logger.addRecordToLog("FingerprintTask.onPostExecute - huellas : " + huellas);
 
                     //Asigna en el arreglo las huellas
                     huellas[respuestaScan.getNumeroHuella()] = respuestaScan.getFingerPrintFeature();
@@ -451,28 +451,32 @@ public class RegistrarActivity extends AppCompatActivity  {
                     //Actualiza la imagen de la huella
                     updateFingerprintImage(respuestaScan.getFingerprintImage());
 
-                    switch ( respuestaScan.getNumeroHuella() ){
-                        case 0: mHuella1.setImageResource(R.drawable.fpon);
+                    switch (respuestaScan.getNumeroHuella()) {
+                        case 0:
+                            mHuella1.setImageResource(R.drawable.fpon);
                             break;
-                        case 1: mHuella2.setImageResource(R.drawable.fpon);
-                                break;
-                        case 2: mHuella3.setImageResource(R.drawable.fpon);
+                        case 1:
+                            mHuella2.setImageResource(R.drawable.fpon);
                             break;
-                        default: break;
+                        case 2:
+                            mHuella3.setImageResource(R.drawable.fpon);
+                            break;
+                        default:
+                            break;
                     }
 
-                    if( numeroHuella>= 2 ){
+                    if (numeroHuella >= 2) {
 
-                        logger.addRecordToLog("onPostExecute - Número de huellas existentes : " + numeroHuella+1);
+                        //logger.addRecordToLog("onPostExecute - Número de huellas existentes : " + numeroHuella + 1);
 
-                        Result res = Bione.makeTemplate( huellas[0] , huellas[1] , huellas[2] );
+                        Result res = Bione.makeTemplate(huellas[0], huellas[1], huellas[2]);
                         if (res.error != Bione.RESULT_OK) {
 
-                            showInfoToast(getString( R.string.enroll_failed_because_of_make_template) );
-                            logger.addRecordToLog("onPostExecute - enroll_failed_because_of_make_template");
+                            showInfoToast(getString(R.string.enroll_failed_because_of_make_template));
+                            //logger.addRecordToLog("onPostExecute - enroll_failed_because_of_make_template");
 
                             //invocarPaginaMenu(final Context context , String numeroCedula , Integer idUsuarioAratek){
-                            ((RegistrarActivity)context).invocarPaginaMenu(context,null,null);
+                            ((RegistrarActivity) context).invocarPaginaMenu(context, null, null);
                             return;
                         }
 
@@ -481,31 +485,31 @@ public class RegistrarActivity extends AppCompatActivity  {
                         int id = Bione.getFreeID();
                         if (id < 0) {
 
-                            showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
-                            logger.addRecordToLog("onPostExecute - enroll_failed_because_of_get_id");
+                            showInfoToast(getString(R.string.enroll_failed_because_of_get_id));
+                            //logger.addRecordToLog("onPostExecute - enroll_failed_because_of_get_id");
 
-                            ((RegistrarActivity)context).invocarPaginaMenu(context,null,null);
+                            ((RegistrarActivity) context).invocarPaginaMenu(context, null, null);
                             return;
                         }
 
                         int ret = Bione.enroll(id, fpTemp);
                         if (ret != Bione.RESULT_OK) {
 
-                            showInfoToast(getString( R.string.enroll_failed_because_of_get_id) );
+                            showInfoToast(getString(R.string.enroll_failed_because_of_get_id));
 
-                            logger.addRecordToLog("onPostExecute - enroll_failed_because_of_error");
-                            ((RegistrarActivity)context).invocarPaginaMenu(context,null,null);
+                            //logger.addRecordToLog("onPostExecute - enroll_failed_because_of_error");
+                            ((RegistrarActivity) context).invocarPaginaMenu(context, null, null);
                             return;
                         }
 
-                        logger.addRecordToLog("onPostExecute - id generado : "+ id);
+                        //logger.addRecordToLog("onPostExecute - id generado : " + id);
 
                         showInfoToast(getString(R.string.enroll_success) + id);
 
                         //invocarPaginaMenu(final Context context , String numeroCedula , Integer idUsuarioAratek){
-                        ((RegistrarActivity)context).invocarPaginaMenu(context , respuestaScan.getNumeroCedula() , id );
+                        ((RegistrarActivity) context).invocarPaginaMenu(context, respuestaScan.getNumeroCedula(), id);
 
-                    }else{
+                    } else {
 
                         ++numeroHuella;
 
@@ -513,7 +517,8 @@ public class RegistrarActivity extends AppCompatActivity  {
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
                             @Override
-                            public void run() {}
+                            public void run() {
+                            }
                         }, 1000);
 
                         mFingerprintImage.setImageResource(R.drawable.sinhuella);
@@ -521,78 +526,78 @@ public class RegistrarActivity extends AppCompatActivity  {
                     }
 
                 } else {
-                    logger.addRecordToLog("FingerprintTask.onPostExecute - ERROR");
+                    //logger.addRecordToLog("FingerprintTask.onPostExecute - ERROR");
 
                     mFingerprintImage.setImageResource(R.drawable.errornuevahuella);
 
                 }
 
-                //logger.addRecordToLog("after update image");
-            }catch(Exception e){
+                ////logger.addRecordToLog("after update image");
+            } catch (Exception e) {
 
                 /*Writer writer = new StringWriter();
                 PrintWriter printWriter = new PrintWriter(writer);
                 e.printStackTrace(printWriter);
                 String s = writer.toString();*/
 
-                logger.addRecordToLog("Exception onPostExecute : " + e.getMessage());
+                //logger.addRecordToLog("Exception onPostExecute : " + e.getMessage());
             }
         }
 
         public void waitForDone() {
             while (!mIsDone) {
-                logger.addRecordToLog("mIsDone");
+                //logger.addRecordToLog("mIsDone");
             }
         }
 
 
     }
 
-    public void invocarPaginaMenu(final Context context , String numeroCedula , Integer idUsuarioAratek){
+    public void invocarPaginaMenu(final Context context, String numeroCedula, Integer idUsuarioAratek) {
 
-        logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu");
-        logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu numeroCedula : " + numeroCedula);
-        logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu idUsuarioAratek : " + idUsuarioAratek);
+        //logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu");
+        //logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu numeroCedula : " + numeroCedula);
+        //logger.addRecordToLog("RegistrarACtivity.invocarPaginaMenu idUsuarioAratek : " + idUsuarioAratek);
 
         StringBuilder mensaje = new StringBuilder();
-        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        try{
+        try {
             ServicioBDD servicioBDD = new ServicioBDD(this);
 
             //Método
-            if( idUsuarioAratek==null ){
+            if (idUsuarioAratek == null) {
 
                 builder.setMessage(R.string.mns_error_creacion_usuario);
                 builder.setTitle(R.string.mns_titulo)
-                        .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent( context , MenuActivity.class);
+                                Intent intent = new Intent(context, MenuActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         })
                         .show();
 
-            }else{
+            } else {
 
-                logger.addRecordToLog("Número de cédula : " + mNumeroCedula.getText().toString());
-                logger.addRecordToLog("idUsuarioAratek  : " + idUsuarioAratek.toString());
+                //logger.addRecordToLog("Número de cédula : " + mNumeroCedula.getText().toString());
+                //logger.addRecordToLog("idUsuarioAratek  : " + idUsuarioAratek.toString());
 
                 //Inserta el registro en la BDD
                 servicioBDD.abrirBD();
-                Registro registro = new Registro( mNumeroCedula.getText().toString() , idUsuarioAratek.toString() );
-                servicioBDD.insertarRegistro( registro );
+                Registro registro = new Registro(mNumeroCedula.getText().toString(), idUsuarioAratek.toString());
+                servicioBDD.insertarRegistro(registro);
                 servicioBDD.cerrarBD();
 
                 mensaje.append("El usuario ha sido creado exitosamente id(")
-                        .append( idUsuarioAratek )
+                        .append(idUsuarioAratek)
                         .append(")");
-                builder.setMessage( mensaje.toString() );
+                builder.setMessage(mensaje.toString());
                 builder.setTitle(R.string.mns_titulo)
-                        .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent intent = new Intent( context , MenuActivity.class);
+                                Intent intent = new Intent(context, MenuActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -600,22 +605,22 @@ public class RegistrarActivity extends AppCompatActivity  {
                         .show();
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
-            Log.e("MV" , e.getMessage());
+            Log.e("MV", e.getMessage());
 
             builder.setMessage("No es posible crear el usuario");
             builder.setTitle(R.string.mns_titulo)
-                    .setPositiveButton(R.string.mns_ok , new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            Intent intent = new Intent( context , MenuActivity.class);
+                            Intent intent = new Intent(context, MenuActivity.class);
                             startActivity(intent);
                             finish();
                         }
                     })
                     .show();
 
-            logger.addRecordToLog("Exception : RegistrarACtivity.invocarPaginaMenu: " + e.getMessage());
+            //logger.addRecordToLog("Exception : RegistrarACtivity.invocarPaginaMenu: " + e.getMessage());
         }
 
     }
