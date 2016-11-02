@@ -4,7 +4,7 @@
     <string name="lbl_productos">PRODUCTOS</string>
     <string name="lbl_comprar_inicio">Comprar</string>
     <string name="lbl_comprar_huella">Captura de Huella</string>
-    <string name="lbl_comprar_valor">Valor: </string>
+    <string name="lbl_comprar_valor">VALOR </string>
     <string name="lbl_comprar_observacion">Observación: </string>
     <string name="lbl_confirmar_comprar">CONFIRMAR COMPRA</string>
     <string name="lbl_confirmar_nombre">Nombre: </string>

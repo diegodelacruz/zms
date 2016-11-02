@@ -51,7 +51,7 @@ public class UnicaCompraActivity extends AppCompatActivity {
     private String observaciones;
     //private Boolean openDeviceEnEjecucion;
 
-    private TextView mCedulaIdentidad;
+    private EditText mCedulaIdentidad;
     private TextView mNombrePersona;
     private EditText mValorCompra;
 
@@ -144,7 +144,7 @@ public class UnicaCompraActivity extends AppCompatActivity {
         //Instancia dispositivo
         this.mHuellaScanner = FingerprintScanner.getInstance();
 
-        this.mCedulaIdentidad = (TextView)findViewById(R.id.idLblNumeroCedula);
+        this.mCedulaIdentidad = (EditText)findViewById(R.id.idTxtCedula);
         this.mNombrePersona = (TextView)findViewById(R.id.idLblNombrePersona);
         this.mValorCompra = (EditText) findViewById(R.id.idTxtValor);
         this.mImgHuella = (ImageView) findViewById(R.id.imgUCHuellaVerificar);
@@ -808,8 +808,9 @@ public class UnicaCompraActivity extends AppCompatActivity {
 
     public void inicializaCompraUnica(){
 
-        this.mCedulaIdentidad.setText("CI:");
-        this.mNombrePersona.setText("NOMBRE:");
+        this.mCedulaIdentidad.requestFocus();
+        this.mCedulaIdentidad.setText("");
+        this.mNombrePersona.setText("");
         this.mValorCompra.setText("");
         this.mImgHuella.setImageResource(R.drawable.sinhuella);
         this.mImgBebida.setImageResource(R.drawable.cb_bebida_ss);
@@ -885,6 +886,50 @@ public class UnicaCompraActivity extends AppCompatActivity {
             this.mImgVarios.setImageResource(R.drawable.cb_varios_cs);
             this.variosSeleccionado = true;
         }
+
+    }
+
+    public void btnOnClickCedulaIdentidad(View view){
+
+        String numeroCedula = this.mCedulaIdentidad.getText().toString();
+
+        if( numeroCedula==null || numeroCedula.length()==0 ){
+            /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Ingrese el número de cédula");
+            builder.setTitle(R.string.mns_titulo)
+                    .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+
+            return;*/
+            return;
+        }
+
+
+        ServicioBDD srvEmpleado = new ServicioBDD(this);
+        srvEmpleado.abrirBD();
+        String empleado = srvEmpleado.buscarEmpleado( numeroCedula );
+
+        if( empleado==null || empleado.length()==0 ){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Ingrese el número de cédula");
+            builder.setTitle(R.string.mns_titulo)
+                    .setPositiveButton(R.string.mns_ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+
+            return;
+        }
+
+        //Asigna el nombre de la persona
+        this.mNombrePersona.setText( empleado );
+        this.mValorCompra.requestFocus();
 
     }
 

@@ -226,6 +226,7 @@ public class ServicioBDD<SQLiteDataBase> {
         } catch (Exception e) {
 
             //logger.addRecordToLog("BaseHelper.exception : " + e.getMessage());
+            //Log.d("ServicioBDD")
 
         }
         return nombreCompleto;

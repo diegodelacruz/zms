@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -38,89 +38,70 @@
                 android:background="@android:color/transparent"
                 android:onClick="btnCapturarCompra"
                 android:padding="5dp"
-                android:src="@drawable/btn_finger_xxc" />
+                android:src="@drawable/btn_finger_xc" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center_horizontal|center_vertical"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/idLblNumeroCedula"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="CÉDULA"
+                android:textColor="#498054"
+                android:textSize="10pt"
+                android:textStyle="normal|bold" />
+
+            <EditText
+                android:id="@+id/idTxtCedula"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/idLblNumeroCedula"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:padding="5dp"
-                    android:text="TextView"
-                    android:textColor="#498054"
-                    android:textSize="15sp"
-                    android:textStyle="normal|bold" />
-
-                <EditText
-                    android:id="@+id/idTxtCedula"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:inputType="numberDecimal"
-                    android:maxLength="10"
-                    android:textColor="#498054"
-                    android:textSize="36sp"
-                    android:textStyle="normal|bold" />
-            </LinearLayout>
+                android:gravity="center_vertical"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:textColor="#498054"
+                android:textSize="10pt"
+                android:textStyle="normal|bold"
+                android:onClick="btnOnClickCedulaIdentidad"/>
 
             <TextView
                 android:id="@+id/idLblNombrePersona"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="TextView"
                 android:textColor="#498054"
-                android:textSize="15sp"
+                android:textSize="10pt"
                 android:textStyle="normal|bold" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/idLblValorCompra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/lbl_comprar_valor"
+                android:textColor="#498054"
+                android:textSize="10pt"
+                android:textStyle="normal|bold" />
+
+            <EditText
+                android:id="@+id/idTxtValor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center_horizontal|center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/idLblValorCompra"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center_vertical"
-                    android:padding="5dp"
-                    android:text="@string/lbl_comprar_valor"
-                    android:textColor="#498054"
-                    android:textSize="15sp"
-                    android:textStyle="normal|bold" />
-
-                <EditText
-                    android:id="@+id/idTxtValor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:hint="0.00"
-                    android:inputType="numberDecimal"
-                    android:textColor="#498054"
-                    android:textSize="36sp"
-                    android:textStyle="normal|bold" />
-            </LinearLayout>
+                android:gravity="center_vertical"
+                android:hint="0.00"
+                android:inputType="numberDecimal"
+                android:textColor="#498054"
+                android:textSize="36sp"
+                android:textStyle="normal|bold" />
         </LinearLayout>
     </LinearLayout>
 
