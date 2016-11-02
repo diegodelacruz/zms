@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/activity_unica_compra"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:background="@drawable/img_adn_nav"
-              tools:context="com.zaimella.snacks.zaimellasnacks.UnicaCompraActivity">
-
-    <TextView
-        android:id="@+id/idComprarValor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="70dp"
-        android:gravity="center_horizontal"
-        android:text="@string/lbl_comprar"
-        android:textColor="#498054"
-        android:textSize="15pt"
-        android:textStyle="bold" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_unica_compra"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_adn_nav"
+    android:orientation="vertical"
+    tools:context="com.zaimella.snacks.zaimellasnacks.UnicaCompraActivity">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -35,67 +24,103 @@
 
             <ImageView
                 android:id="@+id/imgUCHuellaVerificar"
-                android:layout_width="130px"
-                android:layout_height="130px"
-                android:maxWidth="130px"
+                android:layout_width="170px"
+                android:layout_height="170px"
                 android:maxHeight="130px"
+                android:maxWidth="130px"
+                android:padding="5dp"
                 android:src="@drawable/img_huella_p" />
 
             <ImageButton
                 android:id="@+id/imgComprarHuella"
-                android:layout_width="110px"
-                android:layout_height="110px"
-                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:maxWidth="110px"
-                android:maxHeight="110px"
                 android:onClick="btnCapturarCompra"
-                android:src="@drawable/btn_finger" />
+                android:padding="5dp"
+                android:src="@drawable/btn_finger_xxc" />
         </LinearLayout>
 
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="2"
-                      android:gravity="center_horizontal|center_vertical"
-                      android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/idLblNumeroCedula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:padding="5dp"
+                    android:text="TextView"
+                    android:textColor="#498054"
+                    android:textSize="15sp"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:id="@+id/idTxtCedula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10"
+                    android:textColor="#498054"
+                    android:textSize="36sp"
+                    android:textStyle="normal|bold" />
+            </LinearLayout>
 
             <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/idLblNumeroCedula"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="#498054"
-                android:textSize="20sp"
-                android:textStyle="normal|bold"/>
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
                 android:id="@+id/idLblNombrePersona"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="10dp"
-                android:textColor="#498054"
-                android:textSize="18sp"
-                android:textStyle="normal|bold"/>
-
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:padding="5dp"
+                android:text="TextView"
                 android:textColor="#498054"
-                android:hint="0.00"
-                android:id="@+id/idTxtValor"
-                android:textSize="36sp"
+                android:textSize="15sp"
                 android:textStyle="normal|bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/idLblValorCompra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:text="@string/lbl_comprar_valor"
+                    android:textColor="#498054"
+                    android:textSize="15sp"
+                    android:textStyle="normal|bold" />
+
+                <EditText
+                    android:id="@+id/idTxtValor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:textColor="#498054"
+                    android:textSize="36sp"
+                    android:textStyle="normal|bold" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
@@ -104,10 +129,10 @@
         android:id="@+id/idProductos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
         android:text="@string/lbl_productos"
         android:textColor="#498054"
-        android:layout_marginLeft="10dp"
         android:textSize="10pt"
         android:textStyle="bold" />
 
@@ -184,10 +209,10 @@
             android:id="@+id/idMenuPrincipal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:onClick="btnMenuCompraUnica"
-            android:layout_gravity="center_horizontal"
             android:src="@drawable/btn_menu" />
     </LinearLayout>
 
