@@ -20,10 +20,10 @@ public class EmpleadoVO {
         this.estado = estado;
     }
 
-    public EmpleadoVO(String numeroDocumento , String nombresCompletos) {
+    public EmpleadoVO(String numeroDocumento, String nombresCompletos) {
         this.nombresCompletos = nombresCompletos;
         this.numeroDocumento = numeroDocumento;
-     }
+    }
 
     public String getCodigoNomina() {
         return codigoNomina;

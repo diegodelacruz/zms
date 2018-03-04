@@ -13,7 +13,7 @@ public class RespuestaVO {
 
     private String mensaje;
 
-    public RespuestaVO(String codigo, List<EmpleadoVO> empleados , String mensaje) {
+    public RespuestaVO(String codigo, List<EmpleadoVO> empleados, String mensaje) {
         this.codigo = codigo;
         this.mensaje = mensaje;
         this.empleados = empleados;

@@ -15,11 +15,11 @@ public class Compra {
     private String estado;
     private String fechaCompra;
 
-    public Compra(){
+    public Compra() {
         estado = TiposRespuesta.NO_SINCRONIZADO.toString();
     }
 
-    public Compra(int idcpr, String cedula, String valorcompra, String comentario){
+    public Compra(int idcpr, String cedula, String valorcompra, String comentario) {
         this.cedula = cedula;
         this.valorCompra = valorcompra;
         this.comentario = comentario;

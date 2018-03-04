@@ -23,9 +23,10 @@ public class ResultadoScanVO {
 
     private String numeroCedula;
 
-    public ResultadoScanVO(){}
+    public ResultadoScanVO() {
+    }
 
-    public ResultadoScanVO(TiposRespuesta respuesta , Integer numeroHuella , FingerprintImage fingerprintImage , byte[] fingerPrintFeature, String mensaje , Integer idUsuarioAratek){
+    public ResultadoScanVO(TiposRespuesta respuesta, Integer numeroHuella, FingerprintImage fingerprintImage, byte[] fingerPrintFeature, String mensaje, Integer idUsuarioAratek) {
         this.respuesta = respuesta;
         this.numeroHuella = numeroHuella;
         this.fingerprintImage = fingerprintImage;

@@ -10,7 +10,7 @@ import java.io.Writer;
 
 public class SnacksUtil {
 
-    public static String obtenerStackErrores(Exception e){
+    public static String obtenerStackErrores(Exception e) {
 
         Writer writer = new StringWriter();
         PrintWriter printWriter = new PrintWriter(writer);
