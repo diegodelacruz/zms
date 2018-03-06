@@ -54,7 +54,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void btnComprar(View view) {
 
-        Log.d("MV", "btnComprar");
+        Log.d("DLC", "btnComprar");
 
         Intent intent = new Intent(this, UnicaCompraActivity.class);
         startActivity(intent);
@@ -64,7 +64,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void btnRegistrar(View view) {
 
-        Log.d("MV", "btnRegistrar");
+        Log.d("DLC", "btnRegistrar");
 
         Intent intent = new Intent(this, RegistraCedulaActivity.class);
         startActivity(intent);
@@ -73,6 +73,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void btnSincronizar(View view) {
+
+        Log.d("DLC", "btnSincronizar");
         //logger.addRecordToLog("MenuActivity.sincronizar");
 
         ServicioBDD servicioBDD = new ServicioBDD(this);
@@ -180,12 +182,9 @@ public class MenuActivity extends AppCompatActivity {
 
         private Boolean invocarServicioCarga(Compra compra) {
             try {
-                //logger.addRecordToLog("MenuActivity.invocarServicioCarga");
-
                 Gson gson = new Gson();
                 HttpClient httpclient = new DefaultHttpClient();
 
-                //http://192.168.5.32:8888/ComedorSnack-war/webresources/servicios/registrarCompra/1711441418/1476222478896/0.2/NA
                 StringBuilder url = new StringBuilder();
                 url.append(Constantes.URL_SERVICIO_CARGA)
                         .append(compra.getCedula())
@@ -204,8 +203,6 @@ public class MenuActivity extends AppCompatActivity {
                 HttpEntity entity = response.getEntity();
                 String responseString = EntityUtils.toString(entity, "UTF-8");
 
-                //logger.addRecordToLog("despues responseString : " + responseString);
-
                 RespuestaVO respuestaVO = gson.fromJson(responseString, RespuestaVO.class);
 
                 if (!respuestaVO.getCodigo().equalsIgnoreCase("OK")) {
@@ -220,8 +217,6 @@ public class MenuActivity extends AppCompatActivity {
                 PrintWriter printWriter = new PrintWriter(writer);
                 e.printStackTrace(printWriter);
                 String s = writer.toString();
-
-                //logger.addRecordToLog("Exception MenuActivity.invocarServicioCarga : " + s);
 
                 return Boolean.FALSE;
             }

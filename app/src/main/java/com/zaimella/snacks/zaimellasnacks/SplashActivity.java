@@ -32,7 +32,7 @@ import java.io.IOException;
 public class SplashActivity extends AppCompatActivity {
 
     Logger logger;
-    public static final String TAG_SPLASH = "DLC SPLASH";
+    public static final String TAG_SPLASH = "DLC";
     Context context = this;
     int ultEmpleado;
     int contadorCarga = 0;

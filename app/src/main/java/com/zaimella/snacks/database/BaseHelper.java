@@ -50,6 +50,7 @@ public class BaseHelper extends SQLiteOpenHelper {
 
     public BaseHelper(Context context) {
         super(context, Constantes.DATABASE_NAME, null, DATABASE_VERSION);
+        Log.d("DLC", "Despues del Constructor");
     }
 
     @Override
@@ -58,6 +59,7 @@ public class BaseHelper extends SQLiteOpenHelper {
         db.execSQL(empleados);
         db.execSQL(comprador);
         db.execSQL(compras);
+        Log.d("DLC", "Creando las tablas");
     }
 
     @Override
@@ -86,8 +88,8 @@ public class BaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
 
+        Log.d("DLC", "Maximo valor de la BDD: " + maximo);
+
         return maximo;
     }
-
-
 }
